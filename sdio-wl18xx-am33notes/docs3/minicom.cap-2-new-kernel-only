@@ -1,0 +1,607 @@
+
+U-Boot SPL 2017.01-gc68ed086bd (Mar 26 2018 - 15:08:11)
+Trying to boot from MMC1
+reading uboot.env
+
+** Unable to read "uboot.env" from mmc0:1 **
+Using default environment
+
+reading u-boot.img
+reading u-boot.img
+reading u-boot.img
+reading u-boot.img
+
+
+U-Boot 2017.01-gc68ed086bd (Mar 26 2018 - 15:08:11 -0400)
+
+CPU  : AM335X-GP rev 2.1
+Model: TI AM335x BeagleBone Black
+DRAM:  512 MiB
+NAND:  0 MiB
+MMC:   OMAP SD/MMC: 0, OMAP SD/MMC: 1
+reading uboot.env
+
+** Unable to read "uboot.env" from mmc0:1 **
+Using default environment
+
+<ethaddr> not set. Validating first E-fuse MAC
+Net:   Could not get PHY for cpsw: addr 0
+cpsw, usb_ether
+Hit any key to stop autoboot:  2  1  0 
+switch to partitions #0, OK
+mmc0 is current device
+SD/MMC found on device 0
+reading boot.scr
+** Unable to read file boot.scr **
+reading uEnv.txt
+** Unable to read file uEnv.txt **
+switch to partitions #0, OK
+mmc0 is current device
+Scanning mmc 0:1...
+switch to partitions #0, OK
+mmc0 is current device
+SD/MMC found on device 0
+3652144 bytes read in 329 ms (10.6 MiB/s)
+37889 bytes read in 19 ms (1.9 MiB/s)
+## Flattened Device Tree blob at 88000000
+   Booting using the fdt blob at 0x88000000
+   Loading Device Tree to 8fff3000, end 8ffff400 ... OK
+
+Starting kernel ...
+
+[    0.000000] Booting Linux on physical CPU 0x0
+[    0.000000] Linux version 4.9.69-g9ce43c71ae (hi59a@MSI-GTX10) (gcc version 6.2.1 20161016 (Linaro GCC 6.2-2016.11) ) #1 PREEMPT Sun Jun 10 00:42:44 PDT 2018
+[    0.000000] CPU: ARMv7 Processor [413fc082] revision 2 (ARMv7), cr=10c5387d
+[    0.000000] CPU: PIPT / VIPT nonaliasing data cache, VIPT aliasing instruction cache
+[    0.000000] OF: fdt:Machine model: TI AM335x BeagleBone Black
+[    0.000000] efi: Getting EFI parameters from FDT:
+[    0.000000] efi: UEFI not found.
+[    0.000000] cma: Reserved 48 MiB at 0x9d000000
+[    0.000000] Memory policy: Data cache writeback
+[    0.000000] CPU: All CPU(s) started in SVC mode.
+[    0.000000] AM335X ES2.1 (sgx neon)
+[    0.000000] Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 129920
+[    0.000000] Kernel command line: console=ttyO0,115200n8 root=PARTUUID=85465b79-02 rw rootfstype=ext4 rootwait
+[    0.000000] PID hash table entries: 2048 (order: 1, 8192 bytes)
+[    0.000000] Dentry cache hash table entries: 65536 (order: 6, 262144 bytes)
+[    0.000000] Inode-cache hash table entries: 32768 (order: 5, 131072 bytes)
+[    0.000000] Memory: 457960K/524288K available (7168K kernel code, 286K rwdata, 2384K rodata, 1024K init, 287K bss, 17176K reserved, 49152K cma-reserved, 0K highmem)
+[    0.000000] Virtual kernel memory layout:
+[    0.000000]     vector  : 0xffff0000 - 0xffff1000   (   4 kB)
+[    0.000000]     fixmap  : 0xffc00000 - 0xfff00000   (3072 kB)
+[    0.000000]     vmalloc : 0xe0800000 - 0xff800000   ( 496 MB)
+[    0.000000]     lowmem  : 0xc0000000 - 0xe0000000   ( 512 MB)
+[    0.000000]     pkmap   : 0xbfe00000 - 0xc0000000   (   2 MB)
+[    0.000000]     modules : 0xbf000000 - 0xbfe00000   (  14 MB)
+[    0.000000]       .text : 0xc0008000 - 0xc0800000   (8160 kB)
+[    0.000000]       .init : 0xc0b00000 - 0xc0c00000   (1024 kB)
+[    0.000000]       .data : 0xc0c00000 - 0xc0c47b10   ( 287 kB)
+[    0.000000]        .bss : 0xc0c47b10 - 0xc0c8f974   ( 288 kB)
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=1, Nodes=1
+[    0.000000] Preemptible hierarchical RCU implementation.
+[    0.000000] 	Build-time adjustment of leaf fanout to 32.
+[    0.000000] NR_IRQS:16 nr_irqs:16 16
+[    0.000000] IRQ: Found an INTC at 0xfa200000 (revision 5.0) with 128 interrupts
+[    0.000000] OMAP clockevent source: timer2 at 24000000 Hz
+[    0.000014] sched_clock: 32 bits at 24MHz, resolution 41ns, wraps every 89478484971ns
+[    0.000033] clocksource: timer1: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 79635851949 ns
+[    0.000042] OMAP clocksource: timer1 at 24000000 Hz
+[    0.000188] clocksource_probe: no matching clocksources found
+[    0.000345] Console: colour dummy device 80x30
+[    0.000368] WARNING: Your 'console=ttyO0' has been replaced by 'ttyS0'
+[    0.000373] This ensures that you still see kernel messages. Please
+[    0.000378] update your kernel commandline.
+[    0.000398] Calibrating delay loop... 996.14 BogoMIPS (lpj=4980736)
+[    0.089238] pid_max: default: 32768 minimum: 301
+[    0.089334] Security Framework initialized
+[    0.089366] Mount-cache hash table entries: 1024 (order: 0, 4096 bytes)
+[    0.089375] Mountpoint-cache hash table entries: 1024 (order: 0, 4096 bytes)
+[    0.090090] CPU: Testing write buffer coherency: ok
+[    0.090446] Setting up static identity map for 0x80100000 - 0x80100060
+[    0.091209] EFI services will not be available.
+[    0.092382] devtmpfs: initialized
+[    0.102831] VFP support v0.3: implementor 41 architecture 3 part 30 variant c rev 3
+[    0.103169] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 19112604462750000 ns
+[    0.103193] futex hash table entries: 256 (order: -1, 3072 bytes)
+[    0.106478] pinctrl core: initialized pinctrl subsystem
+[    0.107607] NET: Registered protocol family 16
+[    0.109410] DMA: preallocated 256 KiB pool for atomic coherent allocations
+[    0.122423] omap_hwmod: debugss: _wait_target_disable failed
+[    0.199232] cpuidle: using governor ladder
+[    0.229220] cpuidle: using governor menu
+[    0.234629] OMAP GPIO hardware version 0.1
+[    0.248374] No ATAGs?
+[    0.248400] hw-breakpoint: debug architecture 0x4 unsupported.
+[    0.286540] edma 49000000.edma: TI EDMA DMA engine driver
+[    0.289547] omap_i2c 44e0b000.i2c: could not find pctldev for node /ocp/l4_wkup@44c00000/scm@210000/pinmux@800/pinmux_i2c0_pins, deferring probe
+[    0.289602] omap_i2c 4819c000.i2c: could not find pctldev for node /ocp/l4_wkup@44c00000/scm@210000/pinmux@800/pinmux_i2c2_pins, deferring probe
+[    0.289712] media: Linux media interface: v0.10
+[    0.289762] Linux video capture interface: v2.00
+[    0.289808] pps_core: LinuxPPS API ver. 1 registered
+[    0.289814] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    0.289836] PTP clock support registered
+[    0.289872] EDAC MC: Ver: 3.0.0
+[    0.290871] omap-mailbox 480c8000.mailbox: omap mailbox rev 0x400
+[    0.291184] Advanced Linux Sound Architecture Driver Initialized.
+[    0.292331] clocksource: Switched to clocksource timer1
+[    0.301716] NET: Registered protocol family 2
+[    0.302467] TCP established hash table entries: 4096 (order: 2, 16384 bytes)
+[    0.302512] TCP bind hash table entries: 4096 (order: 2, 16384 bytes)
+[    0.302550] TCP: Hash tables configured (established 4096 bind 4096)
+[    0.302613] UDP hash table entries: 256 (order: 0, 4096 bytes)
+[    0.302631] UDP-Lite hash table entries: 256 (order: 0, 4096 bytes)
+[    0.302760] NET: Registered protocol family 1
+[    0.303159] RPC: Registered named UNIX socket transport module.
+[    0.303171] RPC: Registered udp transport module.
+[    0.303177] RPC: Registered tcp transport module.
+[    0.303182] RPC: Registered tcp NFSv4.1 backchannel transport module.
+[    0.304028] hw perfevents: enabled with armv7_cortex_a8 PMU driver, 5 counters available
+[    0.306149] workingset: timestamp_bits=14 max_order=17 bucket_order=3
+[    0.313136] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    0.313968] NFS: Registering the id_resolver key type
+[    0.314009] Key type id_resolver registered
+[    0.314016] Key type id_legacy registered
+[    0.314056] ntfs: driver 2.1.32 [Flags: R/O].
+[    0.318668] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 246)
+[    0.318688] io scheduler noop registered
+[    0.318694] io scheduler deadline registered
+[    0.318836] io scheduler cfq registered (default)
+[    0.320031] pinctrl-single 44e10800.pinmux: 142 pins at pa f9e10800 size 568
+[    0.376384] Serial: 8250/16550 driver, 10 ports, IRQ sharing disabled
+[    0.379794] 44e09000.serial: ttyS0 at MMIO 0x44e09000 (irq = 158, base_baud = 3000000) is a 8250
+[    0.978483] console [ttyS0] enabled
+[    0.983655] omap_rng 48310000.rng: OMAP Random Number Generator ver. 20
+[    0.990416] [drm] Initialized
+[    1.006196] brd: module loaded
+[    1.015136] loop: module loaded
+[    1.020231] libphy: Fixed MDIO Bus: probed
+[    1.092415] davinci_mdio 4a101000.mdio: davinci mdio revision 1.6
+[    1.098551] davinci_mdio 4a101000.mdio: no live phy, scanning all
+[    1.104999] davinci_mdio: probe of 4a101000.mdio failed with error -5
+[    1.112036] cpsw 4a100000.ethernet: Detected MACID = 50:65:83:e1:6c:c6
+[    1.118734] cpsw 4a100000.ethernet: device node lookup for pps timer failed
+[    1.125770] cpsw 4a100000.ethernet: cpts: overflow check period 500 (jiffies)
+[    1.134682] mousedev: PS/2 mouse device common for all mice
+[    1.140909] i2c /dev entries driver
+[    1.146161] cpuidle: enable-method property 'ti,am3352' found operations
+[    1.153862] omap_hsmmc 48060000.mmc: Got CD GPIO
+[    1.259429] mmc0: host does not support reading read-only switch, assuming write-enable
+[    1.269390] mmc0: new high speed SDHC card at address b368
+[    1.276161] ledtrig-cpu: registered to indicate activity on CPUs
+[    1.284880] NET: Registered protocol family 10
+[    1.285978] sit: IPv6, IPv4 and MPLS over IPv4 tunneling driver
+[    1.286685] NET: Registered protocol family 17
+[    1.286935] Key type dns_resolver registered
+[    1.287143] omap_voltage_late_init: Voltage driver support not added
+[    1.318301] mmcblk0: mmc0:b368 LEXAR 3.73 GiB 
+[    1.324590]  mmcblk0: p1 p2
+[    1.366292] random: fast init done
+[    1.373507] tps65217 0-0024: TPS65217 ID 0xe version 1.2
+[    1.379376] at24 0-0050: 32768 byte 24c256 EEPROM, writable, 1 bytes/write
+[    1.474660] mmc1: new high speed MMC card at address 0001
+[    1.480743] mmcblk1: mmc1:0001 S10004 3.56 GiB 
+[    1.485609] mmcblk1boot0: mmc1:0001 S10004 partition 1 4.00 MiB
+[    1.491766] mmcblk1boot1: mmc1:0001 S10004 partition 2 4.00 MiB
+[    1.498998]  mmcblk1: p1
+[    1.524713] tda998x 0-0070: found TDA19988
+[    1.530020] tilcdc 4830e000.lcdc: bound 0-0070 (ops tda998x_ops)
+[    1.536112] [drm] Supports vblank timestamp caching Rev 2 (21.10.2013).
+[    1.542767] [drm] No driver support for vblank timestamp query.
+[    1.549022] tilcdc 4830e000.lcdc: No connectors reported connected with modes
+[    1.556225] [drm] Cannot find any crtc or sizes - going 1024x768
+[    1.570263] Console: switching to colour frame buffer device 128x48
+[    1.581417] tilcdc 4830e000.lcdc: fb0:  frame buffer device
+[    1.613080] omap_i2c 44e0b000.i2c: bus 0 rev0.11 at 400 kHz
+[    1.733239] omap_i2c 4819c000.i2c: bus 2 rev0.11 at 100 kHz
+[    1.740859] hctosys: unable to open rtc device (rtc0)
+[    1.746537] ALSA device list:
+[    1.749527]   No soundcards found.
+[    1.768185] EXT4-fs (mmcblk0p2): mounted filesystem with ordered data mode. Opts: (null)
+[    1.776578] VFS: Mounted root (ext4 filesystem) on device 179:2.
+[    1.785344] devtmpfs: mounted
+[    1.789543] Freeing unused kernel memory: 1024K
+[    2.065093] systemd[1]: System time before build time, advancing clock.
+[    2.130246] systemd[1]: systemd 230 running in system mode. (+PAM -AUDIT -SELINUX +IMA -APPARMOR +SMACK +SYSVINIT +UTMP -LIBCRYPTSETUP -GCRYPT -GNUTLS +ACL +XZ -LZ4 -SECCOMP +BLKID -ELFUTILS +KMOD -IDN)
+[    2.149298] systemd[1]: Detected architecture arm.
+
+Welcome to Arago 2017.12!
+
+[    2.183775] systemd[1]: Set hostname to <am335x-evm>.
+[    2.474841] systemd[1]: [/lib/systemd/system/gadget-init.service:15] Unknown lvalue 'ExecStopPre' in section 'Service'
+[    2.755847] systemd[1]: Reached target Swap.
+[  OK  ] Reached target Swap.
+[    2.837032] systemd[1]: Created slice User and Session Slice.
+[  OK  ] Created slice User and Session Slice.
+[    2.872989] systemd[1]: Listening on Journal Socket (/dev/log).
+[  OK  ] Listening on Journal Socket (/dev/log).
+[    2.902840] systemd[1]: Listening on /dev/initctl Compatibility Named Pipe.
+[  OK  ] Listening on /dev/initctl Compatibility Named Pipe.
+[    2.942994] systemd[1]: Started Forward Password Requests to Wall Directory Watch.
+[  OK  ] Started Forward Password Requests to Wall Directory Watch.
+[    2.983097] systemd[1]: Started Dispatch Password Requests to Console Directory Watch.
+[  OK  ] Started Dispatch Password Requests to Console Directory Watch.
+[  OK  ] Reached target Paths.
+[  OK  ] Reached target Remote File Systems.
+[  OK  ] Listening on Journal Socket.
+[  OK  ] Listening on udev Control Socket.
+[  OK  ] Listening on udev Kernel Socket.
+[  OK  ] Created slice System Slice.
+         Starting Setup Virtual Console...
+[  OK  ] Reached target Slices.
+         Mounting Temporary Directory...
+         Mounting Debug File System...
+[  OK  ] Created slice system-serial\x2dgetty.slice.
+         Starting Load Kernel Modules...
+         Starting Remount Root and Kernel File Systems...
+[    3.465562] cryptodev: disagrees about version of symbol module_layout
+         Starting Create Static Device Nodes in /dev...
+[    3.541608] usb_common: disagrees about version of symbol module_layout
+[    3.572150] EXT4-fs (mmcblk0p2): re-mounted. Opts: (null)
+[  OK  ] Created slice system-getty.slice.
+[    3.594362] usb_common: disagrees about version of symbol module_layout
+[  OK  ] Listening on Syslog Socket.
+[    3.626162] uio: disagrees about version of symbol module_layout
+         Starting Journal Service...
+[  OK  ] Listening on Process Core Dump Socket.
+[  OK  ] Listening on Network Service Netlink Socket.
+         Mounting POSIX Message Queue File System...
+         Starting alignment.service...
+[  OK  ] Mounted Debug File System.
+[  OK  ] Mounted POSIX Message Queue File System.
+[  OK  ] Mounted Temporary Directory.
+[  OK  ] Started Journal Service.
+[  OK  ] Started Setup Virtual Console.
+[FAILED] Failed to start Load Kernel Modules.
+See 'systemctl status systemd-modules-load.service' for details.
+[  OK  ] Started Remount Root and Kernel File Systems.
+[  OK  ] Started Create Static Device Nodes in /dev.
+[  OK  ] Started alignment.service.
+         Starting udev Kernel Device Manager...
+         Starting udev Coldplug all Devices...
+[  OK  ] Reached target Local File Systems (Pre).
+         Mounting /var/volatile...
+         Mounting /media/ram...
+         Mounting Configuration File System...
+         Starting Apply Kernel Variables...
+         Starting Flush Journal to Persistent Storage...
+[  OK  ] Mounted Configuration File System.
+[    4.526919] sch_fq_codel: disagrees about version of symbol module_layout
+[  OK  ] Mounted /var/volatile.
+[  OK  ] Mounted /media/ram.
+[  OK  ] Started udev Kernel Device Manager.
+[  OK  ] Started Apply Kernel Variables.
+[    4.753389] systemd-journald[119]: Received request to flush runtime journal from PID 1
+[  OK  ] Started Flush Journal to Persistent Storage.
+         Starting Load/Save Random Seed...
+[  OK  ] Reached target Local File Systems.
+         Starting Create Volatile Files and Directories...
+[  OK  ] Started Load/Save Random Seed.
+[  OK  ] Started Create Volatile Files and Directories.
+         Starting Update UTMP about System Boot/Shutdown...
+         Starting Network Time Synchronization...
+[  OK  ] Started Update UTMP about System Boot/Shutdown.
+[  OK  ] Started Network Time Synchronization.
+[  OK  ] Reached target System Time Synchronized.
+[    5.992894] omap_wdt: disagrees about version of symbol module_layout
+[    6.006509] musb_am335x: disagrees about version of symbol module_layout
+[    6.013427] rtc_omap: disagrees about version of symbol module_layout
+[    6.013868] rtc_omap: disagrees about version of symbol module_layout
+[    6.049640] rtc_omap: disagrees about version of symbol module_layout
+[    6.122109] rtc_omap: disagrees about version of symbol module_layout
+[    6.180709] omap_wdt: disagrees about version of symbol module_layout
+[  OK  ] Found device /dev/ttyS0.
+[  OK  ] Started udev Coldplug all Devices.
+[  OK  ] Reached target System Initialization.
+[  OK  ] Listening on RPCbind Server Activation Socket.
+[  OK  ] Started Daily Cleanup of Temporary Directories.
+[  OK  ] Reached target Timers.
+[  OK  ] Listening on D-Bus System Message Bus Socket.
+[  OK  ] Listening on Avahi mDNS/DNS-SD Stack Activation Socket.
+[    6.546248] musb_am335x: disagrees about version of symbol module_layout
+[  OK  ] Listening on dropbear.socket.
+[  OK  ] Reached target Sockets.
+[  OK  ] Reached target Basic System.
+         Starting Login Service...
+         Starting Avahi mDNS/DNS-SD Stack...
+         Starting uim-sysfs.service...
+[    7.358259] ti_emif_sram: disagrees about version of symbol module_layout
+[    7.367018] omap_sham: disagrees about version of symbol module_layout
+[    7.403051] pvrsrvkm: disagrees about version of symbol module_layout
+[    7.410625] omap_sham: disagrees about version of symbol module_layout
+[    7.416425] crypto_engine: disagrees about version of symbol module_layout
+[    7.419837] remoteproc: disagrees about version of symbol module_layout
+[    7.420899] remoteproc: disagrees about version of symbol module_layout
+[    7.422166] pruss_soc_bus: disagrees about version of symbol module_layout
+[    7.488447] remoteproc: disagrees about version of symbol module_layout
+[    7.541591] remoteproc: disagrees about version of symbol module_layout
+[    7.543460] pvrsrvkm: disagrees about version of symbol module_layout
+[    7.555352] crypto_engine: disagrees about version of symbol module_layout
+[    7.559429] pruss_soc_bus: disagrees about version of symbol module_layout
+[    7.563141] ti_emif_sram: disagrees about version of symbol module_layout
+[    7.597723] ti_emif_sram: disagrees about version of symbol module_layout
+[    7.767466] snd_soc_simple_card_utils: disagrees about version of symbol module_layout
+[    7.832071] snd_soc_simple_card_utils: disagrees about version of symbol module_layout
+[  OK  ] Started Periodic Command Scheduler.
+[    8.609324] ti_emif_sram: disagrees about version of symbol module_layout
+[  OK  ] Started System Logging Service.
+[  OK  ] Started Job spooling tools.
+         Starting Telephony service...
+[  OK  ] Started Kernel Logging Service.
+         Starting Print notice about GPLv3 packages...
+[  OK  ] Started D-Bus System Message Bus.
+[  OK  ] Started Telephony service.
+[   10.727266] bluetooth: disagrees about version of symbol module_layout
+[  OK  ] Started Avahi mDNS/DNS-SD Stack.
+         Starting Network Service...
+[  OK  ] Found device /dev/ttyS3.
+[  OK  ] Started Network Service.
+[   11.646311] EXT4-fs (mmcblk1p1): recovery complete
+[   11.664241] EXT4-fs (mmcblk1p1): mounted filesystem with ordered data mode. Opts: (null)
+[   11.803100] net eth0: initializing cpsw version 1.12 (0)
+[   11.808458] cpsw 4a100000.ethernet: initialized cpsw ale version 1.4
+[   11.966637] cpsw 4a100000.ethernet: ALE Table size 1024
+[   12.033798] libphy: PHY 4a101000.mdio:00 not found
+[   12.038639] net eth0: phy "4a101000.mdio:00" not found on slave 0, err -19
+[   12.273275] cpts ptp bc clkid 0
+[   12.310341] IPv6: ADDRCONF(NETDEV_UP): eth0: link is not ready
+[  OK  ] Found device /dev/mmcblk0p1.
+[  OK  ] Started uim-sysfs.service.
+[  OK  ] Started Login Service.
+[   15.459900] random: crng init done
+         Starting rc.pvr.service...
+         Starting Start USB gadget...
+[  OK  ] Listening on Load/Save RF Kill Switch Status /dev/rfkill Watch.
+         Starting Wait for Network to be Configured...
+[  OK  ] Reached target Network.
+[  OK  ] Started strongSwan IPsec IKEv1/IKEv2 daemon using ipsec.conf.
+         Starting Simple Network Management Protocol (SNMP) Daemon....
+         Starting Permit User Sessions...
+         Starting Enable and configure wl18xx bluetooth stack...
+         Starting Lightning Fast Webserver With Light System Requirements...
+         Starting Network Name Resolution...
+[  OK  ] Started Permit User Sessions.
+[  OK  ] Started Serial Getty on ttyS0.
+[  OK  ] Started Serial Getty on ttyS3.
+[  OK  ] Started Getty on tty1.
+[   18.727930] pvrsrvkm: disagrees about version of symbol module_layout
+[  OK  ] Started Enable and configure wl18xx bluetooth stack.
+***************************************************************
+***************************************************************
+NOTICE: This file system contains the following GPLv3 packages:
+	autoconf
+	binutils
+	cifs-utils
+	cpio
+	cpp-symlinks
+	cpp
+	dosfstools
+	findutils
+	g++-symlinks
+	g++
+	gawk-dev
+	gawk
+	gcc-symlinks
+	gcc
+	gdb
+	gdbserver
+	glmark2
+	gstreamer1.0-libav
+	gzip
+	hidapi
+	libcairo-perf-utils
+	libgmp10
+	libidn11
+	libmavconn
+	libmpc3
+	libmpfr4
+	libreadline-dev
+	libreadline6
+	m4-dev
+	m4
+	make
+	mavlink
+	mavros-extras
+	mavros-msgs
+	mavros
+	nettle
+	socketcan-interface
+	swig-dev
+	swig
+	which
+
+If you do not wish to distribute GPLv3 components please remove
+the above packages prior to distribution.  This can be done using
+the opkg remove command.  i.e.:
+    opkg remove <package>
+Where <package> is the name printed in the list above
+
+NOTE: If the package is a dependency of another package you
+      will be notified of the dependent packages.  You should
+      use the --force-removal-of-dependent-packages option to
+      also remove the dependent packages as well
+***************************************************************
+***************************************************************
+[  OK  ] Started Print notice about GPLv3 packages.
+[  OK  ] Started Network Name Resolution.
+[  OK  ] Started Lightning Fast Webserver With Light System Requirements.
+[   24.076224] usb_common: disagrees about version of symbol module_layout
+[   24.421282] xfrm_algo: disagrees about version of symbol module_layout
+
+ _____                    _____           _         _   
+|  _  |___ ___ ___ ___   |  _  |___ ___  |_|___ ___| |_ 
+|     |  _| .'| . | . |  |   __|  _| . | | | -_|  _|  _|
+|__|__|_| |__,|_  |___|  |__|  |_| |___|_| |___|___|_|  
+              |___|                    |___|            
+
+Arago Project http://arago-project.org am335x-evm ttyS0
+
+Arago 2017.12 am335x-evm ttyS0
+
+am335x-evm login: [   25.590837] xfrm_algo: disagrees about version of symbol module_layout
+[   26.819512] pvrsrvkm: disagrees about version of symbol module_layout
+
+ _____                    _____           _         _   
+|  _  |___ ___ ___ ___   |  _  |___ ___  |_|___ ___| |_ 
+|     |  _| .'| . | . |  |   __|  _| . | | | -_|  _|  _|
+|__|__|_| |__,|_  |___|  |__|  |_| |___|_| |___|___|_|  
+              |___|                    |___|            
+
+Arago Project http://arago-project.org am335x-evm ttyS0
+
+Arago 2017.12 am335x-evm ttyS0
+
+am335x-evm login: root
+root@am335x-evm:~# lsmod
+Module                  Size  Used by
+root@am335x-evm:~# uname -a
+Linux am335x-evm 4.9.69-g9ce43c71ae #1 PREEMPT Sun Jun 10 00:42:44 PDT 2018 armv7l GNU/Linux
+root@am335x-evm:~# iwconfig
+eth0      no wireless extensions.
+
+sit0      no wireless extensions.
+
+lo        no wireless extensions.
+
+root@am335x-evm:~# ifconfig
+eth0      Link encap:Ethernet  HWaddr 50:65:83:E1:6C:C6  
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+          Interrupt:173 
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1%763860/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:320 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:320 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1 
+          RX bytes:24320 (23.7 KiB)  TX bytes:24320 (23.7 KiB)
+
+root@am335x-evm:~# cat /proc/cmdline 
+console=ttyO0,115200n8 root=PARTUUID=85465b79-02 rw rootfstype=ext4 rootwait
+root@am335x-evm:~# 
+root@am335x-evm:~# halt
+         Stopping User Manager for UID 0...
+         Stopping Job spooling tools...
+         Stopping Simple Network Management Protocol (SNMP) Daemon....
+[  OK  ] Closed Load/Save RF Kill Switch Status /dev/rfkill Watch.
+         Stopping Avahi mDNS/DNS-SD Stack...
+[  OK  ] Sto         Stopping Session c1 of user root.
+         Stopping Kernel Logging Service...
+[  OK  ] Stopped Daily Cleanup of Temporary Directories.
+         Stopping Network Name Resolution...
+         Stopping System Logging Service...
+         Stopping Lightning Fast Webserver With Light System Requirements...
+         Stopping Telephony service...
+         Stopping Periodic Command Scheduler...
+         Stopping Getty on tty1...
+         Stopping Serial Getty on ttyS0...
+[  OK  ] Stopped target System Time Synchronized.
+         Stopping Serial Getty on ttyS3...
+         Stopping rng-tools.service...
+[  OK  ] Stopped Avahi mDNS/DNS-SD Stack.
+[  OK  ] Stopped Periodic Command Scheduler.
+[  OK  ] Stopped System Logging Service.
+[  OK  ] Stopped Job spooling tools.
+[  OK  ] Stopped Telephony service.
+[  OK  ] Stopped Kernel Logging Service.
+[  OK  ] Stopped Wait for Network to be Configured.
+[  OK  ] Stopped Network Name Resolution.
+[  OK  ] Stopped Serial Getty on ttyS0.
+[  OK  ] Stopped Getty on tty1.
+[  OK  ] Stopped Lightning Fast Webserver With Light System Requirements.
+[  OK  ] Stopped Serial Getty on ttyS3.
+[  OK  ] Stopped Session c1 of user root.
+[  OK  ] Removed slice system-getty.slice.
+[  OK  ] Removed slice system-serial\x2dgetty.slice.
+[ TIME ] Timed out waiting for device dev-ttyGS0.device.
+[  OK  ] Stopped User Manager for UID 0.
+[  OK  ] Stopped rng-tools.service.
+         Stopping busybox-udhcpd.service...
+         Stopping thttpd.service...
+[  OK  ] Removed slice User Slice of root.
+         Stopping Login Service...
+         Stopping Permit User Sessions...
+[  OK  ] Unmounted /run/user/0.
+[  OK  ] Stopped Login Service.
+[  OK  ] Stopped Simple Network Management Protocol (SNMP) Daemon..
+[  OK  ] Stopped busybox-udhcpd.service.
+[  OK  ] Stopped thttpd.service.
+[  OK  ] Stopped Permit User Sessions.
+         Stopping telnetd.service...
+[  OK  ] Stopped target Network.
+         Stopping Network Service...
+[  OK  ] Stopped telnetd.service.
+[  OK  ] Stopped Network Service.
+         Stopping D-Bus System Message Bus...
+         Stopping weston.service...
+[  OK  ] Stopped D-Bus System Message Bus.
+[  OK  ] Stopped weston.service.
+         Stopping rc.pvr.service...
+[  OK  ] Stopped target Remote File Systems.
+[  OK  ] Stopped rc.pvr.service.
+         Stopping uim-sysfs.service...
+[  OK  ] Stopped uim-sysfs.service.
+[  OK  ] Stopped target Basic System.
+[  OK  ] Stopped target Paths.
+[  OK  ] Stopped Dispatch Password Requests to Console Directory Watch.
+[  OK  ] Stopped Forward Password Requests to Wall Directory Watch.
+[  OK  ] Stopped target Slices.
+[  OK  ] Removed slice User and Session Slice.
+[  OK  ] Stopped target Sockets.
+[  OK  ] Closed Avahi mDNS/DNS-SD Stack Activation Socket.
+[  OK  ] Closed dropbear.socket.
+[  OK  ] Closed D-Bus System Message Bus Socket.
+[  OK  ] Closed Syslog Socket.
+[  OK  ] Closed RPCbind Server Activation Socket.
+[  OK  ] Stopped target System Initialization.
+         Stopping Network Time Synchronization...
+         Stopping Load/Save Random Seed...
+         Stopping Update UTMP about System Boot/Shutdown...
+[  OK  ] Stopped Setup Virtual Console.
+[  OK  ] Stopped Apply Kernel Variables.
+[  OK  ] Stopped Network Time Synchronization.
+[  OK  ] Stopped Load/Save Random Seed.
+[  OK  ] Stopped Update UTMP about System Boot/Shutdown.
+[  OK  ] Stopped Create Volatile Files and Directories.
+[  OK  ] Stopped target Local File Systems.
+         Unmounting /media/ram...
+         Unmounting /var/volatile...
+         Unmounting /run/media/mmcblk1p1...
+         Unmounting Temporary Directory...
+         Unmounting /run/media/mmcblk0p1...
+[  OK  ] Unmounted /media/ram.
+[  OK  ] Unmounted /var/volatile.
+[  OK  ] Unmounted /run/media/mmcblk1p1.
+[  OK  ] Unmounted Temporary Directory.
+[  OK  ] Stopped target Swap.
+[  OK  ] Unmounted /run/media/mmcblk0p1.
+[  OK  ] Reached target Unmount All Filesystems.
+[  OK  ] Stopped target Local File Systems (Pre).
+[  OK  ] Stopped Remount Root and Kernel File Systems.
+[  OK  ] Stopped Create Static Device Nodes in /dev.
+[  OK  ] Reached target Shutdown.
+[  OK  ] Reached target Final Step.
+         Starting Halt...
+[   99.193736] systemd-shutdow: 25 output lines suppressed due to ratelimiting
+[   99.212780] systemd-shutdown[1]: Sending SIGTERM to remaining processes...
+[   99.245083] systemd-journald[119]: Received SIGTERM from PID 1 (systemd-shutdow).
+[  109.257609] systemd-shutdown[1]: Sending SIGKILL to remaining processes...
+[  109.297392] systemd-shutdown[1]: Sending SIGKILL to PID 730 (rngd).
+[  109.316650] systemd-shutdown[1]: Unmounting file systems.
+[  109.324747] systemd-shutdown[1]: Remounting '/' read-only with options 'data=ordered'.
+[  117.221601] EXT4-fs (mmcblk0p2): re-mounted. Opts: data=ordered
+[  117.247899] systemd-shutdown[1]: Remounting '/' read-only with options 'data=ordered'.
+[  117.259186] EXT4-fs (mmcblk0p2): re-mounted. Opts: data=ordered
+[  117.265478] systemd-shutdown[1]: All filesystems unmounted.
+[  117.271133] systemd-shutdown[1]: Deactivating swaps.
+[  117.276697] systemd-shutdown[1]: All swaps deactivated.
+[  117.282009] systemd-shutdown[1]: Detaching loop devices.
+[  117.303266] systemd-shutdown[1]: All loop devices detached.
+[  117.308951] systemd-shutdown[1]: Detaching DM devices.
+[  117.317437] systemd-shutdown[1]: All DM devices detached.
+[  117.336005] systemd-shutdown[1]: Halting system.
+[  117.360422] reboot: System halted

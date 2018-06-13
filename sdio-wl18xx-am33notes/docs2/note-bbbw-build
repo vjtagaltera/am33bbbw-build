@@ -1,0 +1,135 @@
+
+note-bbbw-build
+
+
+[1] the instruction: 
+
+    http://processors.wiki.ti.com/index.php/WL18xx_System_Build_Scripts
+    WL18xx System Build Scripts
+
+
+[2] clone first repo: 
+
+        mkdir wl8-build
+        cd wl8-build
+        git clone git://git.ti.com/wilink8-wlan/build-utilites.git
+        cd build-utilites
+
+    copy the verify_kernel_config.sh to the kernel directory. 
+    use verify_... script to modify the kernel config and build. 
+
+
+[3] create the setup-env file
+
+    copy setup-env.sample to setup-env and modify three variables to: 
+
+      export TOOLCHAIN_PATH=/home/am33build/ti-processor-sdk-linux-am335x-evm-04.03.00.05/linux-devkit/sysroots/x86_64-arago-linux/usr/bin
+      export ROOTFS=/home/am33build/wl8-build/fs
+      export KERNEL_PATH=/home/am33build/ti-processor-sdk-linux-am335x-evm-04.03.00.05/board-support/linux-4.9.69+gitAUTOINC+9ce43c71ae-g9ce43c71ae
+
+    create the /home/am33build/wl8-build/fs directory
+
+
+[4] clone other repos:
+
+    run: 
+        ./build_wl18xx.sh init
+
+    choose n when it prompts to install python-m2crypto.
+    install python-m2crypto needed by the above init script.
+
+    re-run init.
+
+      Checking out branch OpenSSL_1_0_2d  in repo openssl  
+      Checking out branch libnl3_2_25  in repo libnl  
+      Checking out branch master  in repo crda  
+      Checking out branch master-2017-03-07  in repo wireless_regdb  
+      Checking out branch upstream_44  in repo driver  
+      Checking out branch upstream_25_rebase  in repo hostap  
+      Checking out branch master  in repo ti_utils  
+      Checking out branch master  in repo fw_download  
+      Checking out branch sitara-scripts  in repo scripts_download  
+      Checking out branch upstream_44  in repo backports  
+      Checking out branch v4.1  in repo iw  
+      Checking out branch master  in repo uim  
+      Checking out branch master  in repo bt-firmware  
+
+    it failed with downloading http://releases.linaro.org/15.05/components/toolchain/binaries/arm-linux-gnueabihf/gcc-linaro-4.9-2015.05-x86_64_arm-linux-gnueabihf.tar.xz 
+    and left an empty toolchain directory.
+
+    edit the build_wl18xx.sh to comment out build_all in the update case. 
+    run: 
+        ./build_wl18xx.sh update R8.7_SP3
+
+    /home/am33build/wl8-build/build-utilites$ git diff
+    diff --git a/build_wl18xx.sh b/build_wl18xx.sh
+    index 73c8db8..443f802 100755
+    --- a/build_wl18xx.sh
+    +++ b/build_wl18xx.sh
+    @@ -937,7 +937,7 @@ function main()
+             clean_outputs
+             setup_workspace
+             read_kernel_version #####read kernel version again after update#####
+    -        [[ -z $NO_BUILD ]] && build_all
+    +        [[ -z $NO_BUILD ]] && echo '  ## skip ## ' build_all
+                    ;;
+             
+                    'openlink')
+
+
+[5] modify the build_wl18xx.sh to skip building kernel and modules: 
+
+    diff --git a/build_wl18xx.sh b/build_wl18xx.sh
+    index 73c8db8..c7381b6 100755
+    --- a/build_wl18xx.sh
+    +++ b/build_wl18xx.sh
+    @@ -877,8 +877,8 @@ function build_all()
+         
+         if [ -z $NO_TI ] 
+         then
+    -        [ -z $INTREE ] && build_modules
+    -               [ $INTREE ] && build_intree
+    +        [ -z $INTREE ] && echo '  ## skip ## ' build_modules
+    +               [ $INTREE ] && echo '  ## skip ## ' build_intree
+             build_iw
+             build_wpa_supplicant
+             build_hostapd  
+
+    keep a copy of the build-utilites directory to -save1-updated-modified. 
+
+
+[6] modify the ti- sdk linux-devkit/sysroot/x86_64-arago-linux/usr/bin/perl to /usr/bin/perl
+    run: 
+        ./build_wl18xx.sh
+
+    Verifying filesystem skeleton...
+    ERROR  /home/am33build/wl8-build/fs/lib/modules/4.9.*/updates/drivers/net/wireless/ti/wl18xx/wl18xx.ko  Not found ! 
+
+    modify the build_wl18xx.sh and build again. 
+
+    diff --git a/build_wl18xx.sh b/build_wl18xx.sh
+    index 73c8db8..9417e42 100755
+    --- a/build_wl18xx.sh
+    +++ b/build_wl18xx.sh
+    @@ -682,13 +682,13 @@ function set_files_to_verify()
+             `repo_path fw_download`/wl18xx-fw-4.bin
+             "data"
+     
+    -        `path filesystem`/lib/modules/$KERNEL_VERSION.$KERNEL_PATCHLEVEL.*/updates/drivers/net/wireless/ti/wl18xx/wl18xx.ko
+    -        `path compat_wireless`/drivers/net/wireless/ti/wl18xx/wl18xx.ko
+    -        "ELF 32-bit LSB[ ]*relocatable, ARM"
+    +        ##`path filesystem`/lib/modules/$KERNEL_VERSION.$KERNEL_PATCHLEVEL.*/updates/drivers/net/wireless/ti/wl18xx/wl18xx.ko
+    +        ##`path compat_wireless`/drivers/net/wireless/ti/wl18xx/wl18xx.ko
+    +        ##"ELF 32-bit LSB[ ]*relocatable, ARM"
+     
+    -        `path filesystem`/lib/modules/$KERNEL_VERSION.$KERNEL_PATCHLEVEL.*/updates/drivers/net/wireless/ti/wlcore/wlcore.ko
+    -        `path compat_wireless`/drivers/net/wireless/ti/wlcore/wlcore.ko
+    -        "ELF 32-bit LSB[ ]*relocatable, ARM"
+    +        ##`path filesystem`/lib/modules/$KERNEL_VERSION.$KERNEL_PATCHLEVEL.*/updates/drivers/net/wireless/ti/wlcore/wlcore.ko
+    +        ##`path compat_wireless`/drivers/net/wireless/ti/wlcore/wlcore.ko
+    +        ##"ELF 32-bit LSB[ ]*relocatable, ARM"
+     
+             #`path filesystem`/usr/bin/calibrator
+             #`repo_path ti_utils`/calibrator
+
+

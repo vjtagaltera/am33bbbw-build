@@ -1,0 +1,80 @@
+
+https://eewiki.net/display/linuxonarm/BeagleBone+Black
+  --- see downloaded pdf file
+
+
+search linux 4.9 where to initialize board
+  --- see downloaded pdf file:
+      https://elinux.org/images/2/2a/Schulz-how-to-support-new-board-u-boot-linux.pdf
+
+
+search linux porting sdio driver
+  --- see copied file  sdio-user-space.txt
+
+
+processor sdk linux am335x 04_03_00_05 build date 03262018
+  http://software-dl.ti.com/processor-sdk-linux/esd/AM335X/latest/index_FDS.html
+
+  http://software-dl.ti.com/processor-sdk-linux/esd/AM335X/latest/exports/ti-processor-sdk-linux-am335x-evm-04.03.00.05-Linux-x86-Install.bin
+  optional add-on: 
+        wilink 8 addon package
+        ti 15.4 stack linux gateway example application
+
+  documentation: 
+  http://software-dl.ti.com/processor-sdk-linux/esd/docs/latest/linux/Overview.html
+
+
+https://github.com/TechBookHunter/Free-BeagleBone-Books/blob/master/book/BeagleBone%20Black%20Cookbook.pdf
+  --- see downloaded pdf file
+
+
+Processor SDK Linux Software Developer’s Guide
+  http://software-dl.ti.com/processor-sdk-linux/esd/docs/latest/linux/index.html
+  --- the 2nd level support page. 
+
+
+Processor SDK for AM335x Sitara Processors - Linux and TI-RTOS support
+  http://www.ti.com/tool/processor-sdk-am335x?jktype=recommendedresults
+  --- the top level support page
+
+
+search wl18xx linux driver
+
+  minimal wl18xx
+  https://e2e.ti.com/support/wireless_connectivity/wilink_wifi_bluetooth/f/307/t/328320?How-to-load-WL18xx-Linux-drivers
+
+    insmod /lib/modules/compat.ko   ; insmod /lib/modules/wlcore_sdio.ko ; insmod /lib/modules/cfg80211.ko
+    insmod /lib/modules/mac80211.ko ; insmod /lib/modules/wlcore.ko      ; insmod /lib/modules/wl18xx.ko
+
+    ifconfig wlan0 up
+
+    But something is wrong with the executable iw, the following netlink error occurrs:
+
+    / # iw wlan0 scan
+    Failed to allocate generic netlink cache.
+
+    I built the executable iw from the source as described here: 
+        http://processors.wiki.ti.com/index.php/WL18xx_WiFi_Build_Process
+
+    I found out that this error was caused by another kernel module making use of 
+        netlink multicasts. When I disable this kernel module, iw does not error out anymore.
+
+
+search beaglebone black wireless linux build
+  https://stackoverflow.com/questions/45262749/how-to-get-beaglebone-black-wifi-with-buildroot
+
+  Linux/PROCESSOR-SDK-AM335X: Beaglebone Black Wireless WiFi support
+    Mar 2, 2018 9:59 PM Munan Xu
+    Isaac, I've had success booting the am335x-boneblack-wireless.dtb from 
+    the Debian distribution with the latest processor SDK... I haven't fully 
+    tested this but wlan0 appears and I can connect to wifi networks.
+
+    It would still be nice to have this dtb officially incorporated into 
+    the SDK at some point. Is there a timeline for something like this 
+    to happen?
+
+  https://github.com/torvalds/linux/blob/master/arch/arm/boot/dts/am335x-boneblack-wireless.dts
+
+  https://github.com/beagleboard/beaglebone-black-wireless
+
+

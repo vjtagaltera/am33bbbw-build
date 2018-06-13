@@ -1,0 +1,97 @@
+
+beaglebone black wireless
+
+
+
+wifi ap name: BeagleBone-6CC6
+
+
+uart pin 1 [square pad]  ground
+     pin 4               rx
+     pin 5               tx     3.3v
+
+
+uart terminal log:
+
+  login:
+
+    Debian GNU/Linux 8 beaglebone ttyGS0
+    
+    BeagleBoard.org Debian Image 2016-11-06
+    
+    Support/FAQ: http://elinux.org/Beagleboard:BeagleBoneBlack_Debian
+    
+    default username:password is [debian:temppwd]
+    
+    The IP Address for usb0 is: 192.168.7.2
+    beaglebone login: root
+    Last login: Sun Nov  6 16:09:25 UTC 2016 on ttyGS0
+    Linux beaglebone 4.4.30-ti-r64 #1 SMP Fri Nov 4 21:23:33 UTC 2016 armv7l
+    
+    The programs included with the Debian GNU/Linux system are free software;
+    the exact distribution terms for each program are described in the
+    individual files in /usr/share/doc/*/copyright.
+    
+    Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+    permitted by applicable law.
+    root@beaglebone:~#
+
+  uname lsb_release:
+
+    root@beaglebone:~# uname -a
+    Linux beaglebone 4.4.30-ti-r64 #1 SMP Fri Nov 4 21:23:33 UTC 2016 armv7l GNU/Linux
+
+    root@beaglebone:~# lsb_release -a
+    No LSB modules are available.
+    Distributor ID: Debian
+    Description:    Debian GNU/Linux 8.6 (jessie)
+    Release:        8.6
+    Codename:       jessie
+
+  iwconfig ifconfig
+
+    root@beaglebone:~# iwconfig
+    tether    no wireless extensions.
+    
+    wlan0     IEEE 802.11abgn  Mode:Master  Tx-Power=20 dBm
+              Retry short limit:7   RTS thr:off   Fragment thr:off
+              Power Management:on
+
+    root@beaglebone:~# ifconfig
+    tether    Link encap:Ethernet  HWaddr 50:65:83:e1:6c:c6
+              inet addr:192.168.0.1  Bcast:192.168.0.255  Mask:255.255.255.0
+              inet6 addr: fe80::f40c:2ff:fe7d:82d2/64 Scope:Link
+              UP BROADCAST RUNNING MULTICAST DYNAMIC  MTU:1500  Metric:1
+              RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+              TX packets:39 errors:0 dropped:0 overruns:0 carrier:0
+              collisions:0 txqueuelen:1000
+              RX bytes:0 (0.0 B)  TX bytes:9189 (8.9 KiB)
+    
+    usb0      Link encap:Ethernet  HWaddr 50:65:83:e1:6c:c8
+              inet addr:192.168.7.2  Bcast:192.168.7.3  Mask:255.255.255.252
+              inet6 addr: fe80::5265:83ff:fee1:6cc8/64 Scope:Link
+              UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+              RX packets:404 errors:0 dropped:0 overruns:0 frame:0
+              TX packets:306 errors:0 dropped:0 overruns:0 carrier:0
+              collisions:0 txqueuelen:1000
+              RX bytes:66400 (64.8 KiB)  TX bytes:80033 (78.1 KiB)
+    
+    wlan0     Link encap:Ethernet  HWaddr 50:65:83:e1:6c:c6
+              inet6 addr: fe80::5265:83ff:fee1:6cc6/64 Scope:Link
+              UP BROADCAST RUNNING MULTICAST DYNAMIC  MTU:1500  Metric:1
+              RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+              TX packets:47 errors:0 dropped:0 overruns:0 carrier:0
+              collisions:0 txqueuelen:1000
+              RX bytes:0 (0.0 B)  TX bytes:12126 (11.8 KiB)
+
+  dtb/dts in the stock system: 
+
+    root@beaglebone:/boot# cat uEnv.txt | grep -v '^#'
+    uname_r=4.4.30-ti-r64
+    uuid=ac4731db-c4db-463f-9129-07e6746b98ba
+    cmdline=coherent_pool=1M quiet cape_universal=enable
+
+    root@beaglebone:/boot# dmesg | egrep '(dtb|dts)'
+    [   47.729278] bone_capemgr bone_capemgr: slot #4: dtbo 'cape-universaln-00A0.dtbo' loaded; overlay id #0
+
+

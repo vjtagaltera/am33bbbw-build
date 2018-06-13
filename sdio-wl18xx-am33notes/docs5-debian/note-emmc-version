@@ -1,0 +1,13 @@
+
+
+root@beaglebone:/lib/firmware# uname -a
+Linux beaglebone 4.4.30-ti-r64 #1 SMP Fri Nov 4 21:23:33 UTC 2016 armv7l GNU/Linux
+
+root@beaglebone:/lib/firmware# dmesg | grep gcc
+[    0.000000] Linux version 4.4.30-ti-r64 (root@a2-imx6q-wandboard-2gb) (gcc version 4.9.2 (Debian 4.9.2-10) ) #1 SMP Fri Nov 4 21:23:33 UTC 2016
+
+root@beaglebone:/lib/firmware# cat /etc/dogtag 
+BeagleBoard.org Debian Image 2016-11-06
+
+
+

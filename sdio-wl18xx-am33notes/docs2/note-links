@@ -1,0 +1,18 @@
+
+
+try build ti-processor-sdk-linux-am335x-evm-04.03.00.05
+and follow the build script. 
+
+
+search cred.h: error: 'struct nsproxy' has no member named 'user_ns'; did you mean 'uts_ns
+  https://e2e.ti.com/support/wireless_connectivity/wilink_wifi_bluetooth/f/307/t/622688?Linux-WL18XXCOM82SDMMC-WL18xx-System-Build-Scripts-unsuccessful
+  Linux/WL18XXCOM82SDMMC: WL18xx System Build Scripts unsuccessful
+
+
+search wl18xx on linux kernel 4.9
+  https://e2e.ti.com/support/wireless_connectivity/wilink_wifi_bluetooth/f/307/p/654114/2407790
+  Linux/WL1835MOD: Issue in building WL18xx build scripts against linux kernel version 4.9.11
+
+  just use the in-tree drivers
+
+

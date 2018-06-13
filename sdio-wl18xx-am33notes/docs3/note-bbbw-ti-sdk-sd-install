@@ -1,0 +1,50 @@
+
+note-bbbw-ti-sdk-sd-install
+
+
+copy targetNew/boot to rootfs/boot
+
+    boot with s2 button held down. log to minicom.cap-2
+
+
+copy targetNew/lib/firmware/tigon/* to rootfs/lib/firmware/tigon
+copy targetNew/lib/modules/4.9.69-g9ce43c71ae/* to rootfs/lib
+
+    boot with s2 pressed. log to minicom.cap-3
+
+stop at uboot, run saveenv. it saves to file uboot.env . copy to uboot.env-save4
+
+
+minicom.cap-6: sdcard uenv notes
+    board=am335x
+    board_name=A335BNLT  --- fdtfile am335x-boneblack.dtb
+    board_rev=BWA5
+    bootcmd :   findfdt, init_console, envboot, distro_bootcmd
+
+    loadfdt=load ${devtype} ${bootpart} ${fdtaddr} ${bootdir}/${fdtfile}
+
+modify uboot: 
+    => setenv loadfdt 'echo ; echo fdtfile ${fdtfile}; echo ; load ${devtype} ${bootpart} ${fdtaddr} ${bootdir}/${fdtfile}'
+    => saveenv
+
+  log: 
+    mmc0 is current device
+    SD/MMC found on device 0
+    3652144 bytes read in 333 ms (10.5 MiB/s)
+    
+    fdtfile am335x-boneblack.dtb
+    
+    37889 bytes read in 20 ms (1.8 MiB/s)
+    ## Flattened Device Tree blob at 88000000
+       Booting using the fdt blob at 0x88000000
+       Loading Device Tree to 8fff3000, end 8ffff400 ... OK
+    
+    Starting kernel ...
+
+
+copy the am335x-boneblack-wireless.dtb from emmc: 
+    setenv fdtfilefixed am335x-boneblack-wireless.dtb
+    setenv loadfdt 'echo ; echo fdtfilefixed ${fdtfilefixed}; echo ; load ${devtype} ${bootpart} ${fdtaddr} ${bootdir}/${fdtfilefixed}'
+
+
+

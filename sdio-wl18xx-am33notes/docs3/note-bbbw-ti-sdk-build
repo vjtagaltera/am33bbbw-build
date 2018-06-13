@@ -1,0 +1,90 @@
+
+note-bbbw-ti-sdk-build
+
+
+[1] download ti processor sdk for linux am335x evm 4.3.0.5 from 
+    http://software-dl.ti.com/processor-sdk-linux/esd/AM335X/latest/exports/ti-processor-sdk-linux-am335x-evm-04.03.00.05-Linux-x86-Install.bin
+
+[2] install from the user account by running: 
+        ./ti-processor-sdk-linux-am335x-evm-04.03.00.05-Linux-x86-Install.bin --mode text
+    and choose install to /home/am33build/ti-processor-sdk....
+
+[3] install packages based on bin/setup-package-install.sh: 
+
+      build-essential libncurses5-dev autoconf automake dos2unix screen lrzsz
+      u-boot-tools
+      minicom
+
+    add the user to the dialout group
+    run minicom. select configure. change serial device. save to /etc/minicom/minirc.dfl as default.
+
+[4] in the ti- sdk directory
+    edit bin/setup-targetfs-nfs.sh so that it exits before setting up nfs. 
+    run as root:
+
+        bin/setup-targetfs-nfs.sh
+
+      This step will set up the SDK to install binaries in to:
+        /home/am33build/ti-processor-sdk-linux-am335x-evm-04.03.00.05/targetNFS/home/root/am335x-evm
+
+      The files will be available from /home/root/am335x-evm on the target if nfs is set up. 
+
+      This setting can be changed later by editing Rules.make and changing the
+      EXEC_DIR or DESTDIR variable (depending on your SDK).
+
+    /home/am33build/ti-processor-sdk-linux-am335x-evm-04.03.00.05
+    $ diff -u Rules.make-original-00 Rules.make
+    --- Rules.make-original-00	2018-06-09 22:00:27.680371750 -0700
+    +++ Rules.make	2018-06-09 22:31:07.629282665 -0700
+    @@ -14,7 +14,7 @@
+    -DESTDIR=__DESTDIR__
+    +DESTDIR=/home/am33build/ti-processor-sdk-linux-am335x-evm-04.03.00.05/targetNFS
+    @@ -41,6 +41,6 @@
+    -EXEC_DIR=__EXEC_DIR__
+    +EXEC_DIR=/home/am33build/ti-processor-sdk-linux-am335x-evm-04.03.00.05/targetNFS/home/root/am335x-evm
+
+[5] create sd card with default images: 
+    run as root: 
+        bin/create-sdcard.sh 
+
+    it installs: ... 
+    see the ../docs2/ -logs and -boot files 
+
+
+[6] copy verify_kernel_config.sh to the kernel directory 
+
+    in kernel directory, 
+    copy arch/arm/configs/tisdk_am335x-evm_defconfig to .config, 
+    modify using verify_... tool, and copy it back
+
+    at the top sdk directory, run
+        make linux
+
+    it runs 
+
+        make -C /home/am33build/ti-processor-sdk-linux-am335x-evm-04.03.00.05/board-support/linux-4.9.69+gitAUTOINC+9ce43c71ae-g9ce43c71ae ARCH=arm CROSS_COMPILE=/home/am33build/ti-processor-sdk-linux-am335x-evm-04.03.00.05/linux-devkit/sysroots/x86_64-arago-linux/usr/bin/arm-linux-gnueabihf- tisdk_am335x-evm_defconfig
+
+        make -j 8 -C /home/am33build/ti-processor-sdk-linux-am335x-evm-04.03.00.05/board-support/linux-4.9.69+gitAUTOINC+9ce43c71ae-g9ce43c71ae ARCH=arm CROSS_COMPILE=/home/am33build/ti-processor-sdk-linux-am335x-evm-04.03.00.05/linux-devkit/sysroots/x86_64-arago-linux/usr/bin/arm-linux-gnueabihf- am335x-evm.dtb am335x-evmsk.dtb am335x-bone.dtb am335x-boneblack.dtb am335x-bonegreen.dtb am335x-icev2.dtb am335x-icev2-pru-excl-uio.dtb am335x-boneblack-iot-cape.dtb am335x-icev2-pru-excl-uio.dtb
+          DTC     arch/arm/boot/dts/am335x-evm.dtb
+          DTC     arch/arm/boot/dts/am335x-evmsk.dtb
+          DTC     arch/arm/boot/dts/am335x-bone.dtb
+          DTC     arch/arm/boot/dts/am335x-boneblack.dtb
+          DTC     arch/arm/boot/dts/am335x-bonegreen.dtb
+          DTC     arch/arm/boot/dts/am335x-icev2.dtb
+          DTC     arch/arm/boot/dts/am335x-icev2-pru-excl-uio.dtb
+          DTC     arch/arm/boot/dts/am335x-boneblack-iot-cape.dtb
+
+        make -C /home/am33build/ti-processor-sdk-linux-am335x-evm-04.03.00.05/board-support/linux-4.9.69+gitAUTOINC+9ce43c71ae-g9ce43c71ae ARCH=arm CROSS_COMPILE=/home/am33build/ti-processor-sdk-linux-am335x-evm-04.03.00.05/linux-devkit/sysroots/x86_64-arago-linux/usr/bin/arm-linux-gnueabihf- tisdk_am335x-evm_defconfig
+
+        make -j 8 -C /home/am33build/ti-processor-sdk-linux-am335x-evm-04.03.00.05/board-support/linux-4.9.69+gitAUTOINC+9ce43c71ae-g9ce43c71ae ARCH=arm CROSS_COMPILE=/home/am33build/ti-processor-sdk-linux-am335x-evm-04.03.00.05/linux-devkit/sysroots/x86_64-arago-linux/usr/bin/arm-linux-gnueabihf- zImage
+          Kernel: arch/arm/boot/zImage is ready
+
+        make -j 8 -C /home/am33build/ti-processor-sdk-linux-am335x-evm-04.03.00.05/board-support/linux-4.9.69+gitAUTOINC+9ce43c71ae-g9ce43c71ae ARCH=arm CROSS_COMPILE=/home/am33build/ti-processor-sdk-linux-am335x-evm-04.03.00.05/linux-devkit/sysroots/x86_64-arago-linux/usr/bin/arm-linux-gnueabihf- modules
+
+[7] modify Rules.make to point the dest to targetNew. create the directory. 
+    run: 
+        make linux_install
+
+    system is installed to targetNew tree. 
+
+      

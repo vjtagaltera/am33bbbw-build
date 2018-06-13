@@ -1,0 +1,231 @@
+
+
+search linux porting sdio driver
+
+
+
+http://thread.gmane.org/gmane.linux.kernel.mmc/22781/focus=22783
+
+
+27 Sep 2013 10:19 	Bojan Prtvar 	
+* 	How to trigger sdio bus probing from user space
+27 Sep 2013 13:56 	Romain Izard 	
+*	* 	[PATCH] Re: How to trigger sdio bus probing from user space
+30 Sep 2013 11:56 	Bojan Prtvar 	
+**	* 	Re: [PATCH] Re: How to trigger sdio bus probing from user space 
+
+
+From: Bojan Prtvar <bojan.prtvar <at> rt-rk.com>
+Subject: How to trigger sdio bus probing from user space
+Newsgroups: gmane.linux.kernel.mmc
+Date: Friday 27th September 2013 10:19:57 UTC (over 4 years ago)
+
+Hi,
+
+Is there a clean way to trigger sdio bus probing from user space?
+
+I have a non removable sdio WiFi/BT module on embedded system that needs
+to be tested and calibrated on production line.
+In order to speed up production process, I need to be able to replace
+the  WiFi/BT modules in run time without reboot.
+Modules are connected to the host with a ribbon cable, not with a  sdio
+connector.
+
+I came up with fallowing two-part solution:
+a)
+I extended WiFi driver's /proc interface with a call to
+mmc_detect_change()
+b)
+I also needed to let the sdio host think module is removable by
+commenting fallowing in sdhci-mv.c:
+sdhci_mv_probe_dt(struct platform_device *pdev)
+{
+    struct device_node *np = pdev->dev.of_node;
+    struct sdhci_host *host = platform_get_drvdata(pdev);
+
+    if (of_get_property(np, "mrvl,card-wired", NULL)) {
+        /*
+         * RT-RK
+         * We need to comment out these in order to be able to
+         * trigger sdio bus probing on the fly
+         */
+        //host->quirks |= SDHCI_QUIRK_BROKEN_CARD_DETECTION;
+        //host->mmc->caps |= MMC_CAP_NONREMOVABLE;
+    }
+
+This works in situations when working modules are inserted.
+Unfortunately, it does not work in case when broken module is inserted
+on production line.
+In this case production board needs to be rebooted, because the WiFi
+driver's /proc interface is gone, and I can not force a call to
+mmc_detect_change() any more.
+
+Is there cleaner and better approach?
+
+Best regards,
+Bojan
+
+--
+To unsubscribe from this list: send the line "unsubscribe linux-mmc" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+
+From: Romain Izard <romain.izard.pro <at> gmail.com>
+Subject: [PATCH] Re: How to trigger sdio bus probing from user space
+Newsgroups: gmane.linux.kernel.mmc
+Date: Friday 27th September 2013 13:56:14 UTC (over 4 years ago)
+
+On 2013-09-27, Bojan Prtvar  wrote:
+>
+> Is there a clean way to trigger sdio bus probing from user space?
+....
+> mmc_detect_change() any more.
+>
+> Is there cleaner and better approach?
+
+For internal use I have added a 'rescan' sysfs entry to the mmc
+controller, instead of the sdio device itself. It is quite similar to
+the way it is done in the scsi subsystem, and uses the same
+'mmc_detect_change' function as you do .
+
+Updated to use the new attribute groups syntax for 3.12, I obtain the
+following patch - compile-tested only, nothing more, as I do not have a
+3.12 test system available.
+
+---
+
+diff --git a/drivers/mmc/core/host.c b/drivers/mmc/core/host.c
+index 49bc403..b5b0811 100644
+--- a/drivers/mmc/core/host.c
++++ b/drivers/mmc/core/host.c
+@@ -39,9 +39,26 @@ static void mmc_host_classdev_release(struct device
+*dev)
+        kfree(host);
+ }
+ 
++static ssize_t rescan_store(struct device *dev, struct device_attribute
+*attr,
++                            const char *buf, size_t count)
++{
++       struct mmc_host *host = cls_dev_to_mmc_host(dev);
++       mmc_detect_change(host, 0);
++       return count;
++}
++
++static DEVICE_ATTR_WO(rescan);
++
++static struct attribute *mmc_host_attrs[] = {
++       &dev_attr_rescan.attr,
++       NULL,
++};
++ATTRIBUTE_GROUPS(mmc_host);
++
+ static struct class mmc_host_class = {
+        .name           = "mmc_host",
+        .dev_release    = mmc_host_classdev_release,
++       .dev_groups     = mmc_host_groups,
+ };
+ 
+ int mmc_register_host_class(void)
+
+-- 
+Romain Izard
+
+
+
+How can one force a re-scan of an SDIO bus from Linux user space
+https://unix.stackexchange.com/questions/33285/how-can-one-force-a-re-scan-of-an-sdio-bus-from-linux-user-space?rq=1
+
+To unbind my sdio wifi module I use:
+
+echo -n "2190000.usdhc" > /sys/devices/soc0/soc/2100000.aips-bus/2190000.usdhc/driver/unbind
+
+This will give you something like mmc1: card 0001 removed in dmesg.
+
+I then toggle a gpio pin to reset my wifi module
+
+Then to rebind:
+
+echo -n "2190000.usdhc" > /sys/bus/soc/devices/soc0/soc/2100000.aips-bus/2190000.usdhc/subsystem/drivers/sdhci-esdhc-imx/bind
+
+At which point dmesg will print something like:
+
+mmc1: SDHCI controller on 2190000.usdhc [2190000.usdhc] using ADMA
+mmc1: new high speed SDIO card at address 0001
+
+Binding/unbinding process is explained well by this old LWN.net article.
+
+
+Manual driver binding and unbinding
+https://lwn.net/Articles/143397/
+
+One new feature in the 2.6.13-rc3 kernel release, is the ability to bind and unbind drivers from devices manually from user space. Previously, the only way to disconnect a driver from a device was usually to unload the whole driver from memory, using rmmod.
+
+In the sysfs tree, every driver now has bind and unbind files associated with it:
+
+    $ tree /sys/bus/usb/drivers/ub/
+    /sys/bus/usb/drivers/ub/
+    |-- 1-1:1.0 -> ../../../../devices/pci0000:00/0000:00:1d.7/usb1/1-1/1-1:1.0
+    |-- bind
+    |-- module -> ../../../../module/ub
+    `-- unbind
+
+In order to unbind a device from a driver, simply write the bus id of the device to the unbind file:
+
+    echo -n "1-1:1.0" > /sys/bus/usb/drivers/ub/unbind
+
+and the device will no longer be bound to the driver:
+
+    $ tree /sys/bus/usb/drivers/ub/
+    /sys/bus/usb/drivers/ub/
+    |-- bind
+    |-- module -> ../../../../module/ub
+    `-- unbind
+
+To bind a device to a driver, the device must first not be controlled by any other driver. To ensure this, look for the "driver" symlink in the device directory:
+
+    $ tree /sys/bus/usb/devices/1-1:1.0
+    /sys/bus/usb/devices/1-1:1.0
+    |-- bAlternateSetting
+    |-- bInterfaceClass
+    |-- bInterfaceNumber
+    |-- bInterfaceProtocol
+    |-- bInterfaceSubClass
+    |-- bNumEndpoints
+    |-- bus -> ../../../../../../bus/usb
+    |-- modalias
+    `-- power
+        `-- state
+
+Then, simply write the bus id of the device you wish to bind, into the bind file for that driver:
+
+    echo -n "1-1:1.0" > /sys/bus/usb/drivers/usb-storage/bind
+
+And check that the binding was successful:
+
+    $ tree /sys/bus/usb/devices/1-1:1.0
+    /sys/bus/usb/devices/1-1:1.0
+    |-- bAlternateSetting
+    |-- bInterfaceClass
+    |-- bInterfaceNumber
+    |-- bInterfaceProtocol
+    |-- bInterfaceSubClass
+    |-- bNumEndpoints
+    |-- bus -> ../../../../../../bus/usb
+    |-- driver -> ../../../../../../bus/usb/drivers/usb-storage
+    |-- host2
+    |   `-- power
+    |       `-- state
+    |-- modalias
+    `-- power
+        `-- state
+
+As the example above shows, this capability is very useful for switching devices between drivers which handle the same type of device (both the ub and usb-storage drivers handle USB mass storage devices, like flash drives.)
+
+A number of "enterprise" Linux distributions offer multiple drivers of different version levels in their kernel packages. This manual binding feature will allow configuration tools to pick and choose which devices should be bound to which drivers, allowing users to upgrade only specific devices if they wish to.
+
+In order for a device to bind successfully with a driver, that driver must already support that device. This is why you can not just arbitrarily bind any device to any driver. To help with the issue of adding new devices support to drivers after they are built, the PCI system offers a dynamic_id file in sysfs so that user space can write in new device ids that the driver should bind too. In the future, this ability to add new driver IDs to a running kernel will be moved into the driver core to make it available for all buses.
+
+
+

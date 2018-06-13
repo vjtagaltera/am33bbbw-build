@@ -1,0 +1,858 @@
+
+1: booting off sd card
+2: booting off internal emmc. from line 666
+
+
+
+U-Boot SPL 2017.01-gc68ed086bd (Mar 26 2018 - 15:08:11)
+Trying to boot from MMC1
+reading uboot.env
+
+** Unable to read "uboot.env" from mmc0:1 **
+Using default environment
+
+reading u-boot.img
+reading u-boot.img
+reading u-boot.img
+reading u-boot.img
+
+
+U-Boot 2017.01-gc68ed086bd (Mar 26 2018 - 15:08:11 -0400)
+
+CPU  : AM335X-GP rev 2.1
+Model: TI AM335x BeagleBone Black
+DRAM:  512 MiB
+NAND:  0 MiB
+MMC:   OMAP SD/MMC: 0, OMAP SD/MMC: 1
+reading uboot.env
+
+** Unable to read "uboot.env" from mmc0:1 **
+Using default environment
+
+<ethaddr> not set. Validating first E-fuse MAC
+Net:   Could not get PHY for cpsw: addr 0
+cpsw, usb_ether
+Hit any key to stop autoboot:  2  1  0 
+switch to partitions #0, OK
+mmc0 is current device
+SD/MMC found on device 0
+reading boot.scr
+** Unable to read file boot.scr **
+reading uEnv.txt
+** Unable to read file uEnv.txt **
+switch to partitions #0, OK
+mmc0 is current device
+Scanning mmc 0:1...
+switch to partitions #0, OK
+mmc0 is current device
+SD/MMC found on device 0
+3627816 bytes read in 348 ms (9.9 MiB/s)
+37889 bytes read in 60 ms (616.2 KiB/s)
+## Flattened Device Tree blob at 88000000
+   Booting using the fdt blob at 0x88000000
+   Loading Device Tree to 8fff3000, end 8ffff400 ... OK
+
+Starting kernel ...
+
+[    0.000000] Booting Linux on physical CPU 0x0
+[    0.000000] Linux version 4.9.69-g9ce43c71ae (gtbldadm@ubuntu-16) (gcc version 6.2.1 20161016 (Linaro GCC 6.2-2016.11) ) #1 PREEMPT Mon Mar 26 12:11:28 EDT 2018
+[    0.000000] CPU: ARMv7 Processor [413fc082] revision 2 (ARMv7), cr=10c5387d
+[    0.000000] CPU: PIPT / VIPT nonaliasing data cache, VIPT aliasing instruction cache
+[    0.000000] OF: fdt:Machine model: TI AM335x BeagleBone Black
+[    0.000000] efi: Getting EFI parameters from FDT:
+[    0.000000] efi: UEFI not found.
+[    0.000000] cma: Reserved 48 MiB at 0x9d000000
+[    0.000000] Memory policy: Data cache writeback
+[    0.000000] CPU: All CPU(s) started in SVC mode.
+[    0.000000] AM335X ES2.1 (sgx neon)
+[    0.000000] Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 129920
+[    0.000000] Kernel command line: console=ttyO0,115200n8 root=PARTUUID=85465b79-02 rw rootfstype=ext4 rootwait
+[    0.000000] PID hash table entries: 2048 (order: 1, 8192 bytes)
+[    0.000000] Dentry cache hash table entries: 65536 (order: 6, 262144 bytes)
+[    0.000000] Inode-cache hash table entries: 32768 (order: 5, 131072 bytes)
+[    0.000000] Memory: 457972K/524288K available (7168K kernel code, 281K rwdata, 2424K rodata, 1024K init, 280K bss, 17164K reserved, 49152K cma-reserved, 0K highmem)
+[    0.000000] Virtual kernel memory layout:
+[    0.000000]     vector  : 0xffff0000 - 0xffff1000   (   4 kB)
+[    0.000000]     fixmap  : 0xffc00000 - 0xfff00000   (3072 kB)
+[    0.000000]     vmalloc : 0xe0800000 - 0xff800000   ( 496 MB)
+[    0.000000]     lowmem  : 0xc0000000 - 0xe0000000   ( 512 MB)
+[    0.000000]     pkmap   : 0xbfe00000 - 0xc0000000   (   2 MB)
+[    0.000000]     modules : 0xbf000000 - 0xbfe00000   (  14 MB)
+[    0.000000]       .text : 0xc0008000 - 0xc0800000   (8160 kB)
+[    0.000000]       .init : 0xc0b00000 - 0xc0c00000   (1024 kB)
+[    0.000000]       .data : 0xc0c00000 - 0xc0c46750   ( 282 kB)
+[    0.000000]        .bss : 0xc0c46750 - 0xc0c8c9b4   ( 281 kB)
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=1, Nodes=1
+[    0.000000] Preemptible hierarchical RCU implementation.
+[    0.000000] 	Build-time adjustment of leaf fanout to 32.
+[    0.000000] NR_IRQS:16 nr_irqs:16 16
+[    0.000000] IRQ: Found an INTC at 0xfa200000 (revision 5.0) with 128 interrupts
+[    0.000000] OMAP clockevent source: timer2 at 24000000 Hz
+[    0.000013] sched_clock: 32 bits at 24MHz, resolution 41ns, wraps every 89478484971ns
+[    0.000033] clocksource: timer1: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 79635851949 ns
+[    0.000042] OMAP clocksource: timer1 at 24000000 Hz
+[    0.000189] clocksource_probe: no matching clocksources found
+[    0.000345] Console: colour dummy device 80x30
+[    0.000369] WARNING: Your 'console=ttyO0' has been replaced by 'ttyS0'
+[    0.000375] This ensures that you still see kernel messages. Please
+[    0.000380] update your kernel commandline.
+[    0.000401] Calibrating delay loop... 996.14 BogoMIPS (lpj=4980736)
+[    0.089240] pid_max: default: 32768 minimum: 301
+[    0.089360] Mount-cache hash table entries: 1024 (order: 0, 4096 bytes)
+[    0.089371] Mountpoint-cache hash table entries: 1024 (order: 0, 4096 bytes)
+[    0.090076] CPU: Testing write buffer coherency: ok
+[    0.090424] Setting up static identity map for 0x80100000 - 0x80100060
+[    0.091175] EFI services will not be available.
+[    0.092318] devtmpfs: initialized
+[    0.102394] VFP support v0.3: implementor 41 architecture 3 part 30 variant c rev 3
+[    0.102728] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 19112604462750000 ns
+[    0.102753] futex hash table entries: 256 (order: -1, 3072 bytes)
+[    0.106049] pinctrl core: initialized pinctrl subsystem
+[    0.107170] NET: Registered protocol family 16
+[    0.108818] DMA: preallocated 256 KiB pool for atomic coherent allocations
+[    0.121946] omap_hwmod: debugss: _wait_target_disable failed
+[    0.199229] cpuidle: using governor ladder
+[    0.229220] cpuidle: using governor menu
+[    0.234558] OMAP GPIO hardware version 0.1
+[    0.248142] No ATAGs?
+[    0.248165] hw-breakpoint: debug architecture 0x4 unsupported.
+[    0.286492] edma 49000000.edma: TI EDMA DMA engine driver
+[    0.289481] omap_i2c 44e0b000.i2c: could not find pctldev for node /ocp/l4_wkup@44c00000/scm@210000/pinmux@800/pinmux_i2c0_pins, deferring probe
+[    0.289537] omap_i2c 4819c000.i2c: could not find pctldev for node /ocp/l4_wkup@44c00000/scm@210000/pinmux@800/pinmux_i2c2_pins, deferring probe
+[    0.289656] media: Linux media interface: v0.10
+[    0.289706] Linux video capture interface: v2.00
+[    0.289744] pps_core: LinuxPPS API ver. 1 registered
+[    0.289750] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    0.289773] PTP clock support registered
+[    0.289818] EDAC MC: Ver: 3.0.0
+[    0.290809] omap-mailbox 480c8000.mailbox: omap mailbox rev 0x400
+[    0.291114] Advanced Linux Sound Architecture Driver Initialized.
+[    0.292256] clocksource: Switched to clocksource timer1
+[    0.301335] NET: Registered protocol family 2
+[    0.302024] TCP established hash table entries: 4096 (order: 2, 16384 bytes)
+[    0.302071] TCP bind hash table entries: 4096 (order: 2, 16384 bytes)
+[    0.302109] TCP: Hash tables configured (established 4096 bind 4096)
+[    0.302174] UDP hash table entries: 256 (order: 0, 4096 bytes)
+[    0.302190] UDP-Lite hash table entries: 256 (order: 0, 4096 bytes)
+[    0.302374] NET: Registered protocol family 1
+[    0.302779] RPC: Registered named UNIX socket transport module.
+[    0.302791] RPC: Registered udp transport module.
+[    0.302796] RPC: Registered tcp transport module.
+[    0.302801] RPC: Registered tcp NFSv4.1 backchannel transport module.
+[    0.303638] hw perfevents: enabled with armv7_cortex_a8 PMU driver, 5 counters available
+[    0.305742] workingset: timestamp_bits=14 max_order=17 bucket_order=3
+[    0.312506] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    0.313350] NFS: Registering the id_resolver key type
+[    0.313390] Key type id_resolver registered
+[    0.313397] Key type id_legacy registered
+[    0.313438] ntfs: driver 2.1.32 [Flags: R/O].
+[    0.315150] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 246)
+[    0.315166] io scheduler noop registered
+[    0.315173] io scheduler deadline registered
+[    0.315317] io scheduler cfq registered (default)
+[    0.316499] pinctrl-single 44e10800.pinmux: 142 pins at pa f9e10800 size 568
+[    0.370992] Serial: 8250/16550 driver, 10 ports, IRQ sharing disabled
+[    0.374429] 44e09000.serial: ttyS0 at MMIO 0x44e09000 (irq = 158, base_baud = 3000000) is a 8250
+[    0.969256] console [ttyS0] enabled
+[    0.974344] omap_rng 48310000.rng: OMAP Random Number Generator ver. 20
+[    0.981099] [drm] Initialized
+[    0.996517] brd: module loaded
+[    1.005404] loop: module loaded
+[    1.010488] libphy: Fixed MDIO Bus: probed
+[    1.082339] davinci_mdio 4a101000.mdio: davinci mdio revision 1.6
+[    1.088475] davinci_mdio 4a101000.mdio: no live phy, scanning all
+[    1.094916] davinci_mdio: probe of 4a101000.mdio failed with error -5
+[    1.101949] cpsw 4a100000.ethernet: Detected MACID = 50:65:83:e1:6c:c6
+[    1.108658] cpsw 4a100000.ethernet: device node lookup for pps timer failed
+[    1.115698] cpsw 4a100000.ethernet: cpts: overflow check period 500 (jiffies)
+[    1.124569] mousedev: PS/2 mouse device common for all mice
+[    1.130643] i2c /dev entries driver
+[    1.135880] cpuidle: enable-method property 'ti,am3352' found operations
+[    1.143581] omap_hsmmc 48060000.mmc: Got CD GPIO
+[    1.249352] mmc0: host does not support reading read-only switch, assuming write-enable
+[    1.259307] mmc0: new high speed SDHC card at address b368
+[    1.266068] ledtrig-cpu: registered to indicate activity on CPUs
+[    1.274760] NET: Registered protocol family 10
+[    1.275861] sit: IPv6, IPv4 and MPLS over IPv4 tunneling driver
+[    1.276551] NET: Registered protocol family 17
+[    1.276800] Key type dns_resolver registered
+[    1.277010] omap_voltage_late_init: Voltage driver support not added
+[    1.308132] mmcblk0: mmc0:b368 LEXAR 3.73 GiB 
+[    1.314364]  mmcblk0: p1 p2
+[    1.356095] random: fast init done
+[    1.363451] tps65217 0-0024: TPS65217 ID 0xe version 1.2
+[    1.369421] at24 0-0050: 32768 byte 24c256 EEPROM, writable, 1 bytes/write
+[    1.383223] mmc1: new high speed MMC card at address 0001
+[    1.389307] mmcblk1: mmc1:0001 S10004 3.56 GiB 
+[    1.394175] mmcblk1boot0: mmc1:0001 S10004 partition 1 4.00 MiB
+[    1.400339] mmcblk1boot1: mmc1:0001 S10004 partition 2 4.00 MiB
+[    1.407557]  mmcblk1: p1
+[    1.514606] tda998x 0-0070: found TDA19988
+[    1.519925] tilcdc 4830e000.lcdc: bound 0-0070 (ops tda998x_ops)
+[    1.526023] [drm] Supports vblank timestamp caching Rev 2 (21.10.2013).
+[    1.532679] [drm] No driver support for vblank timestamp query.
+[    1.538928] tilcdc 4830e000.lcdc: No connectors reported connected with modes
+[    1.546130] [drm] Cannot find any crtc or sizes - going 1024x768
+[    1.560162] Console: switching to colour frame buffer device 128x48
+[    1.571317] tilcdc 4830e000.lcdc: fb0:  frame buffer device
+[    1.602946] omap_i2c 44e0b000.i2c: bus 0 rev0.11 at 400 kHz
+[    1.723120] omap_i2c 4819c000.i2c: bus 2 rev0.11 at 100 kHz
+[    1.730714] hctosys: unable to open rtc device (rtc0)
+[    1.736398] ALSA device list:
+[    1.739391]   No soundcards found.
+[    1.757927] EXT4-fs (mmcblk0p2): mounted filesystem with ordered data mode. Opts: (null)
+[    1.766327] VFS: Mounted root (ext4 filesystem) on device 179:2.
+[    1.775069] devtmpfs: mounted
+[    1.779275] Freeing unused kernel memory: 1024K
+[    2.052061] systemd[1]: System time before build time, advancing clock.
+[    2.112235] systemd[1]: systemd 230 running in system mode. (+PAM -AUDIT -SELINUX +IMA -APPARMOR +SMACK +SYSVINIT +UTMP -LIBCRYPTSETUP -GCRYPT -GNUTLS +ACL +XZ -LZ4 -SECCOMP +BLKID -ELFUTILS +KMOD -IDN)
+[    2.131357] systemd[1]: Detected architecture arm.
+
+Welcome to Arago 2017.12!
+
+[    2.163665] systemd[1]: Set hostname to <am335x-evm>.
+[    2.459834] systemd[1]: [/lib/systemd/system/gadget-init.service:15] Unknown lvalue 'ExecStopPre' in section 'Service'
+[    2.740340] systemd[1]: Listening on Journal Socket.
+[  OK  ] Listening on Journal Socket.
+[    2.824014] systemd[1]: Listening on /dev/initctl Compatibility Named Pipe.
+[  OK  ] Listening on /dev/initctl Compatibility Named Pipe.
+[    2.864741] systemd[1]: Created slice User and Session Slice.
+[  OK  ] Created slice User and Session Slice.
+[    2.892936] systemd[1]: Started Dispatch Password Requests to Console Directory Watch.
+[  OK  ] Started Dispatch Password Requests to Console Directory Watch.
+[    2.932786] systemd[1]: Listening on udev Kernel Socket.
+[  OK  ] Listening on udev Kernel Socket.
+[    2.962878] systemd[1]: Listening on Syslog Socket.
+[  OK  ] Listening on Syslog Socket.
+[  OK  ] Listening on Network Service Netlink Socket.
+[  OK  ] Reached target Remote File Systems.
+[  OK  ] Listening on Process Core Dump Socket.
+[  OK  ] Listening on Journal Socket (/dev/log).
+[  OK  ] Listening on udev Control Socket.
+[  OK  ] Started Forward Password Requests to Wall Directory Watch.
+[  OK  ] Reached target Paths.
+[  OK  ] Created slice System Slice.
+         Starting Remount Root and Kernel File Systems...
+         Starting Load Kernel Modules...
+[    3.392194] EXT4-fs (mmcblk0p2): re-mounted. Opts: (null)
+         Starting Setup Virtual Console...
+[  OK  ] Reached target Slices.
+[    3.471790] cryptodev: loading out-of-tree module taints kernel.
+[    3.513295] cryptodev: driver 1.8 loaded.
+         Starting alignment.service...
+[  OK  ] Created slice system-serial\x2dgetty.slice.
+[    3.567141] usbcore: registered new interface driver usbfs
+[    3.578009] usbcore: registered new interface driver hub
+[    3.578124] usbcore: registered new device driver usb
+         Starting Journal Service...
+[    3.610372] usbcore: registered new interface driver usbserial
+         Starting Create Static Device Nodes in /dev...
+[  OK  ] Created slice system-getty.slice.
+[    3.666898] usbcore: registered new interface driver ftdi_sio
+         [    3.703491] usbserial: USB Serial support registered for FTDI USB Serial Device
+Mounting POSIX Message Queue File System...
+         Mounting Debug File System...
+[  OK  ] Reached target Swap.
+         Mounting Temporary Directory...
+[  OK  ] Mounted Debug File System.
+[  OK  ] Mounted POSIX Message Queue File System.
+[  OK  ] Mounted Temporary Directory.
+[  OK  ] Started Journal Service.
+[  OK  ] Started Remount Root and Kernel File Systems.
+[  OK  ] Started Load Kernel Modules.
+[  OK  ] Started Setup Virtual Console.
+[  OK  ] Started alignment.service.
+[  OK  ] Started Create Static Device Nodes in /dev.
+         Starting udev Kernel Device Manager...
+         Mounting Configuration File System...
+         Starting Apply Kernel Variables...
+[  OK  ] Reached target Local File Systems (Pre).
+         Mounting /var/volatile...
+         Mounting /media/ram...
+         Starting udev Coldplug all Devices...
+         Starting Flush Journal to Persistent Storage...
+[  OK  ] Mounted Configuration File System.
+[  OK  ] Mounted /var/volatile.
+[  OK  ] Mounted /media/ram.
+[  OK  ] Started udev Kernel Device Manager.
+[  OK  ] Started Apply Kernel Variables.
+[    4.675642] systemd-journald[100]: Received request to flush runtime journal from PID 1
+         Starting Load/Save Random Seed...
+[  OK  ] Reached target Local File Systems.
+[  OK  ] Started Flush Journal to Persistent Storage.
+[  OK  ] Started Load/Save Random Seed.
+         Starting Create Volatile Files and Directories...
+[  OK  ] Started Create Volatile Files and Directories.
+         Starting Update UTMP about System Boot/Shutdown...
+         Starting Network Time Synchronization...
+[  OK  ] Started Update UTMP about System Boot/Shutdown.
+[  OK  ] Started Network Time Synchronization.
+[  OK  ] Reached target System Time Synchronized.
+[  OK  ] Started udev Coldplug all Devices.
+[    6.183446] omap_wdt: OMAP Watchdog Timer Rev 0x01: initial timeout 60 sec
+[  OK  ] Found device /dev/ttyS0.
+[  OK  ] Reached target System Initialization.
+[    6.280267] omap_rtc 44e3e000.rtc: already running
+[  OK  ] Started Daily Cleanup of Temporary Directorie[    6.309204] omap_rtc 44e3e000.rtc: rtc core: registered 44e3e000.rtc as rtc0
+s.
+[  OK  ] Reached target Timers.
+[  OK  ] Listening on Avahi mDNS/DNS-SD Stack Activation Socket.
+[  OK  ] Listening on D-Bus System Message Bus Socket.
+[  OK  ] Listening on dropbear.socket.
+[  OK  ] Listening on RPCbind Server Activation Socket.
+[  OK  ] Reached target Sockets.
+[  OK  ] Reached target Basic System.
+         Starting Telephony service...
+[  OK  ] Started Kernel Logging Service.
+         Starting uim-sysfs.service...
+[  OK  ] Started D-Bus System Message Bus.
+[    7.373277] omap-sham 53100000.sham: hw accel on OMAP rev 4.3
+[    7.533987] omap-aes 53500000.aes: OMAP AES hw accel rev: 3.2
+[    7.633754] omap-aes 53500000.aes: will run requests pump with realtime priority
+[    7.670219] remoteproc remoteproc0: wkup_m3 is available
+[    7.792935] [drm] Initialized pvr 1.14.3699939 20110701 on minor 1
+[    7.925931] remoteproc remoteproc0: powering up wkup_m3
+[    7.992813] remoteproc remoteproc0: Booting fw image am335x-pm-firmware.elf, size 224268
+[    8.001212] remoteproc remoteproc0: remote processor wkup_m3 is now up
+[    8.007786] wkup_m3_ipc 44e11324.wkup_m3_ipc: CM3 Firmware Version = 0x192
+[    8.016566] PM: Cannot get wkup_m3_ipc handle
+[  OK  ] Started Telephony service.
+         Starting Network Service...
+[    8.559316] Bluetooth: Core ver 2.22
+[    8.604969] asoc-simple-card sound: hdmi-hifi.0 <-> 48038000.mcasp mapping ok
+[    8.615747] PM: bootloader does not support rtc-only!
+[  OK  ] Started System Logging Service.
+[    8.866433] NET: Registered protocol family 31
+[  OK  ] Started Job spooling tools.
+[    8.987373] Bluetooth: HCI device and connection manager initialized
+         [    9.120420] Bluetooth: HCI socket layer initialized
+Starting Avahi mDNS/DNS-SD Stack...
+[  OK  ] Started Periodic Command Scheduler.
+[    9.233750] Bluetooth: L2CAP socket layer initialized
+[    9.398457] net eth0: initializing cpsw version 1.12 (0)
+[    9.398469] cpsw 4a100000.ethernet: initialized cpsw ale version 1.4
+[    9.398475] cpsw 4a100000.ethernet: ALE Table size 1024
+[    9.400069] libphy: PHY 4a101000.mdio:00 not found
+[    9.400076] net eth0: phy "4a101000.mdio:00" not found on slave 0, err -19
+[    9.419352] cpts ptp bc clkid 0
+[    9.522489] IPv6: ADDRCONF(NETDEV_UP): eth0: link is not ready
+         [   10.019277] Bluetooth: SCO socket layer initialized
+Starting Login Service...
+         Starting Save/Restore Sound Card State...
+         Starting Print notice about GPLv3 packages...
+[   10.198242] EXT4-fs (mmcblk1p1): mounted filesystem with ordered data mode. Opts: (null)
+[  OK  ] Started Network Service.
+[  OK  ] Started Save/Restore Sound Card State.
+[  OK  ] Found device /dev/ttyS3.
+[  OK  ] Found device /dev/mmcblk0p1.
+[  OK  ] Started Avahi mDNS/DNS-SD Stack.
+[  OK  ] Started Login Service.
+         Starting Start USB gadget...
+[  OK  ] Listening on Load/Save RF Kill Switch Status /dev/rfkill Watch.
+         Starting Wait for Network to be Configured...
+[  OK  ] Reached target Network.
+         Starting Lightning Fast Webserver With Light System Requirements...
+[  OK  ] Started strongSwan IPsec IKEv1/IKEv2 daemon using ipsec.conf.
+         Starting Enable and configure wl18xx bluetooth stack...
+         Starting Simple Network Management Protocol (SNMP) Daemon....
+         Starting Permit User Sessions...
+         Starting Network Name Resolution...
+[  OK  ] Started Lightning Fast Webserver With Light System Requirements.
+[   13.432193] udc-core: couldn't find an available UDC - added [g_multi] to list of pending drivers
+[  OK  ] Started Permit User Sessions.
+[  OK  ] Started Enable and configure wl18xx bluetooth stack.
+[  OK  ] Started Network Name Resolution.
+[  OK  ] Started Serial Getty on ttyS3.
+[  OK  ] Started Serial Getty on ttyS0.
+[  OK  ] Started Getty on tty1.
+[   14.112684] NET: Registered protocol family 15
+[  OK  ] Started uim-sysfs.service.
+         Starting rc.pvr.service...
+[   14.840664] PVR_K: UM DDK-(3699939) and KM DDK-(3699939) match. [ OK ]
+[FAILED] Failed to start Start USB gadget.
+See 'systemctl status gadget-init.service' for details.
+[  OK  ] Started rc.pvr.service.
+[   15.476805] Initializing XFRM netlink socket
+[  OK  ] Started Simple Network Management Protocol (SNMP) Daemon..
+[   16.117594] 47401300.usb-phy supply vcc not found, using dummy regulator
+[   16.374139] using random self ethernet address
+[   16.397351] using random host ethernet address
+[   16.458291] using host ethernet address: 50:65:83:E1:6C:C8
+[   16.458293] using random self ethernet address
+[   16.458297] using random host ethernet address
+[   16.461382] using host ethernet address: 50:65:83:E1:6C:C8
+[   16.461384] usb0: HOST MAC 50:65:83:e1:6c:c8
+[   16.484991] usb0: MAC 32:78:64:57:61:32
+[   16.733307] random: crng init done
+[   17.564292] ti-pruss 4a300000.pruss: creating PRU cores and other child platform devices
+[   17.576661] Mass Storage Function, version: 2009/09/11
+[   17.576672] LUN: removable file: (no medium)
+[   17.576881] LUN: removable read only file: /dev/mmcblk0p1
+[   17.576885] Number of LUNs=1
+[   17.593624] g_multi gadget: Multifunction Composite Gadget
+[   17.593634] g_multi gadget: g_multi ready
+[   17.596787] 47401b00.usb-phy supply vcc not found, using dummy regulator
+[   17.658405] musb-hdrc musb-hdrc.1: MUSB HDRC host driver
+[   17.658442] musb-hdrc musb-hdrc.1: new USB bus registered, assigned bus number 1
+[   17.664739] hub 1-0:1.0: USB hub found
+[   17.664787] hub 1-0:1.0: 1 port detected
+[   18.016813] g_multi gadget: high-speed config #2: Multifunction with CDC ECM
+[   18.261218] irq: no irq domain found for /ocp/pruss_soc_bus@4a326000/pruss@4a300000/intc@4a320000 !
+[   18.340305] irq: no irq domain found for /ocp/pruss_soc_bus@4a326000/pruss@4a300000/intc@4a320000 !
+[   18.533763] remoteproc remoteproc1: 4a334000.pru0 is available
+[   18.588632] pru-rproc 4a334000.pru0: PRU rproc node /ocp/pruss_soc_bus@4a326000/pruss@4a300000/pru@4a334000 probed successfully
+[   18.674203] remoteproc remoteproc2: 4a338000.pru1 is available
+[   18.680172] pru-rproc 4a338000.pru1: PRU rproc node /ocp/pruss_soc_bus@4a326000/pruss@4a300000/pru@4a338000 probed successfully
+
+ _____                    _____           _         _   
+|  _  |___ ___ ___ ___   |  _  |___ ___  |_|___ ___| |_ 
+|     |  _| .'| . | . |  |   __|  _| . | | | -_|  _|  _|
+|__|__|_| |__,|_  |___|  |__|  |_| |___|_| |___|___|_|  
+              |___|                    |___|            
+
+Arago Project http://arago-project.org am335x-evm ttyS0
+
+Arago 2017.12 am335x-evm ttyS0
+
+am335x-evm login: ***************************************************************
+***************************************************************
+NOTICE: This file system contains the following GPLv3 packages:
+	autoconf
+	binutils
+	cifs-utils
+	cpio
+	cpp-symlinks
+	cpp
+	dosfstools
+	findutils
+	g++-symlinks
+	g++
+	gawk-dev
+	gawk
+	gcc-symlinks
+	gcc
+	gdb
+	gdbserver
+	glmark2
+	gstreamer1.0-libav
+	gzip
+	hidapi
+	libcairo-perf-utils
+	libgmp10
+	libidn11
+	libmavconn
+	libmpc3
+	libmpfr4
+	libreadline-dev
+	libreadline6
+	m4-dev
+	m4
+	make
+	mavlink
+	mavros-extras
+	mavros-msgs
+	mavros
+	nettle
+	socketcan-interface
+	swig-dev
+	swig
+	which
+
+If you do not wish to distribute GPLv3 components please remove
+the above packages prior to distribution.  This can be done using
+the opkg remove command.  i.e.:
+    opkg remove <package>
+Where <package> is the name printed in the list above
+
+NOTE: If the package is a dependency of another package you
+      will be notified of the dependent packages.  You should
+      use the --force-removal-of-dependent-packages option to
+      also remove the dependent packages as well
+***************************************************************
+***************************************************************
+[   86.637426] hrtimer: interrupt took 187750 ns
+
+ _____                    _____           _         _   
+|  _  |___ ___ ___ ___   |  _  |___ ___  |_|___ ___| |_ 
+|     |  _| .'| . | . |  |   __|  _| . | | | -_|  _|  _|
+|__|__|_| |__,|_  |___|  |__|  |_| |___|_| |___|___|_|  
+              |___|                    |___|            
+
+Arago Project http://arago-project.org am335x-evm ttyS0
+
+Arago 2017.12 am335x-evm ttyS0
+
+am335x-evm login: 
+ _____                    _____           _         _   
+|  _  |___ ___ ___ ___   |  _  |___ ___  |_|___ ___| |_ 
+|     |  _| .'| . | . |  |   __|  _| . | | | -_|  _|  _|
+|__|__|_| |__,|_  |___|  |__|  |_| |___|_| |___|___|_|  
+              |___|                    |___|            
+
+Arago Project http://arago-project.org am335x-evm ttyS0
+
+Arago 2017.12 am335x-evm ttyS0
+
+am335x-evm login: root
+root@am335x-evm:~# 
+root@am335x-evm:~# 
+root@am335x-evm:~# 
+root@am335x-evm:~# 
+root@am335x-evm:~# uname -a
+Linux am335x-evm 4.9.69-g9ce43c71ae #1 PREEMPT Mon Mar 26 12:11:28 EDT 2018 armv7l GNU/Linux
+root@am335x-evm:~# lsb_release -a
+-sh: lsb_release: command not found
+root@am335x-evm:~# 
+root@am335x-evm:~# 
+root@am335x-evm:~# cat /proc/cmdline 
+console=ttyO0,115200n8 root=PARTUUID=85465b79-02 rw rootfstype=ext4 rootwait
+root@am335x-evm:~# 
+root@am335x-evm:~# dmesg | egrep -i '(dtb|dts)'
+root@am335x-evm:~# 
+root@am335x-evm:~# 
+root@am335x-evm:~# 
+root@am335x-evm:~# 
+root@am335x-evm:~# halt
+         Stopping Session c1 of user root.
+[  OK  ] Stopped target Login Prompts.
+         Stopping Serial Getty on ttyGS0...
+         Stopping Serial Getty on ttyS3...
+         Stopping Getty on tty1...
+         Stopping Simple Network Management Protocol (SNMP) Daemon....
+[  OK  ] Stopped target Timers.
+         Stopping Kernel Logging Service...
+[  OK  ] Stopped target Sound Card.
+         Stopping Periodic Command Scheduler...
+         Stopping Serial Getty on ttyS0...
+[  OK  ] Stopped Daily Cleanup of Temporary Directories.
+[  OK  ] Closed Load/Save RF Kill Switch Status /dev/rfkill Watch.
+         Stopping Save/Restore Sound Card State...
+         Stopping Lightning Fast Webserver With Light System Requirements...
+         Stopping thermal-zone-init.service...
+         Stopping parse-ip.service...
+         Stopping User Manager for UID 0...
+         Stopping Network Name Resolution...
+         Stopping Job spooling tools...
+         Stopping Telephony service...
+         Stopping System Logging Service...
+         Stopping Avahi mDNS/DNS-SD Stack...
+         Stopping strongSwan IPsec IKEv1/IKEv2 daemon using ipsec.conf...
+[  OK  ] Stopped Telephony service.
+[  OK  ] Stopped Kernel Logging Service.
+[  OK  ] Stopped System Logging Service.
+[  OK  ] Stopped Job spooling tools.
+[  OK  ] Stopped Avahi mDNS/DNS-SD Stack.
+[  OK  ] Stopped Periodic Command Scheduler.
+[  OK  ] Stopped strongSwan IPsec IKEv1/IKEv2 daemon using ipsec.conf.
+[  OK  ] Stopped Simple Network Management Protocol (SNMP) Daemon..
+[  OK  ] Stopped Network Name Resolution.
+[  OK  ] Stopped Lightning Fast Webserver With Light System Requirements.
+[  OK  ] Stopped Serial Getty on ttyS0.
+[  OK  ] Stopped Getty on tty1.
+[  OK  ] Stopped Serial Getty on ttyGS0.
+[  OK  ] Stopped Serial Getty on ttyS3.
+[  OK  ] Stopped Session c1 of user root.
+[  OK  ] Removed slice system-getty.slice.
+[  OK  ] Removed slice system-serial\x2dgetty.slice.
+[  OK  ] Stopped parse-ip.service.
+[  OK  ] Stopped thermal-zone-init.service.
+[  OK  ] Stopped Save/Restore Sound Card State.
+[  OK  ] Stopped User Manager for UID 0.
+[  OK  ] Removed slice User Slice of root.
+         Stopping Login Service...
+         Stopping Permit User Sessions...
+         Stopping matrix-gui-2.0.service...
+[  OK  ] Stopped Login Service.
+[  OK  ] Stopped Permit User Sessions.
+[  OK  ] Stopped matrix-gui-2.0.service.
+         Stopping LSB: Redis, a key-value store...
+[  OK  ] Stopped LSB: Redis, a key-value store.
+         Stopping rng-tools.service...
+[  OK  ] Stopped target Network is Online.
+[  OK  ] Stopped target Network.
+         Stopping Network Service...
+[  OK  ] Stopped rng-tools.service.
+[  OK  ] Stopped Network Service.
+         Stopping D-Bus System Message Bus...
+         Stopping busybox-udhcpd.service...
+         Stopping thttpd.service...
+[  OK  ] Stopped D-Bus System Message Bus.
+[  OK  ] Stopped busybox-udhcpd.service.
+[  OK  ] Stopped thttpd.service.
+         Stopping telnetd.service...
+[  OK  ] Stopped telnetd.service.
+         Stopping weston.service...
+[  OK  ] Stopped weston.service.
+         Stopping rc.pvr.service...
+[  OK  ] Stopped target Remote File Systems.
+[  OK  ] Stopped rc.pvr.service.
+         Stopping uim-sysfs.service...
+[  OK  ] Stopped uim-sysfs.service.
+[  OK  ] Stopped target Basic System.
+[  OK  ] Stopped target Slices.
+[  OK  ] Removed slice User and Session Slice.
+[  OK  ] Stopped target Paths.
+[  OK  ] Stopped Forward Password Requests to Wall Directory Watch.
+[  OK  ] Stopped Dispatch Password Requests to Console Directory Watch.
+[  OK  ] Stopped target Sockets.
+[  OK  ] Closed dropbear.socket.
+[  OK  ] Closed Avahi mDNS/DNS-SD Stack Activation Socket.
+[  OK  ] Closed D-Bus System Message Bus Socket.
+[  OK  ] Closed RPCbind Server Activation Socket.
+[  OK  ] Closed Syslog Socket.
+[  OK  ] Stopped target System Initialization.
+[  OK  ] Stopped Setup Virtual Console.
+         Stopping Network Time Synchronization...
+         Stopping Load/Save Random Seed...
+         Stopping Update UTMP about System Boot/Shutdown...
+[  OK  ] Stopped Apply Kernel Variables.
+[  OK  ] Stopped Load Kernel Modules.
+[  OK  ] Stopped Network Time Synchronization.
+[  OK  ] Stopped Load/Save Random Seed.
+[  OK  ] Stopped Update UTMP about System Boot/Shutdown.
+[  OK  ] Stopped Create Volatile Files and Directories.
+[  OK  ] Stopped target Local File Systems.
+         Unmounting /run/media/mmcblk1p1...
+         Unmounting /var/volatile...
+         Unmounting /run/media/mmcblk0p1...
+         Unmounting /media/ram...
+         Unmounting /run/user/0...
+         Unmounting Temporary Directory...
+[  OK  ] Unmounted /run/media/mmcblk1p1.
+[  OK  ] Unmounted /var/volatile.
+[  OK  ] Unmounted /media/ram.
+[  OK  ] Unmounted /run/user/0.
+[  OK  ] Unmounted /run/media/mmcblk0p1.
+[  OK  ] Unmounted Temporary Directory.
+[  OK  ] Stopped target Swap.
+[  OK  ] Reached target Unmount All Filesystems.
+[  OK  ] Stopped target Local File Systems (Pre).
+[  OK  ] Stopped Remount Root and Kernel File Systems.
+[  OK  ] Stopped Create Static Device Nodes in /dev.
+[  OK  ] Reached target Shutdown.
+[  198.011341] systemd-shutdow: 25 output lines suppressed due to ratelimiting
+[  198.045205] systemd-shutdown[1]: Sending SIGTERM to remaining processes...
+[  198.100506] systemd-journald[100]: Received SIGTERM from PID 1 (systemd-shutdow).
+[  208.114960] systemd-shutdown[1]: Sending SIGKILL to remaining processes...
+[  208.159273] systemd-shutdown[1]: Sending SIGKILL to PID 715 (rngd).
+[  208.179568] systemd-shutdown[1]: Unmounting file systems.
+[  208.188007] systemd-shutdown[1]: Remounting '/' read-only with options 'data=ordered'.
+[  217.933639] EXT4-fs (mmcblk0p2): re-mounted. Opts: data=ordered
+[  217.961299] systemd-shutdown[1]: Remounting '/' read-only with options 'data=ordered'.
+[  217.972681] EXT4-fs (mmcblk0p2): re-mounted. Opts: data=ordered
+[  217.978777] systemd-shutdown[1]: All filesystems unmounted.
+[  217.984451] systemd-shutdown[1]: Deactivating swaps.
+[  217.990159] systemd-shutdown[1]: All swaps deactivated.
+[  217.995598] systemd-shutdown[1]: Detaching loop devices.
+[  218.018166] systemd-shutdown[1]: All loop devices detached.
+[  218.024119] systemd-shutdown[1]: Detaching DM devices.
+[  218.030947] systemd-shutdown[1]: All DM devices detached.
+[  218.053441] systemd-shutdown[1]: Halting system.
+[  218.085453] reboot: System halted
+
+
+
+
+
+
+
+U-Boot SPL 2016.11-rc3-00002-g73df7f7 (Nov 04 2016 - 15:20:36)
+Trying to boot from MMC2
+
+
+U-Boot 2016.11-rc3-00002-g73df7f7 (Nov 04 2016 - 15:20:36 -0500), Build: jenkins-github_Bootloader-Builder-479
+
+CPU  : AM335X-GP rev 2.1
+I2C:   ready
+DRAM:  512 MiB
+Reset Source: Power-on reset has occurred.
+MMC:   OMAP SD/MMC: 0, OMAP SD/MMC: 1
+Using default environment
+
+Board: BeagleBone Black
+Model: BeagleBone Black Wireless
+<ethaddr> not set. Validating first E-fuse MAC
+Net:   eth0: MII MODE
+Could not get PHY for cpsw: addr 0
+cpsw
+Press SPACE to abort autoboot in 2 seconds
+board_name=[BBBW] ...
+switch to partitions #0, OK
+mmc0 is current device
+SD/MMC found on device 0
+** Bad device 0:2 0x82000000 **
+** Bad device 0:2 0x82000000 **
+switch to partitions #0, OK
+mmc0 is current device
+Scanning mmc 0:1...
+gpio: pin 56 (gpio 56) value is 0
+gpio: pin 55 (gpio 55) value is 0
+gpio: pin 54 (gpio 54) value is 0
+gpio: pin 53 (gpio 53) value is 1
+switch to partitions #0, OK
+mmc0 is current device
+gpio: pin 54 (gpio 54) value is 1
+Checking for: /uEnv.txt ...
+Checking for: /boot.scr ...
+Checking for: /boot/boot.scr ...
+Checking for: /boot/uEnv.txt ...
+** Invalid partition 3 **
+** Invalid partition 4 **
+** Invalid partition 5 **
+** Invalid partition 6 **
+** Invalid partition 7 **
+switch to partitions #0, OK
+mmc1(part 0) is current device
+Scanning mmc 1:1...
+gpio: pin 56 (gpio 56) value is 0
+gpio: pin 55 (gpio 55) value is 0
+gpio: pin 54 (gpio 54) value is 0
+gpio: pin 53 (gpio 53) value is 1
+switch to partitions #0, OK
+mmc1(part 0) is current device
+gpio: pin 54 (gpio 54) value is 1
+Checking for: /uEnv.txt ...
+Checking for: /boot.scr ...
+Checking for: /boot/boot.scr ...
+Checking for: /boot/uEnv.txt ...
+gpio: pin 55 (gpio 55) value is 1
+1234 bytes read in 34 ms (35.2 KiB/s)
+Loaded environment from /boot/uEnv.txt
+Checking if uname_r is set in /boot/uEnv.txt...
+gpio: pin 56 (gpio 56) value is 1
+Running uname_boot ...
+loading /boot/vmlinuz-4.4.30-ti-r64 ...
+8644992 bytes read in 576 ms (14.3 MiB/s)
+loading /boot/dtbs/4.4.30-ti-r64/am335x-boneblack-wireless.dtb ...
+64988 bytes read in 48 ms (1.3 MiB/s)
+loading /boot/initrd.img-4.4.30-ti-r64 ...
+5442736 bytes read in 377 ms (13.8 MiB/s)
+debug: [console=ttyO0,115200n8 root=UUID=ac4731db-c4db-463f-9129-07e6746b98ba ro rootfstype=ext4 rootwait coherent_pool=1M quiet cape_universal=enable] ...
+debug: [bootz 0x82000000 0x88080000:530cb0 0x88000000] ...
+## Flattened Device Tree blob at 88000000
+   Booting using the fdt blob at 0x88000000
+   Loading Ramdisk to 8facf000, end 8ffffcb0 ... OK
+   Loading Device Tree to 8fabc000, end 8faceddb ... OK
+
+Starting kernel ...
+
+[    0.001418] clocksource_probe: no matching clocksources found
+[    2.093025] wkup_m3_ipc 44e11324.wkup_m3_ipc: could not get rproc handle
+[    2.331816] omap_voltage_late_init: Voltage driver support not added
+[    2.339715] PM: Cannot get wkup_m3_ipc handle
+[    2.454481] bone_capemgr bone_capemgr: slot #0: No cape found
+[    2.498480] bone_capemgr bone_capemgr: slot #1: No cape found
+[    2.542475] bone_capemgr bone_capemgr: slot #2: No cape found
+[    2.586472] bone_capemgr bone_capemgr: slot #3: No cape found
+Loading, please wait...
+rootfs: clean, 109935/233856 files, 754951/932864 blocks
+
+Debian GNU/Linux 8 beaglebone ttyS0
+
+BeagleBoard.org Debian Image 2016-11-06
+
+Support/FAQ: http://elinux.org/Beagleboard:BeagleBoneBlack_Debian
+
+default username:password is [debian:temppwd]
+
+The IP Address for usb0 is: 192.168.7.2
+beaglebone login: 
+Debian GNU/Linux 8 beaglebone ttyS0
+
+BeagleBoard.org Debian Image 2016-11-06
+
+Support/FAQ: http://elinux.org/Beagleboard:BeagleBoneBlack_Debian
+
+default username:password is [debian:temppwd]
+
+The IP Address for usb0 is: 192.168.7.2
+beaglebone login: root
+Last login: Sun Nov  6 15:28:09 UTC 2016 on ttyS0
+Linux beaglebone 4.4.30-ti-r64 #1 SMP Fri Nov 4 21:23:33 UTC 2016 armv7l
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+root@beaglebone:~# 
+root@beaglebone:~# 
+root@beaglebone:~# pwd
+/root
+root@beaglebone:~# 
+root@beaglebone:~# 
+root@beaglebone:~# uname -a
+Linux beaglebone 4.4.30-ti-r64 #1 SMP Fri Nov 4 21:23:33 UTC 2016 armv7l GNU/Linux
+root@beaglebone:~# 
+root@beaglebone:~# lsibb_release -a
+No LSB modules are available.
+Distributor ID:	Debian
+Description:	Debian GNU/Linux 8.6 (jessie)
+Release:	8.6
+Codename:	jessie
+root@beaglebone:~# 
+root@beaglebone:~# 
+root@beaglebone:~# 
+root@beaglebone:~# dmesg | egrep '(-i '(dtb|dts)'
+[   47.275155] bone_capemgr bone_capemgr: slot #4: dtbo 'cape-universaln-00A0.dtbo' loaded; overlay id #0
+root@beaglebone:~# 
+root@beaglebone:~# 
+root@beaglebone:~# du -s h .
+41M	.
+root@beaglebone:~# df -h .
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/mmcblk1p1  3.5G  2.8G  497M  86% /
+root@beaglebone:~# 
+root@beaglebone:~# iwconfig
+tether    no wireless extensions.
+
+wlan0     IEEE 802.11abgn  Mode:Master  Tx-Power=20 dBm   
+          Retry short limit:7   RTS thr:off   Fragment thr:off
+          Power Management:on
+          
+lo        no wireless extensions.
+
+usb0      no wireless extensions.
+
+can0      no wireless extensions.
+
+can1      no wireless extensions.
+
+root@beaglebone:~# ifconfig
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:1120 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1120 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1 
+          RX bytes:86880 (84.8 KiB)  TX bytes:86880 (84.8 KiB)
+
+tether    Link encap:Ethernet  HWaddr 50:65:83:e1:6c:c6  
+          inet addr:192.168.0.1  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::1c57:20ff:fe8c:62c5/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST DYNAMIC  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:40 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:9570 (9.3 KiB)
+
+usb0      Link encap:Ethernet  HWaddr 50:65:83:e1:6c:c8  
+          inet addr:192.168.7.2  Bcast:192.168.7.3  Mask:255.255.255.252
+          inet6 addr: fe80::5265:83ff:fee1:6cc8/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:102 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:52 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:16762 (16.3 KiB)  TX bytes:14951 (14.6 KiB)
+
+wlan0     Link encap:Ethernet  HWaddr 50:65:83:e1:6c:c6  
+          inet6 addr: fe80::5265:83ff:fee1:6cc6/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST DYNAMIC  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:48 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:12842 (12.5 KiB)
+
+root@beaglebone:~# 
