@@ -1,0 +1,67 @@
+
+
+flash from sd: 
+http://beagleboard.org/latest-images
+ Debian 8.6 2016-11-06 4GB SD LXQT  link: https://debian.beagleboard.org/images/bone-debian-8.6-lxqt-4gb-armhf-2016-11-06-4gb.img.xz
+
+debian build guide: 
+https://elinux.org/Beagleboard:BeagleBoneBlack_Debian
+https://github.com/beagleboard/image-builder
+
+
+
+=================================================================
+host bridge: 
+
+default bbbw interface and eth interface on host: 
+
+  enx5065 Link encap:Ethernet  HWaddr 50:65::::  
+  eth0    Link encap:Ethernet  HWaddr 4c:cc::::  
+
+
+use a router at 192.168.7.100
+
+
+host ubuntu 16.04 add manual eth0 interface: 
+
+ /etc/network/interfaces: 
+
+  auto eth0
+  iface eth0 inet static
+   address 192.168.7.1
+   netmask 255.255.255.0
+   gateway 192.168.7.100
+   dns-nameservers 8.8.8.8
+   ##dhs-search altumview.local
+
+ ip route add default via 192.168.7.100
+ or without the command, just reboot so it defaults to 7.100
+
+ both ping and nslookup works on the host ubuntu 16.04 system. 
+
+
+host ubuntu 16.04 add manual bridge: 
+
+ remove the above eth0 and change to 
+ /etc/network/interfaces: 
+  auto br0
+  iface br0 inet static
+   address 192.168.7.1
+   netmask 255.255.255.0
+   gateway 192.168.7.100
+   dns-nameservers 8.8.8.8
+   bridge_ports eth0 enx5065
+   bridge_stp off
+   bridge_fd 0
+   bridge_maxwait 0
+
+
+target last line to /etc/resolv.conf:
+nameserver 192.168.5.253
+
+target add default route: 
+ip route add default via 192.168.7.1
+
+
+build: 
+

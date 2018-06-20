@@ -1,0 +1,7 @@
+
+
+this at the end of /etc/sudoers:
+
+debian  ALL=NOPASSWD: ALL
+
+

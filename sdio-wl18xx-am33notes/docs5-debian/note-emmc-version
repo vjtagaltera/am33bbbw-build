@@ -11,3 +11,27 @@ BeagleBoard.org Debian Image 2016-11-06
 
 
 
+boot from start uboot log:
+
+U-Boot SPL 2016.11-rc3-00002-g73df7f7 (Nov 04 2016 - 15:20:36)
+Trying to boot from MMC2
+
+
+U-Boot 2016.11-rc3-00002-g73df7f7 (Nov 04 2016 - 15:20:36 -0500), Build: jenkins-github_Bootloader-Bui9
+
+CPU  : AM335X-GP rev 2.1
+I2C:   ready
+DRAM:  512 MiB
+Reset Source: Power-on reset has occurred.
+MMC:   OMAP SD/MMC: 0, OMAP SD/MMC: 1
+Using default environment
+
+Board: BeagleBone Black
+Model: BeagleBone Black Wireless
+<ethaddr> not set. Validating first E-fuse MAC
+Net:   eth0: MII MODE
+Could not get PHY for cpsw: addr 0
+cpsw
+Press SPACE to abort autoboot in 2 seconds
+=> 
+
