@@ -1,0 +1,25 @@
+
+
+  119  git clone git://arago-project.org/git/projects/oe-layersetup.git tisdk
+  120  cd tisdk/
+  123  ./oe-layertool-setup.sh -f configs/processor-sdk/processor-sdk-04.03.00.05-config.txt
+  147  cd build/
+  150  cd conf/
+  153  cat bblayers.conf
+  158  cat conf/setenv
+  159  vi conf/setenv
+  160  source conf/setenv
+  161  time MACHINE=am57xx-evm bitbake arago-core-tisdk-image
+
+  165  source conf/setenv
+  166  locale
+  167  sudo locale-gen "en_US.UTF-8"
+  168  sudo dpkg-reconfigure locales
+  169  time MACHINE=am57xx-evm bitbake arago-core-tisdk-image
+
+setenv:
+PATH=$HOME/gcc-linaro-6.2.1-2016.11-x86_64_arm-linux-gnueabihf/bin:$PATH
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+
