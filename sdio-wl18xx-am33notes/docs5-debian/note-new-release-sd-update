@@ -43,4 +43,15 @@ testing:
     update to kernel 4.9, not showing wifi either. 
 [5] 9.3 2018-03-05 and 9.4 2018-06-17 for iot
 
+images from http://debian.beagleboard.org/images/
+bone-debian-9.3-iot-armhf-2018-01-28-4gb.img.xz    28-Jan-2018 18:23           472838132
+bone-debian-9.3-iot-armhf-2018-03-05-4gb.img.xz    05-Mar-2018 13:11           462639124
+bone-debian-9.4-iot-armhf-2018-06-17-4gb.img.xz    17-Jun-2018 21:40           475608932
+
+rel ver:    hash       4.9 ti version  last commit date
+9.3 jan 28: ede4675545 4.9.78-ti-r94   jan 27
+9.3 mar 5:  7293cfe2fc 4.9.82-ti-r102  feb 23 
+9.4 jun 17: 12ca78a570 4.9.105-ti-r113 jun 16
+
+
 
