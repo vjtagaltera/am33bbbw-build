@@ -20,6 +20,11 @@ release images from http://beagleboard.org/latest-images
  https://rcn-ee.com/rootfs/bb.org/testing/2018-06-01/console/
    bone-debian-8.10-console-armhf-2018-06-01-1gb.img.xz
    kernel is 4.4.113-ti-r149. no wifi somehow. 
+   on http://debian.beagleboard.org/images/ the 8.10 is seeed only:
+       bone-debian-8.10-seeed-iot-armhf-2018-02-01-4gb.img.xz   
+
+ on http://debian.beagleboard.org/images/ the 9.3 2018-03-05 iot and 9.4 2018-06-17 
+ both are ready. try them?? 
 
 saved images: 
 $ ls -l bone*
@@ -30,10 +35,12 @@ $ ls -l bone*
 
 testing:
 [1] 8.6 should be the same as stock image.
-[2] 8.7 works. kernel 4.4.54-ti-r93. 
-[2.1] update 8.6 kernel 4.4 to 4.9...??
+[2] 8.7 works. kernel 4.4.54-ti-r93.  ok! 
+[2.1] update 8.6 kernel 4.4 to 4.9... not to try more.
 [3] 9.3 works on sdcard, kernel 4.9.78-ti-r94 of Jan 26 2018.
     9.3 on emmc???
-[4] 8.10 console not showing wifi??
+[4] 8.10 console not showing wifi?? ... not to continue. may be seeed only.
     update to kernel 4.9, not showing wifi either. 
+[5] 9.3 2018-03-05 and 9.4 2018-06-17 for iot
+
 
