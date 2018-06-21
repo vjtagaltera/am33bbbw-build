@@ -1,0 +1,39 @@
+
+note-new-release-sd-update
+
+
+github.com/beagleboard/image-builder
+
+  tag        jessie/iot4.4/iot4.9    stretch/iot4.4/iot4.9
+  v2017.03   8.7                     stretch
+  v2017.12   8.9
+  v2018.01   8.10/4.4.91/4.9.74      9.3/4.4.91-ti-r141/4.9.74-ti-r89
+  v2018.02   8.10                    9.3/4.4.113-ti-r146/4.9.80-ti-r98
+  v2018.03   8.10                    9.3/4.4.113-ti-r148/4.9.83-ti-r103
+
+release images from http://beagleboard.org/latest-images
+ see  BeagleBoard-latest-images.html that is the saved page on june 20 2018
+ beagle release 9.3 iot: 4.9.78-ti-r94
+   booted with dtb uboot overlay after flashing to the emmc
+   below in [3] booted from sd without overlay??
+
+ https://rcn-ee.com/rootfs/bb.org/testing/2018-06-01/console/
+   bone-debian-8.10-console-armhf-2018-06-01-1gb.img.xz
+   kernel is 4.4.113-ti-r149. no wifi somehow. 
+
+saved images: 
+$ ls -l bone*
+-rwx------+   97731552 Jun 20 16:01 bone-debian-8.10-console-armhf-2018-06-01-1gb.img.xz
+-rwx------+  727202352 Jun 19 17:03 bone-debian-8.6-lxqt-4gb-armhf-2016-11-06-4gb.img.xz
+-rwx------+  418796176 Jun 20 14:13 bone-debian-8.7-iot-armhf-2017-03-19-4gb.img.xz
+-rwx------+  472838132 Jun 20 14:08 bone-debian-9.3-iot-armhf-2018-01-28-4gb.img.xz
+
+testing:
+[1] 8.6 should be the same as stock image.
+[2] 8.7 works. kernel 4.4.54-ti-r93. 
+[2.1] update 8.6 kernel 4.4 to 4.9...??
+[3] 9.3 works on sdcard, kernel 4.9.78-ti-r94 of Jan 26 2018.
+    9.3 on emmc???
+[4] 8.10 console not showing wifi??
+    update to kernel 4.9, not showing wifi either. 
+
