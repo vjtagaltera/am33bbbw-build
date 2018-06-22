@@ -1,6 +1,13 @@
 
+
 https://eewiki.net/display/linuxonarm/BeagleBone+Black
   --- see downloaded pdf file
+      bbb-eewiki/
+      bbb-eewiki/link.txt
+
+http://exploringbeaglebone.com/chapter7/
+  --- see 
+      exploringbeaglebone/
 
 
 search linux 4.9 where to initialize board

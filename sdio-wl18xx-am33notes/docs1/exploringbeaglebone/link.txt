@@ -1,0 +1,7 @@
+
+search 
+cross build debian for beaglebone black
+
+http://exploringbeaglebone.com/chapter7/
+
+
