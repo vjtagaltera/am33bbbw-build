@@ -3822,36 +3822,36 @@ lrwxrwxrwx 1 root root   24 Nov  3  2016 /etc/resolv.conf -> /run/connman/resolv
 total 8
 drwxr-xr-x 2 root root 4096 Oct 10 12:02 update.d
 drwxr-xr-x 2 root root 4096 Oct 10 12:01 update-libc.d
-root@beaglebone:/home/debian# cat /run/commannnman/resolv.conf
+root@beaglebone:/home/debian# cat /run/connman/resolv.conf
 cat: /run/connman/resolv.conf: No such file or directory
 root@beaglebone:/home/debian# 
 root@beaglebone:/home/debian# 
-root@beaglebone:/home/debian# ls /run/comnnman/ -l
+root@beaglebone:/home/debian# ls /run/connman/ -l
 total 0
-root@beaglebone:/home/debian# echo nameserver: 192.168.51.253 > /run/connman/res olv.conf
+root@beaglebone:/home/debian# echo nameserver: 192.168.5.253 > /run/connman/res olv.conf
 root@beaglebone:/home/debian# 
 root@beaglebone:/home/debian# 
 root@beaglebone:/home/debian# 
 root@beaglebone:/home/debian# ping google.ca
 ping: google.ca: Temporary failure in name resolution
-root@beaglebone:/home/debian# ping 192.168.51.253
-PING 192.168.51.253 (192.168.51.253) 56(84) bytes of data.
-64 bytes from 192.168.51.253: icmp_seq=1 ttl=127 time=3.29 ms
+root@beaglebone:/home/debian# ping 192.168.5.253
+PING 192.168.5.253 (192.168.5.253) 56(84) bytes of data.
+64 bytes from 192.168.5.253: icmp_seq=1 ttl=127 time=3.29 ms
 From 192.168.7.1: icmp_seq=2 Redirect Host(New nexthop: 192.168.7.100)
-64 bytes from 192.168.51.253: icmp_seq=2 ttl=127 time=1.34 ms
+64 bytes from 192.168.5.253: icmp_seq=2 ttl=127 time=1.34 ms
 From 192.168.7.1: icmp_seq=3 Redirect Host(New nexthop: 192.168.7.100)
-64 bytes from 192.168.51.253: icmp_seq=3 ttl=127 time=1.33 ms
+64 bytes from 192.168.5.253: icmp_seq=3 ttl=127 time=1.33 ms
 From 192.168.7.1: icmp_seq=4 Redirect Host(New nexthop: 192.168.7.100)
-64 bytes from 192.168.51.253: icmp_seq=4 ttl=127 time=1.23 ms
+64 bytes from 192.168.5.253: icmp_seq=4 ttl=127 time=1.23 ms
 ^C
---- 192.168.51.253 ping statistics ---
+--- 192.168.5.253 ping statistics ---
 4 packets transmitted, 4 received, 0% packet loss, time 3005ms
 rtt min/avg/max/mdev = 1.238/1.802/3.295/0.864 ms
 root@beaglebone:/home/debian# ping google.ca
 ping: google.ca: Temporary failure in name resolution
 root@beaglebone:/home/debian# cat /etc/resolv.conf 
-nameserver: 192.168.51.253
-root@beaglebone:/home/debian# vi /run/connman/resoping google.ca
+nameserver: 192.168.5.253
+root@beaglebone:/home/debian# ping google.ca
 PING google.ca (216.58.216.163) 56(84) bytes of data.
 64 bytes from sea15s02-in-f3.1e100.net (216.58.216.163): icmp_seq=1 ttl=55 time=36.6 ms
 From 192.168.7.1 (192.168.7.1): icmp_seq=2 Redirect Host(New nexthop: 192.168.7.100 (192.168.7.100))
@@ -3866,7 +3866,7 @@ From 192.168.7.1 (192.168.7.1): icmp_seq=5 Redirect Host(New nexthop: 192.168.7.
 --- google.ca ping statistics ---
 6 packets transmitted, 6 received, 0% packet loss, time 5007ms
 rtt min/avg/max/mdev = 13.545/19.810/36.669/7.712 ms
-root@beaglebone:/home/debian# apg-tet-get update
+root@beaglebone:/home/debian# apt-get update
 0% [Working]            Ign:1 http://deb.debian.org/debian stretch InRelease
 0% [Connecting to repos.rcn-ee.com (45.33.2.10)]                                                Get:2 http://deb.debian.org/debian stretch-updates InRelease [91.0 kB]
 0% [2 InRelease 0 B/91.0 kB 0%] [Connecting to repos.rcn-ee.com (45.33.2.10)]                                                                             0% [Waiting for headers]                        Get:3 http://deb.debian.org/debian-security stretch/updates InRelease [94.3 kB]
@@ -4045,7 +4045,7 @@ root@beaglebone:/home/debian#
 root@beaglebone:/home/debian# 
 root@beaglebone:/home/debian# 
 root@beaglebone:/home/debian# 
-root@beaglebone:/home/debian# apt-get install 4.9.5linux-image-4.9.54-ti-r68
+root@beaglebone:/home/debian# apt-get install linux-image-4.9.54-ti-r68
 Reading package lists... 0%Reading package lists... 100%Reading package lists... Done
 Building dependency tree... 0%Building dependency tree... 0%Building dependency tree... 50%Building dependency tree... 50%Building dependency tree... 79%Building dependency tree       
 Reading state information... 0%Reading state information... 98%Reading state information... Done
@@ -4293,7 +4293,7 @@ debian@beaglebone:~$
 debian@beaglebone:~$ 
 debian@beaglebone:~$ sudo bash
 [sudo] password for debian: 
-root@beaglebone:/home/debian# apg-t-cache search linux-image | grep '4\.9\.3' | gr ep ti
+root@beaglebone:/home/debian# apt-cache search linux-image | grep '4\.9\.3' | gr ep ti
 linux-image-4.9.35-ti-r44 - Linux kernel, version 4.9.35-ti-r44
 linux-image-4.9.35-ti-rt-r44 - Linux kernel, version 4.9.35-ti-rt-r44
 linux-image-4.9.36-ti-r45 - Linux kernel, version 4.9.36-ti-r45
@@ -4305,7 +4305,7 @@ linux-image-4.9.38-ti-rt-r49 - Linux kernel, version 4.9.38-ti-rt-r49
 root@beaglebone:/home/debian# 
 root@beaglebone:/home/debian# 
 root@beaglebone:/home/debian# 
-root@beaglebone:/home/debian# apg-t-install linux-image-4.9.37-ti-r47
+root@beaglebone:/home/debian# apt-install linux-image-4.9.37-ti-r47
 bash: apt-install: command not found
 root@beaglebone:/home/debian# apt-get install linux-image-4.9.37-ti-r47
 Reading package lists... 0%Reading package lists... 100%Reading package lists... Done
@@ -4326,9 +4326,9 @@ root@beaglebone:/home/debian#
 root@beaglebone:/home/debian# 
 root@beaglebone:/home/debian# ls -ld /etc/resolv.conf
 lrwxrwxrwx 1 root root 24 Nov  3  2016 /etc/resolv.conf -> /run/connman/resolv.conf
-root@beaglebone:/home/debian# ls -ld /run/comnnman/resolv.conf
+root@beaglebone:/home/debian# ls -ld /run/connman/resolv.conf
 ls: cannot access '/run/connman/resolv.conf': No such file or directory
-root@beaglebone:/home/debian# echo nameserver 8.8.8.8 >> /run/connman/resolv.con f
+root@beaglebone:/home/debian# echo nameserver 8.8.8.8 >> /run/connman/resolv.conf
 root@beaglebone:/home/debian# 
 root@beaglebone:/home/debian# ping google.ca
 ping: google.ca: Temporary failure in name resolution
@@ -4336,7 +4336,7 @@ root@beaglebone:/home/debian#
 root@beaglebone:/home/debian# ping google.ca
 ping: google.ca: Temporary failure in name resolution
 root@beaglebone:/home/debian# 
-root@beaglebone:/home/debian# echo nameserver 192.168.51.253 >> /run/connman/res olv.conf
+root@beaglebone:/home/debian# echo nameserver 192.168.5.253 >> /run/connman/resolv.conf
 root@beaglebone:/home/debian# 
 root@beaglebone:/home/debian# ls -ld /run/connman/
 drwxr-xr-x 2 root root 60 Jun 22 00:23 /run/connman/
@@ -4345,7 +4345,7 @@ root@beaglebone:/home/debian# ls -ld /run/connman/*
 root@beaglebone:/home/debian# ping google.ca
 ping: google.ca: Temporary failure in name resolution
 root@beaglebone:/home/debian# 
-root@beaglebone:/home/debian# ip reoute aoute add default via 192.168.7.1
+root@beaglebone:/home/debian# ip route add default via 192.168.7.1
 root@beaglebone:/home/debian# ping google.ca
 PING google.ca (216.58.216.131) 56(84) bytes of data.
 64 bytes from sea15s01-in-f131.1e100.net (216.58.216.131): icmp_seq=1 ttl=55 time=20.8 ms
@@ -4384,7 +4384,7 @@ update-initramfs: Generating /boot/initrd.img-4.9.37-ti-r47
 zz-uenv_txt: Updating /boot/uEnv.txt [uname_r=4.9.37-ti-r47]
 root@beaglebone:/home/debian# 
 root@beaglebone:/home/debian# 
-root@beaglebone:/home/debian# apt-get install linux-firmware-4.9.437-ti-r47
+root@beaglebone:/home/debian# apt-get install linux-firmware-4.9.37-ti-r47
 Reading package lists... 0%Reading package lists... 100%Reading package lists... Done
 Building dependency tree... 0%Building dependency tree... 0%Building dependency tree... 50%Building dependency tree... 50%Building dependency tree... 74%Building dependency tree       
 Reading state information... 0%Reading state information... 98%Reading state information... Done
@@ -4617,9 +4617,9 @@ debian@beaglebone:~$ sudo bash
 root@beaglebone:/home/debian# 
 root@beaglebone:/home/debian# 
 root@beaglebone:/home/debian# 
-root@beaglebone:/home/debian# su
 root@beaglebone:/home/debian# 
-root@beaglebone:/home/debian# iwco dev wlan0 scan
+root@beaglebone:/home/debian# 
+root@beaglebone:/home/debian# iw dev wlan0 scan
 BSS bc:16:f5:b5:7a:70(on wlan0)
 	TSF: 33999464403078 usec (393d, 12:17:44)
 	freq: 2412
