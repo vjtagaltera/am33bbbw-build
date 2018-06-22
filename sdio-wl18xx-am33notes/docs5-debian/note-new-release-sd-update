@@ -37,21 +37,116 @@ testing:
 [1] 8.6 should be the same as stock image.
 [2] 8.7 works. kernel 4.4.54-ti-r93.  ok! 
 [2.1] update 8.6 kernel 4.4 to 4.9... not to try more.
-[3] 9.3 works on sdcard, kernel 4.9.78-ti-r94 of Jan 26 2018.
-    9.3 on emmc???
+       probably need to update the matching version of firmware too.
+
+[3] 9.3-jan28 works on sdcard, kernel 4.9.78-ti-r94 of Jan 26 2018.
+    9.3-jan28 copied /bbb-uEnv.txt to /uEnv.txt on the sd card so as to avoid using uboot env in emmc. 
+              flashed to emmc. booted with uboot dtb overlay. 
+              modified /boot/uEnv.txt to comment out overlay. it loads bbbw dtb. 
+
 [4] 8.10 console not showing wifi?? ... not to continue. may be seeed only.
     update to kernel 4.9, not showing wifi either. 
+
 [5] 9.3 2018-03-05 and 9.4 2018-06-17 for iot
+[5.1] 9.4-jun17: loaded kernel 4.14.49-ti-r54
+[5.2] 9.3-mar5:  
+    [5.2.1] on sd card, copied /bbb-uEnv.txt to /uEnv.txt, modified prompt. 
+            kernel is 4.9.82-ti-r102. 
+            booted without dtb overlay, loaded bbbw dtb. (leftover from emmc??)
+            modified /boot/uEnv.txt to flash to emmc. 
+    [5.2.2] from emmc: 
+            booted with dtb overlay. 
+            copied /bbb-uEnv.txt to /uEnv.txt.
+            rebooted with dtb overlay again. commented out overlay in /boot/uEnv.txt. 
+            rebooted with loading bbbw dtb. 
+
+[6] 9.2 2817-10-10 for iot
+[6.1] 
+            kernel 4.4.91-ti-r133 on the sd card. 
+            copied /bbb-uEnv.txt to /uEnv.txt. commented out overlay in /boot/uEnv.txt. 
+            booted to flash into emmc. 
+            rebooted ok. iw works. comment out overlay in /boot/uEnv.txt. 
+            rebooted without overlay. iw ok. 
+[6.2] update kernel to 4.9.54-ti-r68: 
+            add nameserver <ip> to /run/connman/resolv.conf
+            apt-get update  ---it is updating from deb.debian.org/debian stretch InRelease
+            apt-cache serach linux-image | grep '4\.9\.54' | grep ti
+            apt-get install linux-image-4.9.54-ti-r68
+            apt-get install linux-firmware-4.9.54-ti-r68 ---as suggested by apt-get
+            iw works.
+[6.3] update kernel to 4.9.37-ti-r47: 
+            apt-get install linux-image-4.9.37-ti-r47 
+                ---getting from repos.rcn-ee.com/debian stretch/main armhf linux-image-4.9.37-ti-r47 armhf 1stretch
+            apt-get install linux-firmware-image-4.9.37-ti-r47 ---as suggested by apt-get
+     [6.1 to 6.3] see log-63-debian-92-oct10-kernel4.9.37 file.
 
 images from http://debian.beagleboard.org/images/
-bone-debian-9.3-iot-armhf-2018-01-28-4gb.img.xz    28-Jan-2018 18:23           472838132
-bone-debian-9.3-iot-armhf-2018-03-05-4gb.img.xz    05-Mar-2018 13:11           462639124
-bone-debian-9.4-iot-armhf-2018-06-17-4gb.img.xz    17-Jun-2018 21:40           475608932
+  bone-debian-9.3-iot-armhf-2018-01-28-4gb.img.xz    28-Jan-2018 18:23           472838132
+  bone-debian-9.3-iot-armhf-2018-03-05-4gb.img.xz    05-Mar-2018 13:11           462639124
+  bone-debian-9.4-iot-armhf-2018-06-17-4gb.img.xz    17-Jun-2018 21:40           475608932
 
-rel ver:    hash       4.9 ti version  last commit date
-9.3 jan 28: ede4675545 4.9.78-ti-r94   jan 27
-9.3 mar 5:  7293cfe2fc 4.9.82-ti-r102  feb 23 
-9.4 jun 17: 12ca78a570 4.9.105-ti-r113 jun 16
+  rel ver:    hash       4.9 ti version  last commit date
+  9.3 jan 28: ede4675545 4.9.78-ti-r94   jan 27
+  9.3 mar 5:  7293cfe2fc 4.9.82-ti-r102  feb 23 
+  9.4 jun 17: 12ca78a570 4.9.105-ti-r113 jun 16 -- actually it is 4.14.49!!!
 
+  bone-debian-9.1-iot-armhf-2017-08-24-4gb.img.xz    24-Aug-2017 19:40           465260684
+   image based on commit message of the last 4.9.x bump: 
+                           4.9.41-ti-r53   aug 10
+    9.1 aug 24: 9ed8059054 4.9.44-ti-r56   aug 23
+
+  bone-debian-9.1-iot-armhf-2017-08-31-4gb.img.xz    31-Aug-2017 18:24           453891372
+  bone-debian-9.1-iot-armhf-2017-08-31-4gb.img.xz.1  31-Aug-2017 18:24           453891372
+    9.1 aug 31: 6102ab324b 4.9.45-ti-r57   aug 26
+
+  bone-debian-9.1-iot-armhf-2017-09-21-4gb.img.xz    22-Sep-2017 01:43           456288400
+  bone-debian-9.1-iot-armhf-2017-09-21-4gb.img.xz.1  22-Sep-2017 01:43           456288400
+
+  bone-debian-9.2-iot-armhf-2017-10-10-4gb.img.xz    10-Oct-2017 13:30           467193116
+  9.2 oct 10: 44ef2d15bc 4.9.54-ti-r68   oct 10 -- actually 4.4.91!!!
+
+kernel package from 9.2-oct10 update: 
+
+    http://repos.rcn-ee.com/debian/dists/stretch/main/binary-armhf/Packages
+    http://repos.rcn-ee.com/debian/dists/stretch/main/source/
+    http://repos.rcn-ee.com/debian/pool/main/l/linux-upstream/
+
+Packages from the 1st link above: 
+
+    Package: linux-image-4.9.37-ti-r47
+    Source: linux-upstream
+    Version: 1stretch
+    Architecture: armhf
+    Maintainer: rcn-ee <robertcnelson@gmail.com>
+    Installed-Size: 92163
+    Suggests: linux-firmware-image-4.9.37-ti-r47
+    Homepage: http://www.kernel.org/
+    Priority: optional
+    Section: kernel
+    Filename: pool/main/l/linux-upstream/linux-image-4.9.37-ti-r47_1stretch_armhf.deb
+    Size: 23866216
+    SHA256: 9ce7706ce258a08d84dee15a07e0c87581b19dcf1be19a5df88d78720e91713a
+    SHA1: de1ed901351f6ba771e0305d74e9efcff559c173
+    MD5sum: f438acddaf09b9f1c3fc6c64c3a51607
+    Description: Linux kernel, version 4.9.37-ti-r47
+     This package contains the Linux kernel, modules and corresponding other
+     files, version: 4.9.37-ti-r47.
+
+    Package: linux-firmware-image-4.9.37-ti-r47
+    Source: linux-upstream
+    Version: 1stretch
+    Architecture: armhf
+    Maintainer: rcn-ee <robertcnelson@gmail.com>
+    Installed-Size: 544
+    Homepage: http://www.kernel.org/
+    Priority: optional
+    Section: kernel
+    Filename: pool/main/l/linux-upstream/linux-firmware-image-4.9.37-ti-r47_1stretch_armhf.deb
+    Size: 181984
+    SHA256: ed3274f41843ae49353e1f1d1a5ffe43203f76e64ef8eac16693955d241be6bb
+    SHA1: 0c03628af763612943cc2a3741a84f67da4a29b8
+    MD5sum: 8638856370450a5986221006d38565f8
+    Description: Linux kernel firmware, version 4.9.37-ti-r47
+     This package contains firmware from the Linux kernel, version 4.9.37-ti-r47.
 
 
