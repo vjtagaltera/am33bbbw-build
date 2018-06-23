@@ -1,0 +1,95 @@
+
+
+https://eewiki.net/display/linuxonarm/BeagleBone+Black
+
+
+get the toolchain: not really needed because the scripts download their own later
+
+    wget -c https://releases.linaro.org/components/toolchain/binaries/6.4-2017.11/arm-linux-gnueabihf/gcc-linaro-6.4.1-2017.11-x86_64_arm-linux-gnueabihf.tar.xz
+    wget -c https://releases.linaro.org/components/toolchain/binaries/6.3-2017.05/arm-linux-gnueabihf/gcc-linaro-6.3.1-2017.05-x86_64_arm-linux-gnueabihf.tar.xz
+
+    tar xf gcc-linaro-6.4.1-2017.11-x86_64_arm-linux-gnueabihf.tar.xz
+
+    export CC=`pwd`/gcc-linaro-6.4.1-2017.11-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
+    export CC=`pwd`/gcc-linaro-6.3.1-2017.05-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
+
+
+install dependency for the later build scripts: 
+
+    apt-get install device-tree-compiler fakeroot lzma lzop man-db gettext
+
+
+checkout the build repo for build scripts: 
+
+    git clone https://github.com/RobertCNelson/ti-linux-kernel-dev.git
+    cd ti-linux-kernel-dev/
+    git checkout -b tmp49y origin/ti-linux-4.9.y
+
+    git checkout 4.9.37-ti-r47
+
+  build: 
+
+    ./build_kernel
+
+  result kernel: 
+
+    ~/ti-linux-kernel-dev/deploy/4.9.37-ti-r47.zImage
+
+  build prompts:
+
+    export kernel_version=4.9.37-ti-r47
+
+
+deploy:
+    sudo cp -v ./bb-kernel/deploy/${kernel_version}.zImage /media/rootfs/boot/vmlinuz-${kernel_version}
+
+    sudo mkdir -p /media/rootfs/boot/dtbs/${kernel_version}/
+    sudo tar xfv ./bb-kernel/deploy/${kernel_version}-dtbs.tar.gz -C /media/rootfs/boot/dtbs/${kernel_version}/
+    cp 4.9.37-ti-r47.zImage vmlinuz-4.9.37-ti-r47-new
+
+    sudo tar xfv ./bb-kernel/deploy/${kernel_version}-modules.tar.gz -C /media/rootfs/
+
+
+
+build log:
+
+Saving to: '~/ti-linux-kernel-dev/dl/gcc-linaro-6.3.1-2017.05-x86_64_arm-linux-gnueabihf.tar.xz'
+
+CROSS_COMPILE=~/ti-linux-kernel-dev/dl/gcc-linaro-6.3.1-2017.05-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
+
+
+cloning https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git into default location: ~/ti-linux-kernel-dev/ignore/linux-src
+Cloning into '~/ti-linux-kernel-dev/ignore/linux-src'...
+
+scripts/git: Debug: LINUX_GIT is setup as: [~/ti-linux-kernel-dev/ignore/linux-src].
+scripts/git: [url=https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git]
+
+Cloning into '~/ti-linux-kernel-dev/KERNEL'...
+done.
+
+scripts/git: fetching from: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+ * [new tag]         v4.9.37    -> v4.9.37
+
+Checking out files: 100% (50442/50442), done.
+Switched to a new branch 'v4.9.37-ti-r47'
+v4.9.37
+Starting patch.sh
+pulling: [https://github.com/RobertCNelson/ti-linux-kernel.git ti-linux-4.9.y]
+
+From https://github.com/RobertCNelson/ti-linux-kernel
+ * branch            ti-linux-4.9.y -> FETCH_HEAD
+
+patch.sh ran successfully
+[v4.9.37-ti-r47 eef1ea5] 4.9.37-ti-r47 patchset
+
+make -j8 ARCH=arm LOCALVERSION=-ti-r47 \
+ CROSS_COMPILE="~/ti-linux-kernel-dev/dl/gcc-linaro-6.3.1-2017.05-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-" \
+ zImage modules
+
+make -j8 ARCH=arm LOCALVERSION=-ti-r47 \
+ CROSS_COMPILE="~/ti-linux-kernel-dev/dl/gcc-linaro-6.3.1-2017.05-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-" \
+ dtbs
+
+'.config' -> '~/ti-linux-kernel-dev/patches/defconfig'
+
+
