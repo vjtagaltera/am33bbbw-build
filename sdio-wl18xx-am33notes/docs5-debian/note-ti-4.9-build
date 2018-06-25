@@ -93,3 +93,11 @@ make -j8 ARCH=arm LOCALVERSION=-ti-r47 \
 '.config' -> '~/ti-linux-kernel-dev/patches/defconfig'
 
 
+
+search remote error object directory objects does not exist
+    https://hoelz.ro/blog/fixing-up-a-git-repository-with-broken-alternates
+    use `git repack -a -d` to deassociate with the external reference repo
+
+    the KERNEL repo contains a reference to ~/.../ignore/linux-src. 
+
+
