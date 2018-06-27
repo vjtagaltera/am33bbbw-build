@@ -1,0 +1,12 @@
+
+search wl18xx kernel modules
+
+
+http://processors.wiki.ti.com/index.php/WL18xx_Driver_Debug
+    see the saved page and file folder
+
+
+https://git.ti.com/wilink8-wlan/18xx-ti-utils/blobs/master/wlconf/configure-device.sh
+    git clone https://git.ti.com/wilink8-wlan/18xx-ti-utils
+    git clone git://git.ti.com/wilink8-wlan/18xx-ti-utils wlconf-18xx-ti-utils
+
