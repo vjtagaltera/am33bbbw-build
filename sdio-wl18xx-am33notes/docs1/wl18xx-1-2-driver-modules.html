@@ -1,0 +1,2515 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta name="e2e_group" content="Support Forums"><meta name="e2e_group_family" content="Wireless Connectivity"><meta name="e2e_subgroup_family" content="WiLink™ WiFi + Bluetooth"><meta name="e2e_type" content="Forum"><meta name="GENERATOR" content="Zimbra Community 8">
+
+<link rel="stylesheet" href="wl18xx-1-2-driver-modules_files/layout.css" type="text/css" media="screen"><script type="text/javascript" async="" charset="utf-8" src="wl18xx-1-2-driver-modules_files/conversion_async.js" id="utag_52"></script><script type="text/javascript" async="" charset="utf-8" src="wl18xx-1-2-driver-modules_files/analytics.js" id="tealium-tag-7110"></script><script type="text/javascript" src="wl18xx-1-2-driver-modules_files/i.js"></script><script src="wl18xx-1-2-driver-modules_files/utag.js" type="text/javascript" async=""></script><script type="text/javascript" defer="defer" async="" src="wl18xx-1-2-driver-modules_files/evergage.js"></script><script type="text/javascript" src="wl18xx-1-2-driver-modules_files/jquery_002.js"></script><script type="text/javascript" src="wl18xx-1-2-driver-modules_files/telligent_002.js"></script><script type="text/javascript" src="wl18xx-1-2-driver-modules_files/jquery.js"></script><script type="text/javascript">
+// <![CDATA[
+try { jQuery.extend(jQuery.validator.messages,{required:'This field is required.',remote:'Please fix this field.',date:'Please enter a valid date.',dateISO:'Please enter a valid date (ISO).',number:'Please enter a valid number.',digits:'Please enter only digits.',creditcard:'Please enter a valid credit card number.',equalTo:'Please enter the same value again.',accept:'Please enter a value with a valid extension.',maxlength:jQuery.validator.format('Please enter no more than {0} characters.'),minlength:jQuery.validator.format('Please enter at least {0} characters.'),rangelength:jQuery.validator.format('Please enter a value between {0} and {1} characters long.'),range:jQuery.validator.format('Please enter a value between {0} and {1}.'),max:jQuery.validator.format('Please enter a value less than or equal to {0}.'),min:jQuery.validator.format('Please enter a value greater than or equal to {0}.')}); } catch(e) { };
+// ]]>
+</script><script type="text/javascript" src="wl18xx-1-2-driver-modules_files/telligent.js"></script><script type="text/javascript">
+// <![CDATA[
+try { jQuery.telligent.evolution.site.configure({baseUrl:'\/',isRemote:false,remoteUrlEncodePattern:'',monthNames:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],dayNames:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],authorizationCookieName:'AuthorizationCookie',defaultErrorMessage:'An error occurred.  Please try again or contact your administrator.',defaultMultiErrorMessagePrefix:'The following errors occurred:  ',silverlightFileUploadEnabled:true,accessingUserId:2101,accessingUserIsSystemAccount:true});
+jQuery.extend($.fn.evolutionUserFileTextBox.defaults,{removeText:'Remove',selectText:'Select\/Upload...',noFileText:'No File Selected'});
+jQuery.telligent.evolution.navigationConfirmation.configure({message:'Unless you save before leaving this page, you will lose any changes you have made.'});
+jQuery.telligent.evolution.validation.registerExtensions({passwordInvalidMessage:'Password contains invalid chars ...',passwordRegex:'^.*$',emailInvalidMessage:'Your email address is invalid.',emailRegex:'^\\w+([-+.]+\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$',usernameInvalidMessage:'Your sign in name does not meet the requirements for this site.',usernameRegex:'^[a-zA-Z0-9_\\- @\\.]+$',emailsInvalidMessage:'One or more emails is invalid',urlInvalidMessage:'URL not in correct format',urlRegex:'^((http|https|mailto|mms|ftp):|\/|#|~\/)'});
+jQuery.extend(jQuery.fn.evolutionLike.defaults,{likeText:'Like',unlikeText:'Unlike',modalTitleText:'People who like this',modalShowMoreText:'Show More',whoLikesOtherText:'<a href=\"{user_profile_url}\" class=\"internal-link view-user-profile\">{user_display_name}<\/a> likes this',whoLikesOtherTwoText:'<a href=\"{user_profile_url}\" class=\"internal-link view-user-profile\">{user_display_name}<\/a> and <span class=\"who-likes\">1 other<\/span> like this',whoLikesOtherMultipleText:'<a href=\"{user_profile_url}\" class=\"internal-link view-user-profile\">{user_display_name}<\/a> and <span class=\"who-likes\">{count} others<\/span> like this',whoLikesAccessingText:'You like this',whoLikesAccessingTwoText:'You and <span class=\"who-likes\">1 other<\/span> like this',whoLikesAccessingMultipleText:'You and <span class=\"who-likes\">{count} others<\/span> like this'});
+jQuery.extend(jQuery.fn.evolutionInlineTagEditor.defaults,{editButtonText:'Edit tags',selectTagsText:'Select tags',saveTagsText:'Save',cancelText:'Cancel'});
+jQuery.extend(jQuery.fn.evolutionStarRating.defaults,{titles:['Terrible','Poor','Fair','Average','Good','Excellent'],ratingMessageFormat:'Average rating: {rating} out of {count} ratings.'});
+jQuery.extend(jQuery.fn.evolutionModerate.defaults,{moderateLinkText:'moderate',reportLinkText:'Flag as spam\/abuse',reportedLinkText:'Flagged as spam\/abuse',reportedNotificationMessageText:'{NAME}\'s post has been flagged. <strong>Thank you for your feedback.<\/strong>'});
+jQuery.extend(jQuery.fn.evolutionBookmark.defaults,{deleteBookmarkText:'Unbookmark {content_type_name}',addBookmarkText:'Bookmark this {content_type_name}',processingText:'...'});
+} catch(e) { };
+// ]]>
+</script><script type="text/javascript">jQuery(function($) {
+	$.telligent.evolution.messaging.subscribe('userActionSubscibeToggle', function(data) {
+		var e = $(data.target);
+		var userId = e.data('userid'), accessingUserId = e.data('accessinguserid'), v = e.data('subscribe');
+		e.html('...');
+		if (v) {
+			$.telligent.evolution.post({
+				url: $.telligent.evolution.site.getBaseUrl() + 'api.ashx/v2/usersubscriptions/{FollowerId}/following.json',
+				data: {  FollowerId: accessingUserId, FollowingId: userId },
+				dataType: 'json',
+				success: function(response) { e.html('Email unsubscribe to user').data('subscribe', false); },
+				error: function(response) {  e.html('Email subscribe to user').data('subscribe', true); }
+			});
+		} else {
+			$.telligent.evolution.del({
+				url: $.telligent.evolution.site.getBaseUrl() + 'api.ashx/v2/usersubscriptions/{FollowerId}/following/{FollowingId}.json',
+				data: {  FollowerId: accessingUserId, FollowingId: userId },
+				dataType: 'json',
+				success: function(response) { e.html('Email subscribe to user').data('subscribe', true); },
+				error: function(response) {  e.html('Email subscribe to user').data('subscribe', false); }
+			});
+		}
+	});
+});</script><script type="text/javascript">jQuery(function($) {
+	$.telligent.evolution.messaging.subscribe('userActionFriendshipToggle', function(data) {
+		var e = $(data.target);
+		var userId = e.data('userid'), accessingUserId = e.data('accessinguserid'), v = parseInt(e.data('friendship'));
+		var t = e.html();
+		e.html('...');
+		if (v == 0) {
+				e.html(t);
+				$.glowModal('/user/requestfriend?UserId=' + userId + '', {width:670,height:390});
+		} else if (v == 3) {
+				$.telligent.evolution.post({
+					url: $.telligent.evolution.site.getBaseUrl() + 'api.ashx/v2/users/{RequestorId}/friends.json',
+					data: { RequestorId: accessingUserId, RequesteeId: userId, RequestMessage: '<p style=\"font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px;\"><strong>Hi,<\/strong><\/p>\n<p style=\"font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px;\"><strong>I would like to be friends with you on the <a title=\"TI E2E Community\" style=\"color: #ff0000;\">TI E2E Community<\/a>.&nbsp;&nbsp;&nbsp; Thank you!<\/strong><\/p> '},
+					dataType: 'json',
+					success: function(response) { window.location = window.location; },
+					error: function(response) {  e.html(t); }
+				});
+		} else if (v == 1 || v == 2 || v == 4) {
+			if (v == 4 || (v == 1 && window.confirm('Are you sure you want to cancel this friendship request?')) || (v == 2 && window.confirm('Are you sure you want to unfriend this person?'))) {
+				$.telligent.evolution.del({
+					url: $.telligent.evolution.site.getBaseUrl() + 'api.ashx/v2/users/{RequestorId}/friends/{RequesteeId}.json',
+					data: { RequestorId: accessingUserId, RequesteeId: userId },
+					dataType: 'json',
+					success: function(response) { window.location = window.location; },
+					error: function(response) {  e.html(t); }
+				});
+			} else { e.html(t); }
+		}
+	});
+});</script><script type="text/javascript">(function($){ $.telligent.evolution.media.defaults.endpoint = 'http://e2e.ti.com/callback.ashx?__type=Telligent.Evolution.Api.Plugins.Endpoints.FileViewerEndpoint%2C%20Telligent.Evolution.Api'; }(jQuery));</script><script type="text/javascript">(function($){ $.telligent.evolution.preview.defaults.endpoint = 'http://e2e.ti.com/callback.ashx?__type=Telligent.Evolution.Api.Plugins.Endpoints.WebPreviewEndpoint%2C%20Telligent.Evolution.Api'; }(jQuery));</script><script type="text/javascript">(function($){ $.telligent.evolution.language.defaults.dateEndpoint = 'http://e2e.ti.com/callback.ashx?__type=Telligent.Evolution.Api.Plugins.Endpoints.DateFormattingEndpoint%2C%20Telligent.Evolution.Api'; }(jQuery));</script><script type="text/javascript">(function($){ $.fn.evolutionUserFileTextBox.defaults.endpoint = 'http://e2e.ti.com/callback.ashx?__type=Telligent.Evolution.Api.Plugins.Endpoints.UserFileTextBoxEndpoint%2C%20Telligent.Evolution.Api'; }(jQuery));</script>
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width"><meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=3"><link rel="shortcut icon" type="image/ico" href="http://e2e.ti.com/cfs-filesystemfile/__key/themefiles/s-ac6c06b274524486add6d4f6b26d379d-files/favicon.ico"><link rel="apple-touch-icon-precomposed" href="http://e2e.ti.com/cfs-filesystemfile/__key/themefiles/s-fd-ac6c06b274524486add6d4f6b26d379d-files/favicon152.png"><meta name="msapplication-TileColor" content="#FFFFFF"><meta name="msapplication-TileImage" content="http://e2e.ti.com/cfs-filesystemfile/__key/themefiles/s-fd-ac6c06b274524486add6d4f6b26d379d-files/favicon144.png">
+        <link type="text/css" rel="stylesheet" href="wl18xx-1-2-driver-modules_files/screen.css"><!--[if lte IE 7]><link type="text/css" rel="stylesheet" href="http://e2e.ti.com/cfs-file/__key/themefiles/h-00000000b0ee429f-s-ac6c06b274524486add6d4f6b26d379d-stylesheetfiles-http-e2eticom-80/ie7.less" /><![endif]--><!--[if lte IE 8]><link type="text/css" rel="stylesheet" href="http://e2e.ti.com/cfs-filesystemfile/__key/themefiles/h-00000000b0ee429f-s-ac6c06b274524486add6d4f6b26d379d-stylesheetfiles-http-e2eticom-80/ie8.less" /><![endif]--><!--[if gte IE 9]--><link type="text/css" rel="stylesheet" href="wl18xx-1-2-driver-modules_files/print.css" media="print"><!--[endif]--><!--[if gte IE 9]--><link type="text/css" rel="stylesheet" href="wl18xx-1-2-driver-modules_files/handheld.css" media="only screen and (max-width: 768px)"><!--[endif]--><!--[if gte IE 9]--><link type="text/css" rel="stylesheet" href="wl18xx-1-2-driver-modules_files/tablet.css" media="only screen and (min-device-width: 769px) and (max-device-width: 1024px) and (orientation: landscape), only screen and (min-device-width: 769px) and (max-device-width: 1024px) and (orientation: portrait)"><!--[endif]--><link type="text/css" rel="stylesheet" href="wl18xx-1-2-driver-modules_files/calendar.css"><!--[if gte IE 9]--><link type="text/css" rel="stylesheet" href="wl18xx-1-2-driver-modules_files/calendar_2D00_handheld.css" media="(max-width: 768px)"><!--[endif]--><link type="text/css" rel="stylesheet" href="wl18xx-1-2-driver-modules_files/analyticswidget.css"><script type="text/javascript" src="wl18xx-1-2-driver-modules_files/theme.js"></script><script type="text/javascript" src="wl18xx-1-2-driver-modules_files/analytics_003.js"></script>
+          <link type="text/css" rel="stylesheet" href="wl18xx-1-2-driver-modules_files/dynamic-style.css" media="screen,print">
+        
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+          <link type="text/css" rel="stylesheet" href="wl18xx-1-2-driver-modules_files/dynamic-style_002.css" media="screen,print">
+        <link rel="canonical" href="http://e2e.ti.com/support/wireless_connectivity/wilink_wifi_bluetooth/f/307/t/438045"><title>
+	[Resolved] How to initialize/load the wl18xx driver when it 's build as
+ module? - WiLink™ WiFi + Bluetooth Forum - WiLink™ WiFi + Bluetooth - 
+TI E2E Community
+</title><style type="text/css" class="evergageCampaignStyles">/*
+ * Copyright (C) 2010-2014 Evergage, Inc.
+ * All rights reserved.
+ */
+
+
+/* Fluid class for determining actual width in IE */
+#qtip-rcontainer .evergage-tooltip{
+    display: block !important;
+    visibility: hidden !important;
+    position: static !important;
+    float: left !important;
+}
+
+/* Core qTip styles */
+.evergage-tooltip, .evergage-qtip{
+    position: fixed;
+    left: -28000px;
+    top: -28000px;
+    display: none;
+}
+
+.evergage-tooltip.evergage-unsafe-tooltip {
+    display: block;
+    left: inherit;
+    top: inherit;
+}
+
+.evergage-tooltip.evergageMessageInVisualEditorTestMode {
+    position: absolute;
+    pointer-events: auto;
+}
+
+.evergage-tooltip > .evergage-tooltip-content-unsafe-tooltip {
+    margin: 0px !important;
+    border: none !important;
+    outline: 0px !important;
+    padding: 0px !important;
+}
+
+.evergage-tooltip.evergage-jgrowl.evergage-tooltip-bar {
+    max-width: 100% !important;
+    width: 100% !important;
+    border-radius: 0px !important;
+    -o-border-radius: 0px !important;
+    -moz-border-radius: 0px !important;
+    -webkit-border-radius: 0px !important;
+    -ms-border-radius: 0px !important;
+}
+
+.evergage-tooltip-invisible {
+    display: none !important;
+    visibility: hidden !important;
+    width: 1px !important;
+    height: 1px !important;
+}
+
+.evergage-tooltip-page {
+    position: relative;
+    left: 0;
+    top: 0;
+    z-index: inherit !important;
+    display: inline-block;
+}
+
+.evergage-tooltip-page-replace {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.evergage-tooltip .evergage-tooltip-content li.evergage-tasklistitem-notdone, .evergage-tooltip .evergage-tooltip-content li.evergage-tasklistitem-done {
+    text-transform: inherit;
+    display: list-item;
+    width: inherit;
+    line-height: inherit;
+    text-align: left;
+    margin-bottom: 10px;
+    list-style-position: inside;
+}
+
+.evergage-tooltip li.evergage-task-done, .evergage-tooltip li.evergage-task-notdone {
+    margin-bottom: 10px;
+}
+
+.evergage-tooltip .evergage-tooltip-content li.evergage-tasklistitem-done, .evergage-tooltip li.evergage-task-done {
+    text-decoration: line-through;
+}
+
+.evergage-tooltip.evergage-nonBlocking.evergage-tooltip-hover {
+    opacity: 0.2 !important;
+}
+
+.evergage-tooltip .evergage-tooltip-content{
+    position: relative;
+    padding: 5px 9px;
+    overflow: hidden;
+
+    text-align: left;
+    word-wrap: break-word;
+}
+
+.evergage-tooltip .evergage-tooltip-titlebar{
+    position: relative;
+    min-height: 14px;
+    padding: 5px 35px 5px 10px;
+    overflow: hidden;
+
+    border-width: 0 0 1px;
+    font-weight: bold;
+}
+
+.evergage-tooltip-titlebar + .evergage-tooltip-content{ border-top-width: 0 !important; }
+
+/* Default close button class */
+.evergage-tooltip-titlebar .evergage-tooltip-close {
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    margin-top: -9px;
+    font-weight: bold;
+
+    cursor: pointer;
+    outline: medium none;
+
+    border: none;
+    background: transparent;
+    /*border-width: 1px;*/
+    /*border-style: solid;*/
+}
+
+.emptyTitle > .evergage-tooltip-titlebar  {
+    height: 0;
+    float: right;
+    z-index: 2147483647;
+}
+
+* html .evergage-tooltip .evergage-tooltip-titlebar .evergage-tooltip-close { top: 16px; } /* IE fix */
+
+.evergage-tooltip-titlebar .evergage-ui-icon-close,
+.evergage-tooltip-icon .evergage-ui-icon-close {
+    display: block;
+    text-indent: -1000em;
+    direction: ltr;
+}
+
+.evergage-tooltip-icon, .evergage-tooltip-icon .evergage-ui-icon-close {
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    text-decoration: none;
+}
+
+.evergage-tooltip-icon .evergage-ui-icon-close{
+    width: 18px;
+    height: 14px;
+
+    text-align: center;
+    text-indent: 0;
+    font: normal bold 14px/14px sans-serif;
+
+    color: inherit;
+    background: transparent none no-repeat -100em -100em;
+}
+
+a.evergage-tooltip-close:hover {
+    text-decoration: none;
+}
+
+.evergage-ui-icon-close:hover {
+    font-size: 22px;
+}
+
+
+/* Applied to 'focused' tooltips e.g. most recently displayed/interacted with */
+.evergage-tooltip-focus {}
+
+/* Applied on hover of tooltips i.e. added/removed on mouseenter/mouseleave respectively */
+.evergage-tooltip-hover {}
+
+/* Default tooltip style */
+.evergage-tooltip-default {
+    /*border-width: 2px;
+    border-style: solid;
+    border-color: #F1D031;
+
+    background-color: #FFFFA3;
+    color: #555;*/
+}
+
+.evergage-tooltip-default .evergage-tooltip-titlebar {
+    background-color: transparent;
+}
+
+.evergage-tooltip-default .evergage-tooltip-icon {
+    /*border-color: #CCC;*/
+    /*background: #F1F1F1;*/
+    /*color: #777;*/
+}
+
+/* Add shadows to your tooltips in: FF3+, Chrome 2+, Opera 10.6+, IE9+, Safari 2+ */
+.evergage-tooltip-shadow{
+    -webkit-box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.15);
+    box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.15);
+}
+
+/* Add rounded corners to your tooltips in: FF3+, Chrome 2+, Opera 10.6+, IE9+, Safari 2+ */
+.evergage-tooltip-rounded,
+.evergage-tooltip-tipsy,
+.evergage-tooltip-bootstrap{
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+
+
+/* IE9 fix - removes all filters */
+.evergage-tooltip:not(.ie9haxors) div.evergage-tooltip-content,
+.evergage-tooltip:not(.ie9haxors) div.evergage-tooltip-titlebar{
+    filter: none;
+    -ms-filter: none;
+}
+
+
+/* Tips plugin */
+.evergage-tooltip .evergage-tooltip-tip{
+    margin: 0 auto;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.evergage-tooltip .evergage-tooltip-tip,
+.evergage-tooltip .evergage-tooltip-tip .evergage-qtip-vml{
+    position: absolute;
+
+    line-height: 0.1px !important;
+    font-size: 0.1px !important;
+    color: #123456;
+
+    background: transparent;
+    border: 0 dashed transparent;
+}
+
+.evergage-tooltip .evergage-tooltip-tip canvas{ top: 0; left: 0; }
+
+.evergage-tooltip .evergage-tooltip-tip .evergage-qtip-vml{
+    behavior: url(#default#VML);
+    display: inline-block;
+    visibility: visible;
+}
+
+/* Modal plugin */
+#evergage-qtip-overlay{
+    position: fixed;
+    left: -10000em;
+    top: -10000em;
+}
+
+/* Applied to modals with show.modal.blur set to true */
+#evergage-qtip-overlay.blurs{ cursor: pointer; }
+
+/* Change opacity of overlay here */
+#evergage-qtip-overlay div{
+    position: absolute;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+
+    background-color: black;
+
+    opacity: 0.7;
+    filter:alpha(opacity=70);
+    -ms-filter:\"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)\";
+}
+
+.evergage.poweredByEvergage > a {
+    opacity: 0.2;
+    transition: opacity 0.3s ease-in-out;
+    -webkit-transition: opacity 0.3s ease-in-out;
+    -moz-transition: opacity 0.3s ease-in-out;
+    position: absolute;
+    right: 4px;
+    bottom: 2px;
+}
+
+.evergage.poweredByEvergage > a:hover {
+    opacity: 1;
+}
+
+
+/*# sourceURL=evergageStyles.css*/</style><script type="text/javascript" async="" charset="utf-8" src="wl18xx-1-2-driver-modules_files/utag_002.js" id="utag_ti.main_4"></script><script type="text/javascript" async="" charset="utf-8" src="wl18xx-1-2-driver-modules_files/utag_004.js" id="utag_ti.main_52"></script><link type="text/css" rel="stylesheet" href="wl18xx-1-2-driver-modules_files/main.css" data-systemjs-css=""><script type="text/javascript" async="" charset="utf-8" src="wl18xx-1-2-driver-modules_files/utag_003.js" id="utag_ti.main_87"></script></head><body spellcheck="true" style="padding-top: 105px;"><form name="ctl02" method="post" action="./1570285" id="ctl02" novalidate="novalidate">
+<div>
+<input name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUBMGRk2maSnWryKnTSdAgVkmY8csPR0g9yKyXi53CrGfvLEX0=" type="hidden">
+</div>
+
+
+<script src="wl18xx-1-2-driver-modules_files/WebResource_003.axd" type="text/javascript"></script>
+<script src="wl18xx-1-2-driver-modules_files/WebResource_002.axd" type="text/javascript"></script>
+<script src="wl18xx-1-2-driver-modules_files/WebResource.axd" type="text/javascript"></script>
+<div>
+
+	<input name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="C21772F6" type="hidden">
+</div><div class="header-fragments-header"></div>
+<div class="header-fragments" id="ctl03_ctl01_page"><div class="layout">
+<div class="layout-header"></div>
+<div class="layout-content header-top-content with-adaptable-elements" id="ctl03_ctl01_layout" style="visibility: visible; top: 0px; z-index: 10; position: static;">
+<div class="layout-region header" id="ctl03_ctl01_header" style="position: fixed; top: 0px; z-index: 10;">
+<div class="layout-region-inner header"><div class="content-fragment site-banner no-wrapper responsive-1" id="header-1722">
+<div class="content-fragment-content">
+
+
+
+
+
+
+
+
+
+				
+		
+	
+		
+
+
+
+<div class="banner site  with-site-navigation " id="header-1722_banner">
+	<div class="avatar">
+						    
+								              <a href="http://www.ti.com/" title="Go to TI.com" class="ui-tip" style="background-image: url('/cfs-file/__key/defaultwidgets/e2e80000000000000000000000000000-8e37c7cc2be34dab910dfa4c3808ef60/iconHeader.svg'); background-image: url('/cfs-file/__key/defaultwidgets/e2e80000000000000000000000000000-8e37c7cc2be34dab910dfa4c3808ef60/ti_5F00_logo.png')\9; *background-image: url('/cfs-file/__key/defaultwidgets/e2e80000000000000000000000000000-8e37c7cc2be34dab910dfa4c3808ef60/ti_5F00_logo.png'); background-repeat: no-repeat; width: 280px; height: 35px">
+			  </a>
+      			</div>
+
+      <h3 class="name hidden">TI E2E Community</h3>
+
+					<div class="navigation-list site-links" id="header-1722_bannerSiteLinks">
+			<ul>
+				<li class="navigation-list-item">
+					<a href="#" class="site-navigation group ui-tip" id="header-1722_site" data-tip="Groups" title="Groups">Menu</a>
+				</li>
+			</ul>
+		</div>
+	    	<fieldset class="search" id="header-1722_searchFields" style="">
+		<ul class="field-list">
+			<li class="field-item">
+				<span class="field-item-description hidden">
+					<label>Search through millions of questions and answers</label>
+				</span>
+				<span class="field-item-input">
+					<input autocomplete="off" placeholder="Search through millions of questions and answers" id="header-1722_Search" type="search">
+					<input class="searchIcon" type="button">
+				</span>
+			</li>
+		</ul>
+	</fieldset>
+ 
+					<div class="navigation-list user-links" id="header-1722_bannerLinks">
+				<ul style="width: 100%">
+																																																		<li class="navigation-list-item">
+							<a href="http://e2e.ti.com/login?ReturnUrl=%2Fsupport%2Fwireless_connectivity%2Fwilink_wifi_bluetooth%2Ff%2F307%2Fp%2F438045%2F1570285" class="ui-tourtip internal-link user with-icon ui-tip" data-tourtipkey="t;zMc3juMrq02RDfpMOAjvYA;uqnDnB3wREIoDPKHxPAQqg" data-tourtipmessage="Sign in or Join the community." title="Join or Sign In">User</a>
+						</li>
+																																													</ul>
+			</div>
+	
+	<div class="navigation-list handheld">
+		<ul>
+			<li class="navigation-list-item">
+				<a href="#" class="site" id="header-1722_handheldSiteLinksLink">Menu</a>
+			</li>
+			<li class="navigation-list-item">
+				<a href="#" class="search" id="header-1722_handheldSearchFieldsLink">Search through millions of questions and answers</a>
+			</li>
+			<li class="navigation-list-item">
+															<a href="http://e2e.ti.com/login?ReturnUrl=%2Fsupport%2Fwireless_connectivity%2Fwilink_wifi_bluetooth%2Ff%2F307%2Fp%2F438045%2F1570285" class="user">User</a>
+												</li>
+		</ul>
+	</div>
+	<div class="container handheld">
+		<fieldset class="search" style="" id="header-1722_handheldSearchFields"></fieldset>
+		<div class="user-links" style="display:none" id="header-1722_handheldBannerLinks"></div>
+	</div>
+
+</div>
+<div class="e2e-header">
+  <div class="e2e-banner">
+		<a href="http://e2e.ti.com/" title="TI E2E™ Community" class="ui-tip">TI E2E™ Community</a>
+  </div>
+</div>
+
+
+
+        
+            
+    
+
+
+
+			</div>
+<div class="content-fragment-footer"></div>
+</div>
+<div class="content-fragment navigation-custom no-wrapper responsive-hidden" id="header-1723">
+<div class="content-fragment-content">
+
+
+							
+
+
+			<div class="navigation-list links" id="header-1723_container" data-minlinks="0" data-direction="horizontal" data-maxlinks="7" data-lid="" style="display: block; overflow: hidden; height: 42px;"><div style="overflow-y: hidden; overflow-x: auto; height: 62px;" class="container"><ul style="list-style: outside none none; padding: 0px; margin: 0px; overflow: hidden; width: 660px; visibility: visible;"><li style="display: inline;" class="navigation-list-item"><a href="http://e2e.ti.com/support/" style="float: left;">Forums</a><ul class="children" style="display: none; float: left;">
+													  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/amplifiers/">Amplifiers</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/site_support/">Site Support</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/switches_multiplexers/">Switches &amp; Multiplexers</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/applications/">Applications</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/arm/">Processors</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/clocks/">Clock and Timing</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/data_converters/">Data Converters</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/development_tools/">Development Tools</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/dsp/">Digital Signal Processors (DSP)</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/dlp__mems_micro-electro-mechanical_systems/">DLP® Products &amp; MEMS</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/embedded/">Embedded Software</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/interface/">Interface</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/isolation/">Digital Isolators</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/logic/">Logic </a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/microcontrollers/">Microcontrollers</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/omap/">OMAP™ Applications Processors (Read Only)</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/power_management/">Power Management</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/rf__digital_radio/">RF &amp; Digital Radio</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/sensor/">Sensor Products</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/other_analog/">Haptics &amp; Touch</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  									  								  									  								  								  <a href="http://e2e.ti.com/support/wireless_connectivity/" class="selected">Wireless Connectivity</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/archive/">Archive</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						   						   						   						   						   							  </ul></li><li style="display: inline;" class="navigation-list-item"><a href="http://e2e.ti.com/blogs_/" style="float: left;">Blogs</a><ul class="children" style="display: none; float: left;">
+													  						  						  						  						  						  							  <li>
+								  																	  <a href="http://e2e.ti.com/blogs_/b/analogwire">Analog Wire</a>
+							  </li>
+						   						   						   						   						   						   
+						   						  						  						  						  						  						  							  <li>
+								  																	  <a href="http://e2e.ti.com/blogs_/b/behind_the_wheel">Behind the Wheel</a>
+							  </li>
+						   						   						   						   						   						   
+						   						  						  						  						  						  						  							  <li>
+								  																	  <a href="http://e2e.ti.com/blogs_/b/connecting_wirelessly">ConnecTIng Wirelessly</a>
+							  </li>
+						   						   						   						   						   						   
+						   						  						  						  						  						  						  							  <li>
+								  																	  <a href="http://e2e.ti.com/blogs_/b/enlightened">Enlightened: The TI DLP® Blog</a>
+							  </li>
+						   						   						   						   						   						   
+						   						  						  						  						  						  						  							  <li>
+								  																	  <a href="http://e2e.ti.com/blogs_/b/industrial_strength">Industrial Strength</a>
+							  </li>
+						   						   						   						   						   						   
+						   						  						  						  						  						  						  							  <li>
+								  																	  <a href="http://e2e.ti.com/blogs_/b/helpcentral">Learn E2E</a>
+							  </li>
+						   						   						   						   						   						   
+						   						  						  						  						  						  						  							  <li>
+								  																	  <a href="http://e2e.ti.com/blogs_/b/motordrivecontrol">Motor Drive &amp; Control</a>
+							  </li>
+						   						   						   						   						   						   
+						   						  						  						  						  						  						  							  <li>
+								  																	  <a href="http://e2e.ti.com/blogs_/b/msp430blog">MSP Low-Power Plays</a>
+							  </li>
+						   						   						   						   						   						   
+						   						  						  						  						  						  						  							  <li>
+								  																	  <a href="http://e2e.ti.com/blogs_/b/powerhouse">Power House</a>
+							  </li>
+						   						   						   						   						   						   
+						   						  						  						  						  						  						  							  <li>
+								  																	  <a href="http://e2e.ti.com/blogs_/b/process">The Process</a>
+							  </li>
+						   						   						   						   						   						   
+						   						  						  						  						  						  						  							  <li>
+								  																	  <a href="http://e2e.ti.com/blogs_/b/thinkinnovate">Think. Innovate</a>
+							  </li>
+						   						   						   						   						   						   
+						   						  						  						  						  						  						  							  <li>
+								  																	  <a href="http://e2e.ti.com/blogs_/b/designproject">University Program</a>
+							  </li>
+						   						   						   						   						   						   
+						   						  						   						   						   						   						   							  </ul></li><li style="display: inline;" class="navigation-list-item"><a href="http://e2e.ti.com/group/" style="float: left;">Groups</a><ul class="children" style="display: none; float: left;">
+													  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/group/universityprogram/">TI University Program</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/group/ru/">Russian E2E (сообщество E2E)</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/group/jp/">Japanese E2E (日本語コミュニティ)</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/group/launchyourdesign/">Launch Your Design</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/group/motor/">Motor Drive &amp; Control</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						   						   						   						   						   							  </ul></li><li style="display: inline;" class="navigation-list-item"><a href="https://training.ti.com/" style="float: left;">TI Training</a><ul class="children" style="display: none; float: left;">
+						  						  							  
+						  						  							  
+						  						  							  
+						  						  							  
+						  							  </ul></li><li style="display: inline;" class="navigation-list-item language"><a href="https://e2echina.ti.com/" class="language-link" title="简体中文" style="float: left;"><span></span>简体中文</a></li></ul></div></div>
+		</div>
+<div class="content-fragment-footer"></div>
+</div>
+<div class="content-fragment header-fragment t-i-header no-wrapper responsive-1" id="header-1724">
+<div class="content-fragment-content">
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+			
+	
+<script src="wl18xx-1-2-driver-modules_files/personalization.js"></script>
+<script language="javascript" type="text/javascript" src="wl18xx-1-2-driver-modules_files/includes_5F00_pg.js"></script>
+<script src="wl18xx-1-2-driver-modules_files/lib.js"></script>
+
+	</div>
+<div class="content-fragment-footer"></div>
+</div>
+</div>
+</div>
+<div class="layout-region content" id="ctl03_ctl01_content">
+<div class="layout-region-inner content"><div class="content-fragment group-banner no-wrapper responsive-1" id="header-1533311608">
+<div class="content-fragment-content">
+
+
+
+
+
+
+<link rel="stylesheet" href="wl18xx-1-2-driver-modules_files/main_002.css">
+<div class="banner context  ">
+  	<div class="avatar">
+		<a href="http://e2e.ti.com/support/wireless_connectivity/wilink_wifi_bluetooth/">
+			<img src="wl18xx-1-2-driver-modules_files/defaulthub.gif" style="width: 68px;height:0;padding:68px 0 0 0;overflow:hidden;background:url('http://e2e.ti.com/utility/defaulthub.gif') center center no-repeat;background-size:cover;" alt="WiLink™ WiFi + Bluetooth">
+		</a>
+	</div>
+	<h3 class="name">
+		<a href="http://e2e.ti.com/support/wireless_connectivity/wilink_wifi_bluetooth/"><span>WiLink™ WiFi + Bluetooth</span></a>
+	</h3>
+
+			<h2 class="description">
+			<a href="http://e2e.ti.com/support/wireless_connectivity/wilink_wifi_bluetooth/f/307"><span>WiLink™ WiFi + Bluetooth Forum</span></a>
+		</h2>
+	
+			<div class="navigation-list applications">
+			<div class="" data-minlinks="0" data-maxlinks="0" data-direction="vertical"><div class="container"><ul style="list-style: outside none none; padding: 0px; margin: 0px; overflow: hidden; visibility: visible;"><li class="navigation-list-tem"><a href="#" class="more" data-more="">More</a></li></ul></div></div>
+		</div>
+	
+	
+																			<div class="new-buttons">
+						<div class="navigation-list related">
+				<div class="" data-maxlinks="1" data-minlinks="1"><div class="container"><ul style="list-style: outside none none; padding: 0px; margin: 0px; overflow: hidden; visibility: visible;"><li class="navigation-list-item"><a class="internal-link add-post forum" href="http://e2e.ti.com/p/addpost?rt=438045">Ask a related question</a><div class="help" title="A related question is a question created from another question. When the related question is created, it will be automatically linked to the original question.">
+								What is a related question?
+							</div></li></ul></div></div>
+			</div>
+						<div class="navigation-list new">
+				<div class="" data-maxlinks="1" data-minlinks="1"><div class="container"><ul style="list-style: outside none none; padding: 0px; margin: 0px; overflow: hidden; visibility: visible;"><li class="navigation-list-item"><a class="internal-link add-post forum" href="http://e2e.ti.com/p/addpost?fn=307">
+																									Ask a new question
+																							</a></li></ul></div></div>
+			</div>
+		</div>
+		
+		</div>
+</div>
+<div class="content-fragment-footer"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="layout-footer"></div>
+</div></div><div class="header-fragments-footer"></div><div class="single-column" style="display: none;"></div><div class="content-fragment-page forums-thread" id="ctl03_ctl02_page"><div class="layout">
+<div class="layout-header"></div>
+<div class="layout-content content-left-sidebar-right" id="ctl03_ctl02_layout">
+<div class="layout-region right-sidebar" id="ctl03_ctl02_right-sidebar">
+<div class="layout-region-inner right-sidebar"><div class="content-fragment raw-html no-wrapper responsive-1 
+	    navigation-custom
+    " id="fragment-320090">
+<div class="content-fragment-content">
+
+<div class="navigation-list links" style="display: block;">
+<ul style="list-style: outside none none; padding: 0px; margin: 0px; overflow: hidden; visibility: visible;">
+<li class="navigation-list-item parent-link"><a href="http://e2e.ti.com/support/wireless_connectivity/">Go to Wireless Connectivity</a></li>
+</ul>
+</div>
+
+	</div>
+<div class="content-fragment-footer"></div>
+</div>
+<div class="content-fragment navigation-custom no-wrapper with-spacing responsive-1" id="fragment-320091">
+<div class="content-fragment-content">
+
+
+							
+
+
+			<div class="navigation-list links" id="fragment-320091_container" data-minlinks="0" data-direction="vertical" data-maxlinks="4" data-lid="" style="display: block;"><div class="container"><ul style="list-style: outside none none; padding: 0px; margin: 0px; overflow: hidden; visibility: visible;"><li class="navigation-list-item"><a href="http://e2e.ti.com/support/wireless_connectivity/wilink_wifi_bluetooth/f/307" class="selected">Forums</a><ul class="children" style="display:none">
+													  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/amplifiers/">Amplifiers</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/site_support/">Site Support</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/switches_multiplexers/">Switches &amp; Multiplexers</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/applications/">Applications</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/arm/">Processors</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/clocks/">Clock and Timing</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/data_converters/">Data Converters</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/development_tools/">Development Tools</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/dsp/">Digital Signal Processors (DSP)</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/dlp__mems_micro-electro-mechanical_systems/">DLP® Products &amp; MEMS</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/embedded/">Embedded Software</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/interface/">Interface</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/isolation/">Digital Isolators</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/logic/">Logic </a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/microcontrollers/">Microcontrollers</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/omap/">OMAP™ Applications Processors (Read Only)</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/power_management/">Power Management</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/rf__digital_radio/">RF &amp; Digital Radio</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/sensor/">Sensor Products</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/other_analog/">Haptics &amp; Touch</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  									  								  									  								  								  <a href="http://e2e.ti.com/support/wireless_connectivity/" class="selected">Wireless Connectivity</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						  						  						  						  						  
+							  <li>
+								  								  									  								  									  								  									  								  								  <a href="http://e2e.ti.com/support/archive/">Archive</a>
+							  </li>
+							  
+						   						   						   						   						   						   						   						   						   						   						   
+						   						  						   						   						   						   						   							  </ul></li></ul></div></div>
+	</div>
+<div class="content-fragment-footer"></div>
+</div>
+<div id="fragment-320092"></div>
+<div id="fragment-320093"></div>
+</div>
+</div>
+<div class="layout-region content" id="ctl03_ctl02_content">
+<div class="layout-region-inner content"><div id="fragment-320094"></div>
+<div id="fragment-320095"></div>
+<div id="fragment-320096"></div>
+<div id="fragment-320097"></div>
+<div class="content-fragment thread no-wrapper with-spacing responsive-1" id="fragment-320098">
+<div class="content-fragment-content">
+
+ 
+
+
+<div id="pi320098-paged-content">
+
+
+
+
+
+
+
+												
+	
+	
+
+
+
+
+
+	<div class="locked-banner">
+		<p>This thread has been locked.</p>
+		<p>If you have a related question, please click the "<a href="http://e2e.ti.com/p/addpost?rt=438045">Ask a related question</a>" button in the top right corner. The newly created question will be automatically linked to this question.</p>
+	</div>
+
+
+
+
+
+
+
+
+	<div class="content full" id="438045">
+
+		
+							<div class="status">
+				<ul class="attribute-list">
+					<li class="attribute-item resolution-status">
+						<span class="attribute-value verified">
+							Resolved
+						</span>
+					</li>
+				</ul>
+			</div>
+				
+					<h1 class="name">How to initialize/load the wl18xx driver when it 's build as module?</h1>
+            <div class="author starter-header">
+              <div class="user-icons">
+                <span class="rank-icon">
+                                                      <div style="background: url('/cfs-filesystemfile/__key/communityserver-components-ranks/00-00-00-00-02/icon_5F00_intellectual.gif') no-repeat" class="rank-image">
+                    <a onclick="self.location='/group/helpcentral/w/e2e/ti-e2e-community-recognition-program.aspx';return false" title="Click here for explanation of levels" href="">
+                      <span class="rank-name">Intellectual</span>
+                    </a><span class="rank-points">740</span> points
+                  </div>
+                                  </span>
+                <span class="role-icon">
+                                    <img src="wl18xx-1-2-driver-modules_files/communitymember.gif" align="absbottom">
+                </span>
+              </div>
+            	<span class="user-name">
+            		            			<a href="http://e2e.ti.com/members/1437841" class="internal-link view-user-profile">
+            				yuqing cai
+            			</a>
+            		            		            	</span>
+            	<div class="avatar">
+            		            			<a href="http://e2e.ti.com/members/1437841">
+            				<img src="wl18xx-1-2-driver-modules_files/default.png" alt="yuqing cai" border="0">
+            			</a>
+            		            	</div>
+            </div>
+		
+				
+		<div class="content">
+						<p>Recently, I am trying to integrate the "<a href="http://www.ti.com/product/WL1835MOD" class="internal-link folder product" title="Link to Product Folder" target="_blank">WL1835MOD</a>" driver to my OMAP3 system(running linux-3.2.1), &nbsp;<br>linux-3.2.1 source tree doesn't contain the wl18xx driver source, according to the <a href="http://processors.wiki.ti.com/index.php/WL18xx_System_Build_Scripts">WL18xx System Build Scripts</a>, <br>I generated the following components as modules from the compat-wireless source and install them in my<br>root file system:</p>
+<p><span style="color:#ff9900;background-color:#ffffff;"><strong>compat.ko, wl18xx.ko, wlcore.ko, wlcore_sdio.ko, mac80211.ko, cfg80211.ko</strong></span><br><span style="color:#ff9900;background-color:#ffffff;"><strong>wilink8 firmware</strong></span><br><span style="color:#ff9900;background-color:#ffffff;"><strong>crda</strong></span><br><span style="color:#ff9900;background-color:#ffffff;"><strong>hostap</strong></span><br><span style="color:#ff9900;background-color:#ffffff;"><strong>wpa_supplicant</strong></span><br><span style="color:#ff9900;background-color:#ffffff;"><strong>iw</strong></span><br><span style="color:#ff9900;background-color:#ffffff;"><strong>libnl</strong></span><br><span style="color:#ff9900;background-color:#ffffff;"><strong>openssl</strong></span><br><span style="color:#ff9900;background-color:#ffffff;"><strong>uim</strong></span></p>
+<p>here is my questions:<br>1) How to pass the initialization data "platfrom_data structure" to the wl18xx driver(driver is build as a module)?<br> According to <a href="http://processors.wiki.ti.com/index.php/WL18xx_Platform_Integration_Guide#Platform_Data">WL18xx Platform Integration Guide</a>, it use the function "wl12xx_set_platform_data" in the board&nbsp;<br>initialization file(such as "board-omap3beagle.c" or "board-omap3evm.c")to initialize the driver, in this way, &nbsp;it seems <br>that the driver has to build in kernel but not a module then initialize it when the system boot. <br>So what is the correct way to initialize the driver when it is a module?</p>
+<p>2) How to load the driver modules after the system is finish booting. The modules is a driver stack, so it must <br>load&nbsp;as an sequence, is there a boot scripts in the building system?</p><div style="clear:both;"></div>
+									
+		</div>
+
+				
+				
+				    		<div class="post-tags">
+    		    		<span class="ui-tag" data-contentid="98f4bd19-ef79-4cf9-ad00-1bc0309aa470" data-contenttypeid="46448885-d0e6-4133-bbfb-f0cd7b0fd6f7" data-urlformat="http://e2e.ti.com/support/wireless_connectivity/wilink_wifi_bluetooth/f/307/tags/{tag}" data-readonly="true" data-tags="WL1835MOD" data-configuration=""><span><a rel="nofollow tag" href="http://e2e.ti.com/support/wireless_connectivity/wilink_wifi_bluetooth/f/307/tags/WL1835MOD">WL1835MOD</a></span></span>
+    		</div>
+		
+							<div class="author footer">
+  <div class="user-icons">
+    <span class="rank-icon">
+                  <div style="background: url('/cfs-filesystemfile/__key/communityserver-components-ranks/00-00-00-00-02/icon_5F00_intellectual.gif') no-repeat" class="rank-image">
+        <a onclick="self.location='/group/helpcentral/w/e2e/ti-e2e-community-recognition-program.aspx';return false" title="Click here for explanation of levels" href="">
+          <span class="rank-name">Intellectual</span>
+        </a><span class="rank-points">740</span> points
+      </div>
+          </span>
+    <span class="role-icon">
+            <img src="wl18xx-1-2-driver-modules_files/communitymember.gif" align="absbottom">
+    </span>
+  </div>
+	<span class="user-name">
+					<a href="http://e2e.ti.com/members/1437841" class="internal-link view-user-profile">
+				yuqing cai
+			</a>
+					</span>
+	<div class="avatar">
+					<a href="http://e2e.ti.com/members/1437841">
+				<img src="wl18xx-1-2-driver-modules_files/default.png" alt="yuqing cai" border="0">
+			</a>
+			</div>
+</div>
+
+
+<div class="actions footer">
+	
+								
+	
+	<div class="navigation-list" data-minlinks="2" data-direction="horizontal" data-maxlinks="2" id="fragment-320098_postActions-98f4bd19-ef79-4cf9-ad00-1bc0309aa470" style="overflow: hidden; height: 25px;"><div style="overflow-y: hidden; overflow-x: auto; height: 45px;" class="container"><ul style="list-style: outside none none; padding: 0px; margin: 0px; overflow: hidden; width: 314px; visibility: visible;"><li style="display: inline;" class="navigation-list-item date"><span class="attribute-value" style="float: left;">
+					<a href="http://e2e.ti.com/support/wireless_connectivity/wilink_wifi_bluetooth/f/307/t/438045">Jul 14, 2015 1:54 AM</a>
+				</span></li><li style="display: inline;" class="navigation-list-item"><span style="float: left;">Locked</span></li></ul></div></div>
+</div>
+
+
+		
+			</div>
+	
+
+
+			<ul class="filter margin-bottom margin-top" id="fragment-320098_filters">
+			<li class="filter-option  selected ">
+				<a href="#" data-messagename="telligent.evolution.widgets.thread.answerfilter" data-filter="all">All Responses</a>
+			</li>
+			<li class="filter-option ">
+				<a href="#" data-messagename="telligent.evolution.widgets.thread.answerfilter" data-filter="answers">Suggested Answers</a>
+			</li>
+		</ul>
+
+			
+	<ul class="content-list content margin-bottom">
+		
+
+
+
+
+	<li class="content-item ">
+	<div class="content full" id="1570232">
+
+					<div class="author header">
+  <div class="user-icons">
+    <span class="rank-icon">
+                  <div style="background: url('/cfs-filesystemfile/__key/communityserver-components-ranks/00-00-00-00-12/icon_5F00_guru.gif') no-repeat" class="rank-image">
+        <a onclick="self.location='/group/helpcentral/w/e2e/ti-e2e-community-recognition-program.aspx';return false" title="Click here for explanation of levels" href="">
+          <span class="rank-name">Guru</span>
+        </a><span class="rank-points">85400</span> points
+      </div>
+          </span>
+    <span class="role-icon">
+            <img src="wl18xx-1-2-driver-modules_files/tiemployee.gif" align="absbottom">
+    </span>
+  </div>
+	<span class="user-name">
+					<a href="http://e2e.ti.com/members/1304335" class="internal-link view-user-profile">
+				Joseph Gigi
+			</a>
+					</span>
+  <div class="avatar">
+					<a href="http://e2e.ti.com/members/1304335">
+				<img src="wl18xx-1-2-driver-modules_files/default.png" alt="Joseph Gigi" border="0">
+			</a>
+			</div>
+</div>
+
+
+<div class="actions header">
+	<div class="navigation-list" data-minlinks="2" data-direction="horizontal" data-maxlinks="2" style="overflow: hidden; height: 25px;"><div style="overflow-y: hidden; overflow-x: auto; height: 45px;" class="container"><ul style="list-style: outside none none; padding: 0px; margin: 0px; overflow: hidden; width: 292px; visibility: visible;"><li style="display: inline;" class="navigation-list-item date"><span class="attribute-value" style="float: left;">
+					<a href="http://e2e.ti.com/support/wireless_connectivity/wilink_wifi_bluetooth/f/307/p/438045/1570232#1570232">Jul 14, 2015 8:29 AM</a>
+				</span></li></ul></div></div>
+</div>
+
+		
+		
+		
+				
+		<div class="content">
+						Hi,<br>
+<br>
+1. wl12xx_set_platform_data() is defined in 
+&lt;kernel&gt;/drivers/net/wireless/wl12xx/wl12xx_platform_data.c - the 
+compilation depends on "CONFIG_WL12XX_PLATFORM_DATA" (not part of the 
+wl12xx modules).<br>
+<br>
+2. Yes, you are correct. Please use the below order of loading:<br>
+<br>
+1. compat.ko<br>
+2. cfg80211.ko<br>
+3. mac80211.ko<br>
+4. wlcore.ko<br>
+5. wl18xx.ko<br>
+6. wlcore_sdio.ko<br>
+<br>
+Regards,<br>
+Gigi Joseph.<div style="clear:both;"></div>
+									
+		</div>
+
+				
+				
+				
+							<div class="actions footer">
+	
+	
+	
+
+						
+	
+
+  <div class="navigation-list" data-minlinks="1" data-direction="horizontal" data-maxlinks="1" id="fragment-320098_postActions-b33a9dfb-f945-41d9-b9e0-28cea3bd360f" style="overflow: hidden;"><div style="overflow-y: hidden; overflow-x: auto;" class="container"><ul style="list-style: outside none none; padding: 0px; margin: 0px; overflow: hidden; width: 870px; visibility: visible;"><li style="display: inline;" class="navigation-list-item"><span style="float: left;">Locked</span></li></ul></div></div>
+	<div class="after-verify" style="display: none;">
+		<h4>Do you have another question?</h4>
+		<p>We are glad that we were able to resolve this issue, and will now proceed to close this thread.</p>
+		<p>If you have further questions related to this thread, you may click
+ "Ask a related question" below. The newly created question will be 
+automatically linked to this question.</p>
+		<div class="question-links">
+			<a href="http://e2e.ti.com/p/addpost?rt=438045" class="ask-related">Ask a related question</a>
+			<a href="http://e2e.ti.com/p/addpost?fn=307" class="ask-new">Ask a new question</a>
+		</div>
+	</div>
+</div>
+
+
+		
+			</div>
+
+		
+
+
+
+
+	</li><li class="content-item ">
+	<div class="content full" id="1570264">
+
+					<div class="author header">
+  <div class="user-icons">
+    <span class="rank-icon">
+                  <div style="background: url('/cfs-filesystemfile/__key/communityserver-components-ranks/00-00-00-00-02/icon_5F00_intellectual.gif') no-repeat" class="rank-image">
+        <a onclick="self.location='/group/helpcentral/w/e2e/ti-e2e-community-recognition-program.aspx';return false" title="Click here for explanation of levels" href="">
+          <span class="rank-name">Intellectual</span>
+        </a><span class="rank-points">740</span> points
+      </div>
+          </span>
+    <span class="role-icon">
+            <img src="wl18xx-1-2-driver-modules_files/communitymember.gif" align="absbottom">
+    </span>
+  </div>
+	<span class="user-name">
+					<a href="http://e2e.ti.com/members/1437841" class="internal-link view-user-profile">
+				yuqing cai
+			</a>
+					</span>
+  <div class="avatar">
+					<a href="http://e2e.ti.com/members/1437841">
+				<img src="wl18xx-1-2-driver-modules_files/default.png" alt="yuqing cai" border="0">
+			</a>
+			</div>
+</div>
+
+
+<div class="actions header">
+	<div class="navigation-list" data-minlinks="2" data-direction="horizontal" data-maxlinks="2" style="overflow: hidden; height: 25px;"><div style="overflow-y: hidden; overflow-x: auto; height: 45px;" class="container"><ul style="list-style: outside none none; padding: 0px; margin: 0px; overflow: hidden; width: 292px; visibility: visible;"><li style="display: inline;" class="navigation-list-item date"><span class="attribute-value" style="float: left;">
+					<a href="http://e2e.ti.com/support/wireless_connectivity/wilink_wifi_bluetooth/f/307/p/438045/1570264#1570264">Jul 14, 2015 8:55 AM</a>
+				</span></li></ul></div></div>
+</div>
+
+		
+		
+		
+				
+		<div class="content">
+																		<p class="in-reply-to">In reply to <a href="http://e2e.ti.com/support/wireless_connectivity/wilink_wifi_bluetooth/f/307/p/438045/1570232#1570232">Joseph Gigi</a>:</p>
+															<p></p><div class="quote-header"></div><blockquote class="quote"><div class="quote-user">Joseph Gigi</div><div class="quote-content">Hi,<br> <br>
+ 1. wl12xx_set_platform_data() is defined in 
+&lt;kernel&gt;/drivers/net/wireless/wl12xx/wl12xx_platform_data.c - the 
+compilation depends on "CONFIG_WL12XX_PLATFORM_DATA" (not part of the 
+wl12xx modules).<br> <br> 2. Yes, you are correct. Please use the below order of loading:<br> <br> 1. compat.ko<br> 2. cfg80211.ko<br> 3. mac80211.ko<br> 4. wlcore.ko<br> 5. wl18xx.ko<br> 6. wlcore_sdio.ko<br> <br> Regards,<br>Gigi Joseph.
+<div style="clear:both;"></div>
+<p></p></div></blockquote><div class="quote-footer"></div><p></p>
+<p>
+</p><p>hi, Joseph, thanks for your reply.</p>
+<p>the 
+"&lt;kernel&gt;/drivers/net/wireless/wl12xx/wl12xx_platform_data.c" is 
+compiling in kernel building step(it's part of the kernel, so the 
+board-init file can call this function), am I right? This file's 
+compilation is depend on switch "CONFIG_WL12XX_PLATFORM_DATA", &nbsp;and
+ "CONFIG_WL12XX_PLATFORM_DATA" depend on "CONFIG_MAC80211", but 
+according to <a href="http://processors.wiki.ti.com/index.php/WL18xx_Platform_Integration_Guide#Creating_configuration_file_.28.config.29_for_Linux_kernel">WL18xx_Platform_Integration_Guide</a>
+ , "CONFIG_MAC80211" should be set to disabled,&nbsp; that means 
+"wl12xx/wl12xx_platform_data.c" would never be compiled, it's 
+incompatible. why this happen??</p>
+<p>Should I patch my kernel(linux-3.2.1, it's a clean kernel).</p>
+<p><br>Regards.</p>
+<p>Qing.</p><div style="clear:both;"></div>
+									
+		</div>
+
+				
+				
+				
+							<div class="actions footer">
+	
+	
+	
+
+						
+	
+
+  <div class="navigation-list" data-minlinks="1" data-direction="horizontal" data-maxlinks="1" id="fragment-320098_postActions-62efebb4-e3d9-4de5-bd8a-b5f2e3eca934" style="overflow: hidden;"><div style="overflow-y: hidden; overflow-x: auto;" class="container"><ul style="list-style: outside none none; padding: 0px; margin: 0px; overflow: hidden; width: 870px; visibility: visible;"><li style="display: inline;" class="navigation-list-item"><span style="float: left;">Locked</span></li></ul></div></div>
+	<div class="after-verify" style="display: none;">
+		<h4>Do you have another question?</h4>
+		<p>We are glad that we were able to resolve this issue, and will now proceed to close this thread.</p>
+		<p>If you have further questions related to this thread, you may click
+ "Ask a related question" below. The newly created question will be 
+automatically linked to this question.</p>
+		<div class="question-links">
+			<a href="http://e2e.ti.com/p/addpost?rt=438045" class="ask-related">Ask a related question</a>
+			<a href="http://e2e.ti.com/p/addpost?fn=307" class="ask-new">Ask a new question</a>
+		</div>
+	</div>
+</div>
+
+
+		
+			</div>
+
+		
+
+
+
+
+	</li><li class="content-item ">
+	<div class="content full" id="1570285">
+
+					<div class="author header">
+  <div class="user-icons">
+    <span class="rank-icon">
+                  <div style="background: url('/cfs-filesystemfile/__key/communityserver-components-ranks/00-00-00-00-12/icon_5F00_guru.gif') no-repeat" class="rank-image">
+        <a onclick="self.location='/group/helpcentral/w/e2e/ti-e2e-community-recognition-program.aspx';return false" title="Click here for explanation of levels" href="">
+          <span class="rank-name">Guru</span>
+        </a><span class="rank-points">85400</span> points
+      </div>
+          </span>
+    <span class="role-icon">
+            <img src="wl18xx-1-2-driver-modules_files/tiemployee.gif" align="absbottom">
+    </span>
+  </div>
+	<span class="user-name">
+					<a href="http://e2e.ti.com/members/1304335" class="internal-link view-user-profile">
+				Joseph Gigi
+			</a>
+					</span>
+  <div class="avatar">
+					<a href="http://e2e.ti.com/members/1304335">
+				<img src="wl18xx-1-2-driver-modules_files/default.png" alt="Joseph Gigi" border="0">
+			</a>
+			</div>
+</div>
+
+
+<div class="actions header">
+	<div class="navigation-list" data-minlinks="2" data-direction="horizontal" data-maxlinks="2" style="overflow: hidden; height: 25px;"><div style="overflow-y: hidden; overflow-x: auto; height: 45px;" class="container"><ul style="list-style: outside none none; padding: 0px; margin: 0px; overflow: hidden; width: 292px; visibility: visible;"><li style="display: inline;" class="navigation-list-item date"><span class="attribute-value" style="float: left;">
+					<a href="http://e2e.ti.com/support/wireless_connectivity/wilink_wifi_bluetooth/f/307/p/438045/1570285#1570285">Jul 14, 2015 9:09 AM</a>
+				</span></li></ul></div></div>
+</div>
+
+		
+		
+		
+				
+		<div class="content">
+																		<p class="in-reply-to">In reply to <a href="http://e2e.ti.com/support/wireless_connectivity/wilink_wifi_bluetooth/f/307/p/438045/1570264#1570264">yuqing cai</a>:</p>
+															Hi Qing,<br>
+<br>
+I am checking the 5.07 SDK (kernel v 3.2.0) - and I see the below:<br>
+<br>
+config WL12XX_PLATFORM_DATA<br>
+	bool<br>
+	default y<br>
+	select WIRELESS_EXT<br>
+<br>
+Maybe you can have something similar.<br>
+<br>
+Regards,<br>
+Gigi Joseph.<div style="clear:both;"></div>
+									
+		</div>
+
+				
+				
+				
+							<div class="actions footer">
+	
+	
+	
+
+						
+	
+
+  <div class="navigation-list" data-minlinks="1" data-direction="horizontal" data-maxlinks="1" id="fragment-320098_postActions-66eaa800-d24a-4240-88eb-8c59ac48719b" style="overflow: hidden;"><div style="overflow-y: hidden; overflow-x: auto;" class="container"><ul style="list-style: outside none none; padding: 0px; margin: 0px; overflow: hidden; width: 870px; visibility: visible;"><li style="display: inline;" class="navigation-list-item"><span style="float: left;">Locked</span></li></ul></div></div>
+	<div class="after-verify" style="display: none;">
+		<h4>Do you have another question?</h4>
+		<p>We are glad that we were able to resolve this issue, and will now proceed to close this thread.</p>
+		<p>If you have further questions related to this thread, you may click
+ "Ask a related question" below. The newly created question will be 
+automatically linked to this question.</p>
+		<div class="question-links">
+			<a href="http://e2e.ti.com/p/addpost?rt=438045" class="ask-related">Ask a related question</a>
+			<a href="http://e2e.ti.com/p/addpost?fn=307" class="ask-new">Ask a new question</a>
+		</div>
+	</div>
+</div>
+
+
+		
+			</div>
+
+		
+
+
+
+
+	</li><li class="content-item ">
+	<div class="content full" id="1575716">
+
+					<div class="author header">
+  <div class="user-icons">
+    <span class="rank-icon">
+                  <div style="background: url('/cfs-filesystemfile/__key/communityserver-components-ranks/00-00-00-00-02/icon_5F00_intellectual.gif') no-repeat" class="rank-image">
+        <a onclick="self.location='/group/helpcentral/w/e2e/ti-e2e-community-recognition-program.aspx';return false" title="Click here for explanation of levels" href="">
+          <span class="rank-name">Intellectual</span>
+        </a><span class="rank-points">740</span> points
+      </div>
+          </span>
+    <span class="role-icon">
+            <img src="wl18xx-1-2-driver-modules_files/communitymember.gif" align="absbottom">
+    </span>
+  </div>
+	<span class="user-name">
+					<a href="http://e2e.ti.com/members/1437841" class="internal-link view-user-profile">
+				yuqing cai
+			</a>
+					</span>
+  <div class="avatar">
+					<a href="http://e2e.ti.com/members/1437841">
+				<img src="wl18xx-1-2-driver-modules_files/default.png" alt="yuqing cai" border="0">
+			</a>
+			</div>
+</div>
+
+
+<div class="actions header">
+	<div class="navigation-list" data-minlinks="2" data-direction="horizontal" data-maxlinks="2" style="overflow: hidden; height: 25px;"><div style="overflow-y: hidden; overflow-x: auto; height: 45px;" class="container"><ul style="list-style: outside none none; padding: 0px; margin: 0px; overflow: hidden; width: 292px; visibility: visible;"><li style="display: inline;" class="navigation-list-item date"><span class="attribute-value" style="float: left;">
+					<a href="http://e2e.ti.com/support/wireless_connectivity/wilink_wifi_bluetooth/f/307/p/438045/1575716#1575716">Jul 20, 2015 2:59 AM</a>
+				</span></li></ul></div></div>
+</div>
+
+		
+		
+		
+				
+		<div class="content">
+																		<p class="in-reply-to">In reply to <a href="http://e2e.ti.com/support/wireless_connectivity/wilink_wifi_bluetooth/f/307/p/438045/1570285#1570285">Joseph Gigi</a>:</p>
+															<p>Hi, Joseph, I have success to build the kernel(3.2.1) 
+and the compact driver, the following message is show up in the booting 
+prompt (my wl18xx model is insert in MMC1 interface)</p>
+<p><span style="color:#808080;">[&nbsp;&nbsp;&nbsp; 4.568084] mmc1: card claims to support voltages below the defined range. These will be ignored.</span><br><span style="color:#808080;">[&nbsp;&nbsp;&nbsp; 4.747436] mmc1: queuing unknown CIS tuple 0x91 (3 bytes)</span><br><span style="color:#808080;">[&nbsp;&nbsp;&nbsp; 4.766510] mmc1: new high speed SDIO card at address 0001</span><br><br>then I load the driver model manually...<br><br><span style="color:#ff6600;">insmod /lib/modules/3.2.1/updates/compat/compat.ko</span> <br><span style="color:#808080;">[&nbsp; 292.485198] Disabling lock debugging due to kernel taint</span><br><span style="color:#808080;">[&nbsp; 292.494049] Loading modules backported from Linux version R8.5-0-gcb51164</span><br><span style="color:#808080;">[&nbsp; 292.501220] Backport generated by backports.git R8.4-0-g0d46f43</span><br><span style="color:#ff6600;">/ # insmod /lib/modules/3.2.1/updates/net/wireless/cfg80211.ko</span> <br><span style="color:#808080;">[&nbsp; 299.317657] cfg80211: Calling CRDA to update world regulatory domain</span><br><span style="color:#ff6600;">/ # insmod /lib/modules/3.2.1/updates/net/mac80211/mac80211.ko </span><br><span style="color:#ff6600;">/ # insmod /lib/modules/3.2.1/updates/drivers/net/wireless/ti/wlcore/wlcore.ko </span><br><span style="color:#ff6600;">/ # insmod /lib/modules/3.2.1/updates/drivers/net/wireless/ti/wlcore/wlcore_sdio.ko </span><br><span style="color:#ff6600;">/ # insmod /lib/modules/3.2.1/updates/drivers/net/wireless/ti/wl18xx/wl18xx.ko</span> <br><br>after about 1 minutes, the following message show up...<br><br><span style="color:#808080;">[&nbsp; 445.118652] wlcore: ERROR could not get configuration binary ti-connectivity/wl18xx-conf.bin: -2</span><br><span style="color:#808080;">[&nbsp; 445.127929] wlcore: WARNING falling back to default config</span><br><span style="color:#808080;">[&nbsp; 445.502288] wlcore: wl18xx HW: 183x or 180x, PG 2.2 (ROM 0x11)</span><br><span style="color:#808080;">[&nbsp; 445.518096] wlcore: loaded</span><br><span style="color:#808080;">[&nbsp; 445.520996] wlcore: driver version: R8.5</span><br><span style="color:#808080;">[&nbsp; 445.525177] wlcore: compilation time: Wed Jul 15 09:44:05 2015</span><br><br>after the driver loaded message, I can see the wlan0 interface by the "ifconfig command" as below: <br><br><span style="color:#ff6600;">/ # ifconfig -a</span><br><span style="color:#808080;">eth0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Link encap:Ethernet&nbsp; HWaddr 46:6E:F3:1A:D6:22 &nbsp;</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ inet addr:192.168.30.35&nbsp; Bcast:192.168.30.255&nbsp; 
+Mask:255.255.255.0</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UP BROADCAST RUNNING MULTICAST&nbsp; MTU:1500&nbsp; Metric:1</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; RX packets:9 errors:0 dropped:0 overruns:0 frame:0</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TX packets:2 errors:0 dropped:0 overruns:0 carrier:0</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; collisions:0 txqueuelen:1000 </span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; RX bytes:2002 (1.9 KiB)&nbsp; TX bytes:656 (656.0 B)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Interrupt:179 </span><br><br><span style="color:#808080;">lo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Link encap:Local Loopback &nbsp;</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LOOPBACK&nbsp; MTU:16436&nbsp; Metric:1</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; collisions:0 txqueuelen:0 </span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; RX bytes:0 (0.0 B)&nbsp; TX bytes:0 (0.0 B)</span><br><br><span style="color:#808080;">wlan0&nbsp;&nbsp;&nbsp;&nbsp; Link encap:Ethernet&nbsp; HWaddr 84:DD:20:6D:49:22 &nbsp;</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BROADCAST MULTICAST&nbsp; MTU:1500&nbsp; Metric:1</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; collisions:0 txqueuelen:1000 </span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; RX bytes:0 (0.0 B)&nbsp; TX bytes:0 (0.0 B)</span><br><br>when I try to enable the wlan0, error comes up...<br><br><span style="color:#ff6600;">/ # ifconfig wlan0 up</span><br><span style="color:#808080;">[&nbsp; 807.119018] wlcore: ERROR could not get firmware ti-connectivity/wl18xx-fw-4.bin: -2</span><br><span style="color:#808080;">[&nbsp; 868.118988] wlcore: ERROR could not get firmware ti-connectivity/wl18xx-fw-4.bin: -2</span><br><span style="color:#808080;">[&nbsp; 929.118774] wlcore: ERROR could not get firmware ti-connectivity/wl18xx-fw-4.bin: -2</span><br><span style="color:#808080;">[&nbsp; 929.129241] wlcore: ERROR firmware boot failed despite 3 retries</span></p>
+<p><span style="color:#ff6600;">/ # iw wlan0 scan</span><br><span style="color:#808080;">command failed: Network is down (-100)</span><br><br>then I try the "iw phy" command. <br><br><span style="color:#ff6600;">/ # iw phy</span> <br><span style="color:#808080;">Wiphy phy0</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; max # scan SSIDs: 1</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; max scan IEs length: 441 bytes</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Retry short limit: 7</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Retry long limit: 4</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Coverage class: 0 (up to 0m)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Device supports AP-side u-APSD.</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Supported Ciphers:</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * WEP40 (00-0f-ac:1)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * WEP104 (00-0f-ac:5)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * TKIP (00-0f-ac:2)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * CCMP (00-0f-ac:4)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * WPI-SMS4 (00-14-72:1)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Available Antennas: TX 0 RX 0</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Supported interface modes:</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * managed</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * AP</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * AP/VLAN</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * monitor</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * P2P-client</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * P2P-GO</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Band 1:</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Capabilities: 0x1072</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ HT20/HT40</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ Static SM Power Save</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ RX Greenfield</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ RX HT20 SGI</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ RX HT40 SGI</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ No RX STBC</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ Max AMSDU length: 3839 bytes</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DSSS/CCK HT40</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ Maximum RX AMPDU length 16383 bytes (exponent: 0x001)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ Minimum RX AMPDU time spacing: 16 usec (0x07)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ HT TX/RX MCS rate indexes supported: 0-7</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bitrates (non-HT):</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 1.0 Mbps</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 2.0 Mbps (short preamble supported)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5.5 Mbps (short preamble supported)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 11.0 Mbps (short preamble supported)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 6.0 Mbps</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 9.0 Mbps</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 12.0 Mbps</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 18.0 Mbps</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 24.0 Mbps</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 36.0 Mbps</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 48.0 Mbps</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 54.0 Mbps</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Frequencies:</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 2412 MHz [1] (20.0 dBm)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 2417 MHz [2] (20.0 dBm)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 2422 MHz [3] (20.0 dBm)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 2427 MHz [4] (20.0 dBm)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 2432 MHz [5] (20.0 dBm)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 2437 MHz [6] (20.0 dBm)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 2442 MHz [7] (20.0 dBm)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 2447 MHz [8] (20.0 dBm)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 2452 MHz [9] (20.0 dBm)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 2457 MHz [10] (20.0 dBm)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 2462 MHz [11] (20.0 dBm)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 2467 MHz [12] (20.0 dBm) (no IR)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 2472 MHz [13] (20.0 dBm) (no IR)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 2484 MHz [14] (20.0 dBm) (no IR)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Band 2:</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Capabilities: 0x72</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ HT20/HT40</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ Static SM Power Save</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ RX Greenfield</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ RX HT20 SGI</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ RX HT40 SGI</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ No RX STBC</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ Max AMSDU length: 3839 bytes</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ No DSSS/CCK HT40</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ Maximum RX AMPDU length 16383 bytes (exponent: 0x001)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ Minimum RX AMPDU time spacing: 16 usec (0x07)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ HT TX/RX MCS rate indexes supported: 0-7</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bitrates (non-HT):</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 6.0 Mbps</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 9.0 Mbps</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 12.0 Mbps</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 18.0 Mbps</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 24.0 Mbps</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 36.0 Mbps</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 48.0 Mbps</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 54.0 Mbps</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Frequencies:</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5040 MHz [8] (disabled)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5060 MHz [12] (disabled)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5080 MHz [16] (disabled)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5170 MHz [34] (disabled)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5180 MHz [36] (20.0 dBm) (no IR)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5190 MHz [38] (20.0 dBm) (no IR)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5200 MHz [40] (20.0 dBm) (no IR)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5210 MHz [42] (20.0 dBm) (no IR)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5220 MHz [44] (20.0 dBm) (no IR)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5230 MHz [46] (20.0 dBm) (no IR)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5240 MHz [48] (20.0 dBm) (no IR)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5260 MHz [52] (20.0 dBm) (no IR, radar detection)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS state: usable (for 778 sec)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS CAC time: 60000 ms</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5280 MHz [56] (20.0 dBm) (no IR, radar detection)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS state: usable (for 778 sec)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS CAC time: 60000 ms</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5300 MHz [60] (20.0 dBm) (no IR, radar detection)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS state: usable (for 778 sec)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS CAC time: 60000 ms</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5320 MHz [64] (20.0 dBm) (no IR, radar detection)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS state: usable (for 778 sec)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS CAC time: 60000 ms</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5500 MHz [100] (20.0 dBm) (no IR, radar detection)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS state: usable (for 778 sec)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS CAC time: 60000 ms</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5520 MHz [104] (20.0 dBm) (no IR, radar detection)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS state: usable (for 778 sec)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS CAC time: 60000 ms</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5540 MHz [108] (20.0 dBm) (no IR, radar detection)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS state: usable (for 778 sec)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS CAC time: 60000 ms</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5560 MHz [112] (20.0 dBm) (no IR, radar detection)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS state: usable (for 778 sec)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS CAC time: 60000 ms</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5580 MHz [116] (20.0 dBm) (no IR, radar detection)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS state: usable (for 778 sec)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS CAC time: 60000 ms</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5600 MHz [120] (20.0 dBm) (no IR, radar detection)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS state: usable (for 778 sec)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS CAC time: 60000 ms</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5620 MHz [124] (20.0 dBm) (no IR, radar detection)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS state: usable (for 778 sec)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS CAC time: 60000 ms</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5640 MHz [128] (20.0 dBm) (no IR, radar detection)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS state: usable (for 778 sec)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS CAC time: 60000 ms</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5660 MHz [132] (20.0 dBm) (no IR, radar detection)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS state: usable (for 778 sec)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS CAC time: 60000 ms</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5680 MHz [136] (20.0 dBm) (no IR, radar detection)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS state: usable (for 778 sec)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS CAC time: 60000 ms</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5700 MHz [140] (20.0 dBm) (no IR, radar detection)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS state: usable (for 778 sec)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ DFS CAC time: 60000 ms</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5745 MHz [149] (disabled)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5765 MHz [153] (disabled)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5785 MHz [157] (disabled)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5805 MHz [161] (disabled)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * 5825 MHz [165] (disabled)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Supported commands:</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * new_interface</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * set_interface</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * new_key</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * start_ap</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * new_station</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * set_bss</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * authenticate</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * associate</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * deauthenticate</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * disassociate</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * join_ibss</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * remain_on_channel</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * set_tx_bitrate_mask</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * frame</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * frame_wait_cancel</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * set_wiphy_netns</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * set_channel</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * set_wds_peer</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * start_sched_scan</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * probe_client</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * set_noack_map</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * register_beacons</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * start_p2p_device</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * set_mcast_rate</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * channel_switch</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * Unknown command (104)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * testmode</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * connect</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * disconnect</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Supported TX frame types:</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * IBSS: 0x00 0x10 0x20 0x30 0x40 0x50 0x60 0x70 0x80 0x90 0xa0 0xb0 
+0xc0 0xd0 0xe0 0xf0</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * managed: 0x00 0x10 0x20 0x30 0x40 0x50 0x60 0x70 0x80 0x90 0xa0 0xb0 
+0xc0 0xd0 0xe0 0xf0</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * AP: 0x00 0x10 0x20 0x30 0x40 0x50 0x60 0x70 0x80 0x90 0xa0 0xb0 0xc0 
+0xd0 0xe0 0xf0</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * AP/VLAN: 0x00 0x10 0x20 0x30 0x40 0x50 0x60 0x70 0x80 0x90 0xa0 0xb0 
+0xc0 0xd0 0xe0 0xf0</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * mesh point: 0x00 0x10 0x20 0x30 0x40 0x50 0x60 0x70 0x80 0x90 0xa0 
+0xb0 0xc0 0xd0 0xe0 0xf0</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * P2P-client: 0x00 0x10 0x20 0x30 0x40 0x50 0x60 0x70 0x80 0x90 0xa0 
+0xb0 0xc0 0xd0 0xe0 0xf0</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * P2P-GO: 0x00 0x10 0x20 0x30 0x40 0x50 0x60 0x70 0x80 0x90 0xa0 0xb0 
+0xc0 0xd0 0xe0 0xf0</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * P2P-device: 0x00 0x10 0x20 0x30 0x40 0x50 0x60 0x70 0x80 0x90 0xa0 
+0xb0 0xc0 0xd0 0xe0 0xf0</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Supported RX frame types:</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * IBSS: 0x40 0xb0 0xc0 0xd0</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * managed: 0x40 0xd0</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * AP: 0x00 0x20 0x40 0xa0 0xb0 0xc0 0xd0</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * AP/VLAN: 0x00 0x20 0x40 0xa0 0xb0 0xc0 0xd0</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * mesh point: 0xb0 0xc0 0xd0</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * P2P-client: 0x40 0xd0</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * P2P-GO: 0x00 0x20 0x40 0xa0 0xb0 0xc0 0xd0</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * P2P-device: 0x40 0xd0</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WoWLAN support:</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * wake up on anything (device continues operating normally)</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * wake up on pattern match, up to 5 patterns of 1-91 bytes,</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ maximum packet offset 0 bytes</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; software interface modes (can always be added):</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * AP/VLAN</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * monitor</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; valid interface combinations:</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * #{ managed } &lt;= 3, #{ AP, P2P-client, P2P-GO } &lt;= 1,</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ total &lt;= 3, #channels &lt;= 2, radar detect widths: { 20 MHz (no 
+HT), 20 MHz, 40 MHz, 80 MHz }</span><br><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * #{ AP } &lt;= 2,</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ total &lt;= 2, #channels &lt;= 1, radar detect widths: { 20 MHz (no 
+HT), 20 MHz, 40 MHz, 80 MHz }</span><br><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * #{ managed } &lt;= 1, #{ AP } &lt;= 1, #{ P2P-client } &lt;= 1,</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ total &lt;= 3, #channels &lt;= 2, radar detect widths: { 20 MHz (no 
+HT), 20 MHz, 40 MHz, 80 MHz }</span><br><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * #{ managed } &lt;= 1, #{ AP } &lt;= 1, #{ P2P-GO } &lt;= 1,</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ total &lt;= 3, #channels &lt;= 1</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; HT Capability overrides:</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * MCS: ff ff ff ff ff ff ff ff ff ff</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * maximum A-MSDU length</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * supported channel width</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * short GI for 40 MHz</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * max A-MPDU length exponent</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * min MPDU start spacing</span><br><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Device supports HT-IBSS.</span><br><span style="color:#808080;"></span><span style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Device supports scan flush.</span></p>
+<p><br>finally, the wl18xx model still doesn't&nbsp; work.<br><br></p>
+<p>here is my question:</p>
+<p>1)&nbsp; According to the prompt&nbsp; message,&nbsp; has the wl18xx hardware been&nbsp;recognized?</p>
+<p>2)&nbsp; /lib/firmware/ti-connectivity/wl18xx-fw-4.bin is existed in my FS,&nbsp; why&nbsp; wlcore complain&nbsp;can't get it ?<br>&nbsp;&nbsp;&nbsp;&nbsp; the files under /lib/firmware/ti-connectivity/ are: <strong>wl1271-nvs.bin&nbsp;&nbsp; wl18xx-conf.bin&nbsp; wl18xx-fw-4.bin</strong></p>
+<p>3)&nbsp; It is said that I need Calibration,&nbsp; how to do that?</p>
+<p>4)&nbsp; Should I use udev to suppord this driver?&nbsp; I use mdev but not&nbsp; udev.</p><div style="clear:both;"></div>
+									
+		</div>
+
+				
+				
+				
+							<div class="actions footer">
+	
+	
+	
+
+						
+	
+
+  <div class="navigation-list" data-minlinks="1" data-direction="horizontal" data-maxlinks="1" id="fragment-320098_postActions-a3652a69-ab1e-4e71-9b7d-a16bba587afb" style="overflow: hidden;"><div style="overflow-y: hidden; overflow-x: auto;" class="container"><ul style="list-style: outside none none; padding: 0px; margin: 0px; overflow: hidden; width: 870px; visibility: visible;"><li style="display: inline;" class="navigation-list-item"><span style="float: left;">Locked</span></li></ul></div></div>
+	<div class="after-verify" style="display: none;">
+		<h4>Do you have another question?</h4>
+		<p>We are glad that we were able to resolve this issue, and will now proceed to close this thread.</p>
+		<p>If you have further questions related to this thread, you may click
+ "Ask a related question" below. The newly created question will be 
+automatically linked to this question.</p>
+		<div class="question-links">
+			<a href="http://e2e.ti.com/p/addpost?rt=438045" class="ask-related">Ask a related question</a>
+			<a href="http://e2e.ti.com/p/addpost?fn=307" class="ask-new">Ask a new question</a>
+		</div>
+	</div>
+</div>
+
+
+		
+			</div>
+
+		
+
+
+
+
+	</li><li class="content-item verified">
+	<div class="content full" id="1576121">
+
+					<div class="author header">
+  <div class="user-icons">
+    <span class="rank-icon">
+                  <div style="background: url('/cfs-filesystemfile/__key/communityserver-components-ranks/00-00-00-00-12/icon_5F00_guru.gif') no-repeat" class="rank-image">
+        <a onclick="self.location='/group/helpcentral/w/e2e/ti-e2e-community-recognition-program.aspx';return false" title="Click here for explanation of levels" href="">
+          <span class="rank-name">Guru</span>
+        </a><span class="rank-points">85400</span> points
+      </div>
+          </span>
+    <span class="role-icon">
+            <img src="wl18xx-1-2-driver-modules_files/tiemployee.gif" align="absbottom">
+    </span>
+  </div>
+	<span class="user-name">
+					<a href="http://e2e.ti.com/members/1304335" class="internal-link view-user-profile">
+				Joseph Gigi
+			</a>
+					</span>
+  <div class="avatar">
+					<a href="http://e2e.ti.com/members/1304335">
+				<img src="wl18xx-1-2-driver-modules_files/default.png" alt="Joseph Gigi" border="0">
+			</a>
+			</div>
+</div>
+
+
+<div class="actions header">
+	<div class="navigation-list" data-minlinks="2" data-direction="horizontal" data-maxlinks="2" style="overflow: hidden; height: 25px;"><div style="overflow-y: hidden; overflow-x: auto; height: 45px;" class="container"><ul style="list-style: outside none none; padding: 0px; margin: 0px; overflow: hidden; width: 292px; visibility: visible;"><li style="display: inline;" class="navigation-list-item date"><span class="attribute-value" style="float: left;">
+					<a href="http://e2e.ti.com/support/wireless_connectivity/wilink_wifi_bluetooth/f/307/p/438045/1576121#1576121">Jul 20, 2015 12:54 PM</a>
+				</span></li></ul></div></div>
+</div>
+
+		
+		
+		
+				
+		<div class="content">
+																		<p class="in-reply-to">In reply to <a href="http://e2e.ti.com/support/wireless_connectivity/wilink_wifi_bluetooth/f/307/p/438045/1575716#1575716">yuqing cai</a>:</p>
+															Hi,<br>
+<br>
+It looks like you are almost there.<br>
+<br>
+(1) Yes, the hw seems to be recognized.<br>
+(2) &amp; (4) I am not familiar with mdev. The driver makes the 
+"request_firmware()" API call. The "udev" finds the firmware from the 
+FS, and passes it on to the kernel module. Does the mdev support this? 
+That looks to be the problem here. With udev, you can track the call by 
+using the "udevadm" utility. Do you have something similar in mdev?<br>
+(3) You can refer to: <a href="http://processors.wiki.ti.com/index.php/.INI/wlconf_Overview">processors.wiki.ti.com/.../wlconf_Overview</a><br>
+<br>
+Regards,<br>
+Gigi Joseph.<div style="clear:both;"></div>
+									
+		</div>
+
+				
+				
+				
+							<div class="actions footer">
+	
+	
+	
+
+						
+	
+
+  <div class="navigation-list" data-minlinks="1" data-direction="horizontal" data-maxlinks="1" id="fragment-320098_postActions-d3947bbf-e51f-40f3-9375-da3fcb28656c" style="overflow: hidden;"><div style="overflow-y: hidden; overflow-x: auto;" class="container"><ul style="list-style: outside none none; padding: 0px; margin: 0px; overflow: hidden; width: 870px; visibility: visible;"><li style="display: inline;" class="navigation-list-item"><span style="float: left;">Locked</span></li></ul></div></div>
+	<div class="after-verify" style="display: none;">
+		<h4>Do you have another question?</h4>
+		<p>We are glad that we were able to resolve this issue, and will now proceed to close this thread.</p>
+		<p>If you have further questions related to this thread, you may click
+ "Ask a related question" below. The newly created question will be 
+automatically linked to this question.</p>
+		<div class="question-links">
+			<a href="http://e2e.ti.com/p/addpost?rt=438045" class="ask-related">Ask a related question</a>
+			<a href="http://e2e.ti.com/p/addpost?fn=307" class="ask-new">Ask a new question</a>
+		</div>
+	</div>
+</div>
+
+
+		
+			</div>
+
+		
+
+
+
+
+	</li><li class="content-item verified">
+	<div class="content full" id="1577006">
+
+					<div class="author header">
+  <div class="user-icons">
+    <span class="rank-icon">
+                  <div style="background: url('/cfs-filesystemfile/__key/communityserver-components-ranks/00-00-00-00-02/icon_5F00_intellectual.gif') no-repeat" class="rank-image">
+        <a onclick="self.location='/group/helpcentral/w/e2e/ti-e2e-community-recognition-program.aspx';return false" title="Click here for explanation of levels" href="">
+          <span class="rank-name">Intellectual</span>
+        </a><span class="rank-points">740</span> points
+      </div>
+          </span>
+    <span class="role-icon">
+            <img src="wl18xx-1-2-driver-modules_files/communitymember.gif" align="absbottom">
+    </span>
+  </div>
+	<span class="user-name">
+					<a href="http://e2e.ti.com/members/1437841" class="internal-link view-user-profile">
+				yuqing cai
+			</a>
+					</span>
+  <div class="avatar">
+					<a href="http://e2e.ti.com/members/1437841">
+				<img src="wl18xx-1-2-driver-modules_files/default.png" alt="yuqing cai" border="0">
+			</a>
+			</div>
+</div>
+
+
+<div class="actions header">
+	<div class="navigation-list" data-minlinks="2" data-direction="horizontal" data-maxlinks="2" style="overflow: hidden; height: 25px;"><div style="overflow-y: hidden; overflow-x: auto; height: 45px;" class="container"><ul style="list-style: outside none none; padding: 0px; margin: 0px; overflow: hidden; width: 292px; visibility: visible;"><li style="display: inline;" class="navigation-list-item date"><span class="attribute-value" style="float: left;">
+					<a href="http://e2e.ti.com/support/wireless_connectivity/wilink_wifi_bluetooth/f/307/p/438045/1577006#1577006">Jul 21, 2015 6:13 AM</a>
+				</span></li></ul></div></div>
+</div>
+
+		
+		
+		
+				
+		<div class="content">
+																		<p class="in-reply-to">In reply to <a href="http://e2e.ti.com/support/wireless_connectivity/wilink_wifi_bluetooth/f/307/p/438045/1576121#1576121">Joseph Gigi</a>:</p>
+															<p>Joseph, you are right! The problem is the mdev, 
+&nbsp;I should direct mdev to kernel's hotplug System, the following 
+command solved this problem:</p>
+<p><span style="color:#ff6600;"># / echo /sbin/mdev &gt; /proc/sys/kernel/hotplug</span></p>
+<p><span style="color:#000000;">My wl18xx model is working now, Thank you very much! :~)<br></span></p>
+<p><span style="color:#000000;">And one more question, does this compat_driver stack support WPA?&nbsp;<br></span></p><div style="clear:both;"></div>
+									
+		</div>
+
+				
+				
+				
+							<div class="actions footer">
+	
+	
+	
+
+						
+	
+
+  <div class="navigation-list" data-minlinks="1" data-direction="horizontal" data-maxlinks="1" id="fragment-320098_postActions-761fc85f-3980-483a-a5b7-090dc43ebff6" style="overflow: hidden;"><div style="overflow-y: hidden; overflow-x: auto;" class="container"><ul style="list-style: outside none none; padding: 0px; margin: 0px; overflow: hidden; width: 870px; visibility: visible;"><li style="display: inline;" class="navigation-list-item"><span style="float: left;">Locked</span></li></ul></div></div>
+	<div class="after-verify" style="display: none;">
+		<h4>Do you have another question?</h4>
+		<p>We are glad that we were able to resolve this issue, and will now proceed to close this thread.</p>
+		<p>If you have further questions related to this thread, you may click
+ "Ask a related question" below. The newly created question will be 
+automatically linked to this question.</p>
+		<div class="question-links">
+			<a href="http://e2e.ti.com/p/addpost?rt=438045" class="ask-related">Ask a related question</a>
+			<a href="http://e2e.ti.com/p/addpost?fn=307" class="ask-new">Ask a new question</a>
+		</div>
+	</div>
+</div>
+
+
+		
+			</div>
+
+		
+
+
+
+
+	</li><li class="content-item ">
+	<div class="content full" id="1577014">
+
+					<div class="author header">
+  <div class="user-icons">
+    <span class="rank-icon">
+                  <div style="background: url('/cfs-filesystemfile/__key/communityserver-components-ranks/00-00-00-00-12/icon_5F00_guru.gif') no-repeat" class="rank-image">
+        <a onclick="self.location='/group/helpcentral/w/e2e/ti-e2e-community-recognition-program.aspx';return false" title="Click here for explanation of levels" href="">
+          <span class="rank-name">Guru</span>
+        </a><span class="rank-points">85400</span> points
+      </div>
+          </span>
+    <span class="role-icon">
+            <img src="wl18xx-1-2-driver-modules_files/tiemployee.gif" align="absbottom">
+    </span>
+  </div>
+	<span class="user-name">
+					<a href="http://e2e.ti.com/members/1304335" class="internal-link view-user-profile">
+				Joseph Gigi
+			</a>
+					</span>
+  <div class="avatar">
+					<a href="http://e2e.ti.com/members/1304335">
+				<img src="wl18xx-1-2-driver-modules_files/default.png" alt="Joseph Gigi" border="0">
+			</a>
+			</div>
+</div>
+
+
+<div class="actions header">
+	<div class="navigation-list" data-minlinks="2" data-direction="horizontal" data-maxlinks="2" style="overflow: hidden; height: 25px;"><div style="overflow-y: hidden; overflow-x: auto; height: 45px;" class="container"><ul style="list-style: outside none none; padding: 0px; margin: 0px; overflow: hidden; width: 292px; visibility: visible;"><li style="display: inline;" class="navigation-list-item date"><span class="attribute-value" style="float: left;">
+					<a href="http://e2e.ti.com/support/wireless_connectivity/wilink_wifi_bluetooth/f/307/p/438045/1577014#1577014">Jul 21, 2015 6:19 AM</a>
+				</span></li></ul></div></div>
+</div>
+
+		
+		
+		
+				
+		<div class="content">
+																		<p class="in-reply-to">In reply to <a href="http://e2e.ti.com/support/wireless_connectivity/wilink_wifi_bluetooth/f/307/p/438045/1577006#1577006">yuqing cai</a>:</p>
+															Hi,<br>
+<br>
+Yes, WPA is supported with the wpa_supplicant. Please see: <a href="http://processors.wiki.ti.com/index.php/Connect_to_Secure_AP_using_WPA_Supplicant">processors.wiki.ti.com/.../Connect_to_Secure_AP_using_WPA_Supplicant</a><br>
+<br>
+Regards,<br>
+Gigi Joseph.<div style="clear:both;"></div>
+									
+		</div>
+
+				
+				
+				
+							<div class="actions footer">
+	
+	
+	
+
+						
+	
+
+  <div class="navigation-list" data-minlinks="1" data-direction="horizontal" data-maxlinks="1" id="fragment-320098_postActions-694cba73-1757-49dd-b165-7694a27ac735" style="overflow: hidden;"><div style="overflow-y: hidden; overflow-x: auto;" class="container"><ul style="list-style: outside none none; padding: 0px; margin: 0px; overflow: hidden; width: 870px; visibility: visible;"><li style="display: inline;" class="navigation-list-item"><span style="float: left;">Locked</span></li></ul></div></div>
+	<div class="after-verify" style="display: none;">
+		<h4>Do you have another question?</h4>
+		<p>We are glad that we were able to resolve this issue, and will now proceed to close this thread.</p>
+		<p>If you have further questions related to this thread, you may click
+ "Ask a related question" below. The newly created question will be 
+automatically linked to this question.</p>
+		<div class="question-links">
+			<a href="http://e2e.ti.com/p/addpost?rt=438045" class="ask-related">Ask a related question</a>
+			<a href="http://e2e.ti.com/p/addpost?fn=307" class="ask-new">Ask a new question</a>
+		</div>
+	</div>
+</div>
+
+
+		
+			</div>
+
+	</li></ul>
+		<div class="locked-banner">
+		<p>This thread has been locked.</p>
+		<p>If you have a related question, please click the "<a href="http://e2e.ti.com/p/addpost?rt=438045">Ask a related question</a>" button in the top right corner. The newly created question will be automatically linked to this question.</p>
+	</div>
+
+
+	<div class="pager ui-page" data-currentpage="0" data-pagesize="10" data-totalitems="7" data-pagekey="pi320098" data-pagedcontenturl="/utility/scripted-file.ashx?_cf=thread.vm&amp;_fid=320098&amp;_ct=page&amp;_cp=forums-thread&amp;_ctt=c6108064af6511ddb074de1a56d89593&amp;_ctc=ac6dadb3819d44f1b8ba5d3ba5ed79c8&amp;_ctn=decec9f8365c4a06ab6053f36924f21f&amp;_cc=0&amp;_pcurl=%7e%2fsupport%2fwireless_connectivity%2fwilink_wifi_bluetooth%2ff%2f307%2fp%2f438045%2f1570285" data-pagedcontentwrapperid="pi320098-paged-content" data-pagedcontentpagingevent="ui.page.pi320098.paging" data-pagedcontentpagedevent="ui.page.pi320098.paged" data-loadonanyhashchange="true" data-loadingindicator="true" data-configuration="ShowIndividualPages=false&amp;ShowPrevious=true&amp;ShowNext=true&amp;PagedContentFile=thread.vm&amp;LoadOnAnyHashChange=true&amp;LoadingIndicator=true">  </div>
+</div>
+
+
+
+
+
+        
+    
+
+
+
+</div>
+<div class="content-fragment-footer"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="layout-footer"></div>
+</div></div><div class="footer-fragments-header"></div>
+<div class="footer-fragments" id="ctl03_ctl03_page"><div class="layout">
+<div class="layout-header"></div>
+<div class="layout-content content" id="ctl03_ctl03_layout">
+<div class="layout-region content" id="ctl03_ctl03_content">
+<div class="layout-region-inner content"><div class="content-fragment scripted-content-fragment no-wrapper responsive-1" id="footer-1688">
+<div class="content-fragment-content">
+
+
+
+                                                    
+
+<script language="JavaScript">
+    var subject = "How to initialize/load the wl18xx driver when it &#39;s build as module?";
+	
+			var tiPageName = 'E2E-How to initializeload the wl18xx driver when it 39s build as module?-EN';
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+            			<script language="JavaScript">
+var tiContentGroup='TI E2E Community/Forums/WiLink WiFi + Bluetooth/WiLink WiFi + Bluetooth Forum';
+</script>
+
+    
+    
+        
+    
+
+            	
+    
+	</div>
+<div class="content-fragment-footer"></div>
+</div>
+<div class="content-fragment t-i-footer no-wrapper with-spacing responsive-3" id="footer-1689">
+<div class="content-fragment-content">
+
+          
+    
+    
+  <!-- TI Footer - Start -->
+
+<div class="footertop">
+  <div class="footerLinks">
+    <div id="footerLinks_e2e">
+      <div id="home">
+        <div class="foothead">
+        TI E2E™ Community
+        </div>
+        <ul class="footlinks">
+          <li><a href="http://e2e.ti.com/support/w/forums/261.ti-e2e-community-forums-site-map.aspx">Forums</a></li>
+          <li><a href="http://e2e.ti.com/blogs_/default.aspx">Blogs</a></li>
+          <li><a href="http://e2e.ti.com/group/default.aspx">Groups</a></li>
+          <li><a href="https://training.ti.com/">TI training</a></li>
+          <li><a href="http://e2e.ti.com/group/helpcentral/f/301.aspx">Site Support &amp; Feedback</a></li>
+          <li><a href="http://e2e.ti.com/user/settings.aspx">Settings</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="footerLinks_e2eGroups">
+      <div id="home">
+        <div class="foothead">
+        TI E2E™ Community Groups
+        </div>
+        <ul class="footlinks">
+          <li><a href="http://e2e.ti.com/group/universityprogram/default.aspx">TI University Program</a></li>
+          <li><a href="http://e2e.ti.com/group/maketheswitch/default.aspx">Make the Switch</a></li>
+          <li><a href="http://e2e.ti.com/group/microcontrollerprojects/default.aspx">Microcontroller Projects</a></li>
+          <li><a href="http://e2e.ti.com/group/motor/b/blog/default.aspx">Motor Drive &amp; Control</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="footerLinks_partners">
+      <div id="home">
+        <div class="foothead">
+        Other Communities
+        </div>
+        <ul class="footlinks">
+          <li><a href="http://www.deyisupport.com/">Deyisupport</a></li>
+          <li><a href="http://designsomething.org/">Designsomething.org</a></li>
+          <li><a href="http://beagleboard.org/">beagleboard.org</a></li>
+          <li><a href="http://www.element14.com/community/community/manufacturers/ti">TI on Element 14</a></li>
+          <li><a href="http://www.digikey.com/techxchange/groups/texas-instruments">TI on TechXchange</a><span style="font-size:50%; vertical-align:super; text-decoration:none; color: #333333;">SM</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="footerLinks_other">
+      <div id="home">
+        <div class="foothead">
+        Other Technical &amp; Support Resources
+        </div>
+        <ul class="footlinks">
+          <li><a href="http://www.ti.com/webench">WEBENCH® Design Center</a></li>
+          <li><a href="http://www.ti.com/general/docs/dsnsuprt.tsp">Product Information Centers</a></li>
+          <li><a href="http://www.ti.com/general/docs/techdocs.tsp">Technical Documents</a></li>
+          <li><a href="http://www.ti.com/3p">TI Design Network</a></li>
+          <li><a href="http://focus.ti.com/en/multimedia/flash/selection_tools/tech-articles/contributed-articles.htm">TI Technical Articles</a></li>
+          <li>&nbsp;</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="disclaimer">
+  <p>All content and materials on this site are provided "as is". TI and
+ its respective suppliers and providers of content make no 
+representations about the suitability of these materials for any purpose
+ and disclaim all warranties and conditions with regard to these 
+materials, including but not limited to all implied warranties and 
+conditions of merchantability, fitness for a particular purpose, title 
+and non-infringement of any third party intellectual property right. TI 
+and its respective suppliers and providers of content make no 
+representations about the suitability of these materials for any purpose
+ and disclaim all warranties and conditions with respect to these 
+materials. No license, either express or implied, by estoppel or 
+otherwise, is granted by TI. Use of the information on this site may 
+require a license from a third party, or a license from TI.</p>
+  <p>Content on this site may contain or be subject to specific 
+guidelines or limitations on use. All postings and use of the content on
+ this site are subject to the <a href="http://www.ti.com/corp/docs/legal/termsofuse.shtml">Terms of Use</a> of the site; third parties using this content agree to abide by any limitations or guidelines and to comply with the <a href="http://www.ti.com/corp/docs/legal/termsofuse.shtml">Terms of Use</a>
+ of this site. TI, its suppliers and providers of content reserve the 
+right to make corrections, deletions, modifications, enhancements, 
+improvements and other changes to the content and materials, its 
+products, programs and services at any time or to move or discontinue 
+any content, products, programs, or services without notice.</p>
+  </div>
+</div>
+
+<!-- Syntax Highlighter CSS autoloader code starts -->
+<link href="wl18xx-1-2-driver-modules_files/shCore.css" rel="stylesheet" type="text/css"> 
+<link href="wl18xx-1-2-driver-modules_files/shThemeDefault.css" rel="stylesheet" type="text/css"> 
+<script src="wl18xx-1-2-driver-modules_files/XRegExp.js" type="text/javascript"></script>
+<script src="wl18xx-1-2-driver-modules_files/shCore.js" type="text/javascript"></script> 
+<script src="wl18xx-1-2-driver-modules_files/shAutoloader.js" type="text/javascript"></script> 
+<script type="text/javascript">
+$(document).ready(function() {
+ SyntaxHighlighter.autoloader('applescript            /tiny_mce/SyntaxHighlighter/scripts/shBrushAppleScript.js','actionscript3 as3      /tiny_mce/SyntaxHighlighter/scripts/shBrushAS3.js','bash shell             /tiny_mce/SyntaxHighlighter/scripts/shBrushBash.js','coldfusion cf          /tiny_mce/SyntaxHighlighter/scripts/shBrushColdFusion.js','cpp c                  /tiny_mce/SyntaxHighlighter/scripts/shBrushCpp.js','c# c-sharp csharp      /tiny_mce/SyntaxHighlighter/scripts/shBrushCSharp.js','css                    /tiny_mce/SyntaxHighlighter/scripts/shBrushCss.js','delphi pascal          /tiny_mce/SyntaxHighlighter/scripts/shBrushDelphi.js','diff patch pas         /tiny_mce/SyntaxHighlighter/scripts/shBrushDiff.js','erl erlang             /tiny_mce/SyntaxHighlighter/scripts/shBrushErlang.js','groovy                 /tiny_mce/SyntaxHighlighter/scripts/shBrushGroovy.js','java                   /tiny_mce/SyntaxHighlighter/scripts/shBrushJava.js','jfx javafx             /tiny_mce/SyntaxHighlighter/scripts/shBrushJavaFX.js','js jscript javascript  /tiny_mce/SyntaxHighlighter/scripts/shBrushJScript.js','perl pl                /tiny_mce/SyntaxHighlighter/scripts/shBrushPerl.js','php                    /tiny_mce/SyntaxHighlighter/scripts/shBrushPhp.js','text plain             /tiny_mce/SyntaxHighlighter/scripts/shBrushPlain.js','py python              /tiny_mce/SyntaxHighlighter/scripts/shBrushPython.js','ruby rails ror rb      /tiny_mce/SyntaxHighlighter/scripts/shBrushRuby.js','sass scss              /tiny_mce/SyntaxHighlighter/scripts/shBrushSass.js','scala                  /tiny_mce/SyntaxHighlighter/scripts/shBrushScala.js','sql                    /tiny_mce/SyntaxHighlighter/scripts/shBrushSql.js','vb vbnet               /tiny_mce/SyntaxHighlighter/scripts/shBrushVb.js','xml xhtml xslt html    /tiny_mce/SyntaxHighlighter/scripts/shBrushXml.js');
+ SyntaxHighlighter.config.stripBrs = true; 
+ SyntaxHighlighter.all();     
+});
+</script> 
+<!-- Syntax Highlighter CSS autoloader code ends -->
+
+<span id="sSC"></span>
+
+  <script language="javascript" src="wl18xx-1-2-driver-modules_files/analytics_002.js" type="text/javascript"></script><script language="JavaScript" src="wl18xx-1-2-driver-modules_files/metrics-min.js" type="text/javascript"></script>
+
+<div id="footer">
+
+<!--<p><a href="http://www.ti.com/footer_products"><b class="first_item">Products</b></a> | <a href="http://www.ti.com/footer_apps"><b>Applications</b></a> | <a href="http://www.ti.com/footer_support"><b>Design Support</b></a> | <a href="http://www.ti.com/footer_buy"><b>Sample &amp; Buy</b></a> <a href="http://www.ti.com/footer_rss"><img src="http://focus.ti.com/graphics/shared/rss.gif" alt="RSS" width="40" height="13" border="0" class="rss_ico"></a></p>
+  <p><a href="http://www.ti.com/footer_worldwide">TI Worldwide</a> | <a href="http://www.ti.com/footer_about_ti">About TI</a> | <a href="http://www.ti.com/footer_contact">Contact Us</a> | <a href="http://www.ti.com/footer_investor_relations">Investor Relations</a> | <a href="http://www.ti.com/footer_press">Press Center</a> | <a href="http://www.ti.com/footer_csr">Corporate Citizenship</a> | <a href="http://www.ti.com/footer_careers">Careers</a> | <a href="http://www.ti.com/footer_tags">Tags</a> | <a href="http://www.ti.com/footer_myti">my.TI Login</a> | <a href="http://www.ti.com/footer_search">All Searches</a> | <a href="http://www.ti.com/footer_sitemap">Site Map</a></p>
+  <p class="disclaim"><a href="http://www.ti.com/footer_copyright">&copy; Copyright 1995-<script>var date = new Date();document.write(date.getFullYear());</script><noscript>2009</noscript></a> Texas Instruments Incorporated. All rights reserved. <a href="http://www.ti.com/footer_trademarks">Trademarks</a> | <a href="http://www.ti.com/footer_privacy">Privacy Policy</a> | <a href="http://www.ti.com/footer_terms">Terms of Use</a> </p>
+-->
+</div>
+
+
+<div id="footnote">
+<div class="container">
+
+<div style=" float:right; text-align:right;">
+
+<div class="social">
+            <span>Follow Us</span>
+<span><a href="http://www.ti.com/facebook" style="color:#000;" name="&amp;lid=EN_US_footer_facebookicon"><img src="wl18xx-1-2-driver-modules_files/follow-us-facebook.png" alt="Texas Instruments on Facebook" border="0" align="absmiddle"></a></span>
+<span><a href="http://twitter.com/txinstruments" style="color:#000;" name="&amp;lid=EN_US_footer_twittericon"><img src="wl18xx-1-2-driver-modules_files/follow-us-twitter.png" alt="Texas Instruments on Twitter" border="0" align="absmiddle"></a></span>
+<span><a href="http://www.ti.com/linkedin" style="color:#000;" name="&amp;lid=EN_US_footer_linkedin-icon"><img src="wl18xx-1-2-driver-modules_files/linkedin.png" alt="Texas Instruments on LinkedIn" border="0" align="absmiddle"></a></span>
+<span><a href="https://plus.google.com/u/0/104292131839044508100/posts?hl=en" style="color:#000;" name="&amp;lid=EN_US_footer_google-icon"><img src="wl18xx-1-2-driver-modules_files/google.png" alt="Texas Instruments on Google+" border="0" align="absmiddle"></a></span>
+        </div>
+
+
+<div id="footerbadge" style="width:180px;"><!--<a href="http://www.ti.com/general/docs/gencontent.tsp?contentId=106103"><span style="float:left; padding:15px 0 0 0; font-size:9px;">Texas Instruments<br>is a member of</span><img src="http://www.ti.com/assets/en/images/homepage/ecia-logo-1.jpg" alt="Member of ECIA"></a>--><!--  <img src="images/picp-logo.jpg" alt="picp-logo" width="211" height="48" /> --></div>
+</div>
+
+<a href="http://www.ti.com/footer_worldwide" name="&amp;lid=EN_US_footer_worldwide">TI Worldwide</a> | <a href="http://www.ti.com/footer_contact" name="&amp;lid=EN_US_footer_contactus">Contact Us</a> |<!--  <a href="http://www.ti.com/corp/docs/feedbk2.htm" name="&lid=EN_US_footer_websitefeedback">Website Feedback</a> | --> <a href="http://my.ti.com/" name="&amp;lid=EN_US_footer_mytilogin">my.TI Login</a> | <a href="http://www.ti.com/general/docs/sitemap.tsp" name="&amp;lid=EN_US_footer_sitemap"> Site Map</a> | <a href="http://www.ti.com/corp/docs/csr/index.shtml" name="&amp;lid=EN_US_footer_corporate_citizenship">Corporate Citizenship</a> | <a href="http://www.ti.com/footer_mobile"><img src="wl18xx-1-2-driver-modules_files/mobile.gif" alt="mobile" name="&amp;lid=EN_US_footer_mobile" width="12" height="21"> m.ti.com (Mobile Version)</a>
+
+<p>TI is a global semiconductor design and manufacturing company. Innovate with 100,000+ analog ICs and<br>embedded processors, along with software, tools and the industry’s largest sales/support staff.</p>
+
+<div style="width:48%; padding-top:5px;">
+<a href="http://www.ti.com/corp/docs/legal/copyright.shtml" name="&amp;lid=EN_US_footer_websitefeedback">© Copyright 1995-2018</a> Texas Instruments Incorporated. All rights reserved.
+<br>
+<a href="http://www.ti.com/corp/docs/legal/trademark/trademrk.htm" name="&amp;lid=EN_US_footer_trademarks">Trademarks</a> | <a href="http://www.ti.com/corp/docs/legal/privacy.shtml" name="&amp;lid=EN_US_footer_privacypolicy">Privacy Policy</a> | <a href="http://www.ti.com/corp/docs/legal/termsofuse.shtml" name="&amp;lid=EN_US_footer_termsofuse">Terms of Use</a>
+</div><!-- Copyright ends -->
+
+</div><!-- Footnote ends -->
+</div>
+			</div>
+<div class="content-fragment-footer"></div>
+</div>
+<div class="content-fragment scripted-content-fragment no-wrapper responsive-hidden" id="footer-1780">
+<div class="content-fragment-content">
+
+
+
+
+                                                                                                
+<script type="text/javascript">
+          var tiUserGeo = {"country_code":"CA","city":"PORTCOQUITLAM","continent":"NA","throughput":"vhigh","network":"telus","network_type":"","bw":"5000","proxy":"","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:60.0) Gecko/20100101 Firefox/60.0","IP":"50.92.59.212", "ABM":""};
+</script>
+<div id="tiPrivacy"></div></div>
+<div class="content-fragment-footer"></div>
+</div>
+<div id="footer-1690"></div>
+<div id="footer-1691"></div>
+<div id="footer-1692"></div>
+<div id="footer-1693"></div>
+</div>
+</div>
+</div>
+<div class="layout-footer"></div>
+</div></div><div class="footer-fragments-footer"></div>
+
+
+	<script type="text/html" id="site-banner-notification-preferences-template">
+		<div class="notification-preference">
+			<span class="description">Do not notify me when someone <strong><%: notificationTypeName %></strong>?</span>
+			<a href="#" class="confirm internal-link button submit-button" data-notificationtypeid="<%: notificationTypeId %>">b2833Confirm</a>
+			<a href="#" class="cancel internal-link button submit-button">Cancel</a>
+		</div>
+	</script>
+
+
+	<script type="text/html" id="site-banner-list-template">
+		<div>
+			<div class="multiple-column-list columns-1">
+				<div class="multiple-column-item column-1">
+					<ul class="content-list content">
+					</ul>
+					<div class="loading">Loading...</div>
+					<% if(footerContent) { %>
+						<div class="content-list-footer">
+							<%= footerContent %>
+						</div>
+					<% } %>
+				</div>
+			</div>
+		</div>
+	</script>
+
+
+	<script type="text/html" id="site-banner-bookmark-filter-template">
+
+		<ul class="navigation-list filter">
+			<% if(contentTypeIds && contentTypeIds.length > 0) { %>
+				<li class="navigation-item conversations">
+					<a class="internal-link" href="#" data-contenttypeids="<%: contentTypeIds %>">Content</a>
+				</li>
+			<% } %>
+			<% if(applicationContentTypeIds && applicationContentTypeIds.length > 0) { %>
+				<li class="navigation-item conversations">
+					<a class="internal-link" href="#" data-contenttypeids="<%: applicationContentTypeIds %>">Application</a>
+				</li>
+			<% } %>
+			<% if(containerTypes && containerTypes.length > 0) { %>
+				<% foreach(containerTypes, function(containerType) {  %>
+					<li class="navigation-item conversations">
+						<a class="internal-link" href="#" data-contenttypeids="<%: containerType.id %>"><%: containerType.name %></a>
+					</li>
+				<% }); %>
+			<% } %>
+		</ul>
+
+	</script>
+
+	<script type="text/html" id="site-banner-notification-filter-template">
+		<ul class="navigation-list filter">
+			<li class="navigation-item all">
+				<a class="internal-link" href="#" data-filter="all">All</a>
+			</li>
+			<li class="navigation-item unread">
+				<a class="internal-link" href="#" data-filter="unread">Unread</a>
+			</li>
+		</ul>
+	</script>
+
+	<script type="text/html" id="site-banner-search-filter-template">
+		<% if(places && places.length > 0) { %>
+			<ul class="navigation-list filter">
+				<% foreach(places, function(place) { %>
+					<li class="navigation-item">
+						<a class="place internal-link" href="#" data-key="<%: place.key %>" data-value="<%: place.value %>"><%= place.name %></a>
+				<% }); %>
+			</ul>
+		<% } %>
+
+		<% if(filters && filters.length > 0) { %>
+			<ul class="navigation-list filter">
+			<% foreach(filters, function(filter) {  %>
+				<li class="navigation-item">
+					<a class="type internal-link" href="#" data-key="<%: filter.key %>"><%= filter.name %></a>
+				</li>
+			<% }); %>
+			</ul>
+		<% } %>
+	</script>
+
+	<script type="text/html" id="site-banner-user-template">
+		<div class="user">
+			<div class="avatar">
+				<a href="$core_v2_encoding.HtmlAttributeEncode($user.ProfileUrl)">
+					<img src="/cfs-filesystemfile/__key/communityserver-components-imagefileviewer/communityserver-components-avatars_2E00_/default.png_2D00_40x40x2.png" />
+				</a>
+			</div>
+			<span class="user-name">
+				<a href="$core_v2_encoding.HtmlAttributeEncode($user.ProfileUrl)">Anonymous</a>
+			</span>
+		</div>
+
+							<ul class="navigation-list user">
+      																																																																																									</ul>
+			</script>
+
+
+	<script type="text/javascript" src="wl18xx-1-2-driver-modules_files/ui_002.js"></script>
+	<script type="text/javascript">
+		
+		
+
+		
+						
+		
+		jQuery(function(){
+			jQuery.telligent.evolution.widgets.siteBanner.register({
+				wrapper: '#header-1722',
+
+				messagePrefix: 'widget.header-1722.',
+				banner: jQuery('#header-1722_banner'),
+
+				handheldSearchFieldsLink: jQuery('#header-1722_handheldSearchFieldsLink'),
+				handheldSearchFields: jQuery('#header-1722_handheldSearchFields'),
+				handheldBannerLinksLink: jQuery('#header-1722_handheldBannerLinksLink'),
+				handheldBannerLinks: jQuery('#header-1722_handheldBannerLinks'),
+				searchFields: jQuery('#header-1722_searchFields'),
+				bannerLinks: jQuery('#header-1722_bannerLinks'),
+				handheldBannerLinksCount: jQuery('#header-1722_handheldBannerLinksCount'),
+				bannerSiteLinks: jQuery('#header-1722_bannerSiteLinks'),
+				handheldSiteLinksLink: jQuery('#header-1722_handheldSiteLinksLink'),
+				handheldSiteLinks: jQuery('#header-1722_handheldSiteLinks'),
+
+				notificationsTemplate: 'site-banner-list-template',
+				notificationsUrl: '/utility/scripted-file.ashx?_cf=notifications.vm\u0026_fid=1722\u0026_ct=header\u0026_cp=\u0026_ctt=c6108064af6511ddb074de1a56d89593\u0026_ctc=ac6dadb3819d44f1b8ba5d3ba5ed79c8\u0026_ctn=decec9f8365c4a06ab6053f36924f21f\u0026_cc=0\u0026_pcurl=%7e%2fsupport%2fwireless_connectivity%2fwilink_wifi_bluetooth%2ff%2f307%2fp%2f438045%2f1570285',
+				notificationsLink: jQuery('#header-1722_notifications'),
+				notificationsUnread: 0,
+				notificationListFooterContent: '\u003ca href=\"#\" class=\"mark-read left\"  style=\"display:none\" \u003eMark as Read\u003c/a\u003e\u003ca class=\"right\" href=\"${notificationSettingsUrl}\"\u003eSettings\u003c/a\u003e',
+				notificationPreferenceTemplate: 'site-banner-notification-preferences-template',
+				notificationssUnreadCountMessageSingular: 'You have {0} unread notification',
+				notificationssUnreadCountMessagePlural: 'You have {0} unread notifications',
+				notificationsFilterTemplate: 'site-banner-notification-filter-template',
+
+				conversationsTemplate: 'site-banner-list-template',
+				conversationsUrl: '/utility/scripted-file.ashx?_cf=conversations.vm\u0026_fid=1722\u0026_ct=header\u0026_cp=\u0026_ctt=c6108064af6511ddb074de1a56d89593\u0026_ctc=ac6dadb3819d44f1b8ba5d3ba5ed79c8\u0026_ctn=decec9f8365c4a06ab6053f36924f21f\u0026_cc=0\u0026_pcurl=%7e%2fsupport%2fwireless_connectivity%2fwilink_wifi_bluetooth%2ff%2f307%2fp%2f438045%2f1570285',
+				conversationsLink: jQuery('#header-1722_conversations'),
+				conversationsUnread: 0,
+				conversationNotificationTypeId: '84e4c0a7-3a17-4dfe-b8a0-d7038aa04a84',
+				conversationListFooterContent: '\u003ca href=\"${core_v2_urls.Conversations()}\" class=\"left\"\u003eView All\u003c/a\u003e\u003ca href=\"#\" data-messagename=\"widget.header-1722.startconversation\" class=\"right\"\u003eNew Message\u003c/a\u003e',
+				conversationsUnreadCountMessageSingular: 'You have {0} unread message',
+				conversationsUnreadCountMessagePlural: 'You have {0} unread messages',
+				conversationNewConversationModalUrl: '$core_v2_encoding.JavascriptEncode($core_v2_urls.AddConversation())',
+
+				bookmarksTemplate: 'site-banner-list-template',
+				bookmarksUrl: '/utility/scripted-file.ashx?_cf=bookmarks.vm\u0026_fid=1722\u0026_ct=header\u0026_cp=\u0026_ctt=c6108064af6511ddb074de1a56d89593\u0026_ctc=ac6dadb3819d44f1b8ba5d3ba5ed79c8\u0026_ctn=decec9f8365c4a06ab6053f36924f21f\u0026_cc=0\u0026_pcurl=%7e%2fsupport%2fwireless_connectivity%2fwilink_wifi_bluetooth%2ff%2f307%2fp%2f438045%2f1570285',
+				bookmarksLink: jQuery('#header-1722_bookmarks'),
+				bookmarksListFooterContent: '\u003ca class=\"left\" href=\"${bookmarksUrl}\"\u003eView All\u003c/a\u003e',
+				bookmarksContentTypes: '$core_v2_encoding.JavascriptEncode($contentTypes)',
+				bookmarksApplicationContentTypes: '$core_v2_encoding.JavascriptEncode($applicationContentTypes)',
+				bookmarksContainerContentTypes: '$core_v2_encoding.JavascriptEncode($containerContentTypes)',
+				bookmarksFilterTemplate: 'site-banner-bookmark-filter-template',
+				bookmarksIsBookmarked:  false ,
+				bookmarksCurrentContentId: '',
+				bookmarksBookmarks: 'Bookmarks',
+				bookmarkAdded: 'Bookmark Added',
+				bookmarkRemoved: 'Bookmark Removed',
+
+				userPopupTemplate: 'site-banner-list-template',
+				userContentTemplate: 'site-banner-user-template',
+				userLink: jQuery('#header-1722_user'),
+
+				searchTemplate: 'site-banner-list-template',
+				searchUrl: '/utility/scripted-file.ashx?_cf=search.vm\u0026_fid=1722\u0026_ct=header\u0026_cp=\u0026_ctt=c6108064af6511ddb074de1a56d89593\u0026_ctc=ac6dadb3819d44f1b8ba5d3ba5ed79c8\u0026_ctn=decec9f8365c4a06ab6053f36924f21f\u0026_cc=0\u0026_pcurl=%7e%2fsupport%2fwireless_connectivity%2fwilink_wifi_bluetooth%2ff%2f307%2fp%2f438045%2f1570285',
+				searchInput: jQuery('#header-1722_Search'),
+				searchFooterContent: '\u003cspan class=\"right\"\u003e\u003ca data-messagename=\"widget.header-1722.advancedsearch\" id=\"header-1722_advancedsearch\" href=\"#\"\u003eAdvanced Search\u003c/a\u003e\u003c/span\u003e',
+				searchFilterTemplate: 'site-banner-search-filter-template',
+				searchAdvancedUrl: '/search?{0}',
+				searchAdvancedUserUrl: '/members?{0}',
+				searchFilterContentName: 'Content',
+				searchFilterGroupsName: 'Groups',
+				searchFilterPeopleName: 'People',
+				searchPlaceApplicationId:  '3201be17-b404-45c3-abff-22bb05bd486c' ,
+				searchPlaceApplicationName:  'In WiLink™ WiFi + Bluetooth Forum' ,
+				searchPlaceGroupId:  'ac6dadb3-819d-44f1-b8ba-5d3ba5ed79c8' ,
+				searchPlaceGroupName:  'In WiLink™ WiFi + Bluetooth' ,
+				searchPlaceAnywhereName: 'Anywhere',
+				advancedSearchId: 'header-1722_advancedsearch',
+				searchShowPeople:  true
+									,siteNavigationType: 'group'
+					,siteNavigationUrl: '/utility/scripted-file.ashx?_cf=groups.vm\u0026_fid=1722\u0026_ct=header\u0026_cp=\u0026_ctt=c6108064af6511ddb074de1a56d89593\u0026_ctc=ac6dadb3819d44f1b8ba5d3ba5ed79c8\u0026_ctn=decec9f8365c4a06ab6053f36924f21f\u0026_cc=0\u0026_pcurl=%7e%2fsupport%2fwireless_connectivity%2fwilink_wifi_bluetooth%2ff%2f307%2fp%2f438045%2f1570285'
+					,siteNavigationTemplate: 'site-banner-list-template'
+					,siteNavigationLink: jQuery('#header-1722_site')
+					,siteNavigationTitle:  						'Groups'
+																,siteNavigationCustomItems:
+													[
+																			{
+								label: 'Blogs',
+								url: 'http://e2e.ti.com/blogs_/'
+							}
+													,
+																			{
+								label: 'Support Forums',
+								url: 'http://e2e.ti.com/support/'
+							}
+													,
+																			{
+								label: 'Videos',
+								url: 'http://e2e.ti.com/videos/'
+							}
+													,
+																			{
+								label: 'Groups',
+								url: 'http://e2e.ti.com/group/'
+							}
+													 
+								,{
+									label: 'All Groups',
+									url: '/g'
+								}
+														]
+																		});
+		});
+	</script>
+		<script>
+		jQuery(function(j){
+			// no sub-nav on touch
+			if(j('body').hasClass('touch'))
+				return;
+
+			var container = j('#header-1723_container');
+			var popup;
+
+			function hideLinksPopup() {
+				if(popup) {
+					popup.glowPopUpPanel('hide');
+				}
+			}
+
+			function showLinksPopUp(parent, children) {
+				var links = j('<ul></ul>').append(children);
+				links.on('mouseleave', function(){
+					hideLinksPopup();
+				});
+
+				if(popup) {
+					hideLinksPopup();
+					popup.glowPopUpPanel('empty', '')
+						.glowPopUpPanel('append', links)
+						.glowPopUpPanel('show', parent);
+				} else {
+					popup = j('<div></div>')
+						.glowPopUpPanel({
+							cssClass: 'navigation-custom links-popup-panel',
+							zIndex: 1500,
+							hideOnDocumentClick: true
+						})
+						.glowPopUpPanel('append', links)
+						.glowPopUpPanel('show', parent)
+				}
+			}
+      
+        container.on('mouseover', '.navigation-list-item', function(e){
+            j(".navigation-custom.links-popup-panel").parent().attr('class','menuPopupPanel');
+        });
+
+			container.on('mouseover', '.navigation-list-item a', function(e){
+				var elm = j(e.target);
+				var children = elm.data('_link_children');
+				if(!children) {
+					children = elm.closest('li').find('ul.children > li');
+					elm.data('_link_children', children);
+				}
+				if(children && children.length > 0) {
+					showLinksPopUp(elm, children);
+				}
+			});
+
+			container.on('mouseout', '.navigation-list-item a', function(e){
+				if(!(e.relatedTarget &&
+					(j(e.relatedTarget).is('.links-popup-panel') ||
+					j(e.relatedTarget).closest('.links-popup-panel').length > 0)))
+					hideLinksPopup();
+			});
+		});
+		</script>
+		<script type="text/javascript">
+		jQuery(function(j){
+			j.telligent.evolution.widgets.scglobal.register();
+		});
+	</script>
+		<script>
+			SystemJS.import( 'widget-groupbanner' )
+			.then( function( init ) {
+				init( {
+					groupMembershipButton:jQuery("#header-1533311608_groupMembershipButton"),
+					requestJoinUrl:  "/login?ReturnUrl=%2Fsupport%2Fwireless_connectivity%2Fwilink_wifi_bluetooth%2F%3Frequestmembership%3Dtrue",					canJoinGroup:  false,					canJoinGroupByRequest:  false,					membershipType:"None",
+					groupId:340,
+					userId:2101,
+					errorText:"There was an error joining or leaving the group.",
+					joinedText:"You have joined this group.",
+					leftText:"You have left this group.",
+					wrapperId: 'header-1533311608',
+											forceRequestMembership:false
+									} );
+			} );
+		</script>
+	<script type="text/javascript">
+// <![CDATA[
+ctl03_ctl01 = new ContentFragmentContainerCustomCallback('ctl03_ctl01',new Function('mode','parameters','callback','errorCallback','context','authValue','ctl03_ctl01_ctl00._doCallback(mode+\':\'+authValue+\':\'+parameters,callback,context,errorCallback);'),'AuthorizationCookie');
+// ]]>
+</script><script>
+SystemJS.import( 'widget-thread' ).then( function( init ) {
+	return init( {
+		wrapperFragmentId: "fragment-320098",
+		threadId: 438045,
+		isAdmin: false,
+		isOP: false,
+		isTIer: false,
+		isSticky: false,
+		pageIndexQueryKey: "pi320098",
+		wrapperId: 'fragment-320098',
+		messages: {
+			paged: "ui.page.pi320098.paged",
+			moreLink: "widget.fragment-320098.more"
+		},
+		resources: {"replyModerated":"All replies are moderated. Your reply will appear once a moderator approves it.","resolutionFeedbackDetails":"Please provide details to help us resolve this issue.","suggestedAnswer":"Answer Suggested","tiThinksResolved":"TI Thinks Resolved","resolved":"Resolved"},
+		urls: {
+			ajax: {"resolutionStatus":"/utility/scripted-file.ashx?_cf=callback-resolutionstatus.vm&_fid=320098&_ct=page&_cp=forums-thread&_ctt=c6108064af6511ddb074de1a56d89593&_ctc=ac6dadb3819d44f1b8ba5d3ba5ed79c8&_ctn=decec9f8365c4a06ab6053f36924f21f&_cc=0&_pcurl=%7e%2fsupport%2fwireless_connectivity%2fwilink_wifi_bluetooth%2ff%2f307%2fp%2f438045%2f1570285","subscribe":"/utility/scripted-file.ashx?_cf=subscribe.vm&_fid=320098&_ct=page&_cp=forums-thread&_ctt=c6108064af6511ddb074de1a56d89593&_ctc=ac6dadb3819d44f1b8ba5d3ba5ed79c8&_ctn=decec9f8365c4a06ab6053f36924f21f&_cc=0&_pcurl=%7e%2fsupport%2fwireless_connectivity%2fwilink_wifi_bluetooth%2ff%2f307%2fp%2f438045%2f1570285","endorse":"/utility/scripted-file.ashx?_cf=callback-endorse.vm&_fid=320098&_ct=page&_cp=forums-thread&_ctt=c6108064af6511ddb074de1a56d89593&_ctc=ac6dadb3819d44f1b8ba5d3ba5ed79c8&_ctn=decec9f8365c4a06ab6053f36924f21f&_cc=0&_pcurl=%7e%2fsupport%2fwireless_connectivity%2fwilink_wifi_bluetooth%2ff%2f307%2fp%2f438045%2f1570285","unlink":"/utility/scripted-file.ashx?_cf=callback-unlink.vm&_fid=320098&_ct=page&_cp=forums-thread&_ctt=c6108064af6511ddb074de1a56d89593&_ctc=ac6dadb3819d44f1b8ba5d3ba5ed79c8&_ctn=decec9f8365c4a06ab6053f36924f21f&_cc=0&_pcurl=%7e%2fsupport%2fwireless_connectivity%2fwilink_wifi_bluetooth%2ff%2f307%2fp%2f438045%2f1570285","moreActions":"/utility/scripted-file.ashx?_cf=callback-more-actions.vm&_fid=320098&_ct=page&_cp=forums-thread&_ctt=c6108064af6511ddb074de1a56d89593&_ctc=ac6dadb3819d44f1b8ba5d3ba5ed79c8&_ctn=decec9f8365c4a06ab6053f36924f21f&_cc=0&_pcurl=%7e%2fsupport%2fwireless_connectivity%2fwilink_wifi_bluetooth%2ff%2f307%2fp%2f438045%2f1570285","thread":"/utility/scripted-file.ashx?_cf=thread-list.vm&_fid=320098&_ct=page&_cp=forums-thread&_ctt=c6108064af6511ddb074de1a56d89593&_ctc=ac6dadb3819d44f1b8ba5d3ba5ed79c8&_ctn=decec9f8365c4a06ab6053f36924f21f&_cc=0&_pcurl=%7e%2fsupport%2fwireless_connectivity%2fwilink_wifi_bluetooth%2ff%2f307%2fp%2f438045%2f1570285","mute":"/utility/scripted-file.ashx?_cf=mute.vm&_fid=320098&_ct=page&_cp=forums-thread&_ctt=c6108064af6511ddb074de1a56d89593&_ctc=ac6dadb3819d44f1b8ba5d3ba5ed79c8&_ctn=decec9f8365c4a06ab6053f36924f21f&_cc=0&_pcurl=%7e%2fsupport%2fwireless_connectivity%2fwilink_wifi_bluetooth%2ff%2f307%2fp%2f438045%2f1570285","deleteVerifyAnswerExtAttr":"/utility/scripted-file.ashx?_cf=deleteVerifyAnswerExtAttr.vm&_fid=320098&_ct=page&_cp=forums-thread&_ctt=c6108064af6511ddb074de1a56d89593&_ctc=ac6dadb3819d44f1b8ba5d3ba5ed79c8&_ctn=decec9f8365c4a06ab6053f36924f21f&_cc=0&_pcurl=%7e%2fsupport%2fwireless_connectivity%2fwilink_wifi_bluetooth%2ff%2f307%2fp%2f438045%2f1570285","advancedReply":"/utility/scripted-file.ashx?_cf=callback-advancedreply.vm&_fid=320098&_ct=page&_cp=forums-thread&_ctt=c6108064af6511ddb074de1a56d89593&_ctc=ac6dadb3819d44f1b8ba5d3ba5ed79c8&_ctn=decec9f8365c4a06ab6053f36924f21f&_cc=0&_pcurl=%7e%2fsupport%2fwireless_connectivity%2fwilink_wifi_bluetooth%2ff%2f307%2fp%2f438045%2f1570285"}
+		},
+		totalReplyCount: 7
+	} );
+} );
+</script>
+<script type="text/javascript">
+// <![CDATA[
+ctl03_ctl02 = new ContentFragmentContainerCustomCallback('ctl03_ctl02',new Function('mode','parameters','callback','errorCallback','context','authValue','ctl03_ctl02_ctl00._doCallback(mode+\':\'+authValue+\':\'+parameters,callback,context,errorCallback);'),'AuthorizationCookie');
+// ]]>
+</script>	<script type="text/javascript" src="wl18xx-1-2-driver-modules_files/ui.js"></script>
+	<script type="text/javascript">
+		jQuery(function(){
+			jQuery.telligent.evolution.widgets.userHover.register({
+				getUserInformationUrl: '/utility/scripted-file.ashx?_cf=get-user-information.vm\u0026_fid=1690\u0026_ct=footer\u0026_cp=forums-thread\u0026_ctt=c6108064af6511ddb074de1a56d89593\u0026_ctc=ac6dadb3819d44f1b8ba5d3ba5ed79c8\u0026_ctn=decec9f8365c4a06ab6053f36924f21f\u0026_cc=0\u0026_pcurl=%7e%2fsupport%2fwireless_connectivity%2fwilink_wifi_bluetooth%2ff%2f307%2fp%2f438045%2f1570285',
+				getRecentActivityUrl: '/utility/scripted-file.ashx?_cf=get-recent-activity.vm\u0026_fid=1690\u0026_ct=footer\u0026_cp=forums-thread\u0026_ctt=c6108064af6511ddb074de1a56d89593\u0026_ctc=ac6dadb3819d44f1b8ba5d3ba5ed79c8\u0026_ctn=decec9f8365c4a06ab6053f36924f21f\u0026_cc=0\u0026_pcurl=%7e%2fsupport%2fwireless_connectivity%2fwilink_wifi_bluetooth%2ff%2f307%2fp%2f438045%2f1570285'
+			});
+		});
+	</script>
+	<script type="text/javascript">
+	//<![CDATA[
+
+        jQuery.telligent.evolution.ui.components.moderate.defaults = {
+    		reportedText: 'Thank you for your report',
+    		flagText: 'Flag as spam/abuse',
+    		flaggedText: 'Flagged as spam/abuse'
+    	};
+	//]]>
+	</script>
+<script type="text/javascript">
+// <![CDATA[
+ctl03_ctl03 = new ContentFragmentContainerCustomCallback('ctl03_ctl03',new Function('mode','parameters','callback','errorCallback','context','authValue','ctl03_ctl03_ctl00._doCallback(mode+\':\'+authValue+\':\'+parameters,callback,context,errorCallback);'),'AuthorizationCookie');
+// ]]>
+</script><script type="text/javascript">
+// <![CDATA[
+window.ctl03_ctl01_ctl00 = new Telligent_CallbackManager('ctl03_ctl01_ctl00','ctl03$ctl01$ctl00','ctl02');
+// ]]>
+</script><script type="text/javascript">
+// <![CDATA[
+window.ctl03_ctl02_ctl00 = new Telligent_CallbackManager('ctl03_ctl02_ctl00','ctl03$ctl02$ctl00','ctl02');
+// ]]>
+</script><script type="text/javascript">
+// <![CDATA[
+window.ctl03_ctl03_ctl00 = new Telligent_CallbackManager('ctl03_ctl03_ctl00','ctl03$ctl03$ctl00','ctl02');
+// ]]>
+</script><div style="z-index: 1500; width: 270px; height: 0px; left: 512.733px; top: 105px; visibility: visible; overflow: hidden; position: absolute; display: none;" class="menuPopupPanel"><div style="left: 0px; top: 0px; visibility: visible; overflow: visible; position: absolute; display: none;" class="navigation-custom links-popup-panel"><ul><li>
+								  <a href="http://www.ti.com/ww/en/techdays/index.html">Tech days</a>
+							  </li><li>
+								  <a href="https://training.ti.com/">Online training</a>
+							  </li><li>
+								  <a href="https://training.ti.com/search-catalog/type/classroom/type/webcast">Live events</a>
+							  </li><li>
+								  <a href="http://www.ti.com/ww/en/power_supply_design_seminars/index.html">Power Supply Design Seminar</a>
+							  </li></ul></div></div></form></body></html>
