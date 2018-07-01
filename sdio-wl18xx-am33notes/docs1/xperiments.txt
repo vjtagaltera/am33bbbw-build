@@ -1,0 +1,23 @@
+
+
+experiments with building wl18xx on a custom soc
+
+ experiment 1: default custom kernel configuration
+ experiment 2: manually add the kernel configurations from ti integration guide
+ experiment 3: follow instructions from ti sdk documentation or wl18xx linux instructions
+               copy the default kernel configuration
+               run menuconfig to enable relevant modules
+               run make oldconfig 
+               run make zImage and modules to build
+
+
+experiments with bbbw
+
+ experiment 4: bbbw on am335x using the ti processor sdk plus verify script
+               build sdk kernel
+               run verify script to modify the configuration
+               build sdk again
+ experiment 5: build using beagleboard image-builder scripts.
+ experiment 6: build using the scripts from eewiki scripts by Robert Nelson
+ experiment 7: run with various changes to kernel 
+

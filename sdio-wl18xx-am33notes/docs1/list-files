@@ -1,0 +1,9 @@
+-rw-r--r-- 1 1550325 Jun  1 00:47 linux-kernel-mmc-sdio-randyqiu.pdf
+-rw-r--r-- 1  111534 Jun  2 21:27 Schulz-how-to-support-new-board-u-boot-linux.pdf
+-rw-r--r-- 1    7996 Jun  3 21:29 sdio-user-space.txt
+-rw-r--r-- 1 6973160 Jun  3 22:04 BeagleBone_Black_Cookbook.pdf
+-rw-r--r-- 1     719 Jun 19 22:00 note-oe-layers-build
+drwxr-xr-x 1       0 Jun 22 00:40 exploringbeaglebone/
+drwxr-xr-x 1       0 Jun 22 00:41 bbb-eewiki/
+-rw-r--r-- 1    3101 Jun 22 00:46 note-links
+
