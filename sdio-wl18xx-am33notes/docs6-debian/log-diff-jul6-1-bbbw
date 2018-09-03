@@ -1,0 +1,829 @@
+diff --git a/srcs/drivers/base/bus.c b/srcs/drivers/base/bus.c
+index 6470eb8..7495f0c 100644
+--- a/srcs/drivers/base/bus.c
++++ b/srcs/drivers/base/bus.c
+@@ -310,7 +310,11 @@ int bus_for_each_dev(struct bus_type *bus, struct device *start,
+ 	klist_iter_init_node(&bus->p->klist_devices, &i,
+ 			     (start ? &start->p->knode_bus : NULL));
+ 	while ((dev = next_device(&i)) && !error)
++{
++/* fn  is __driver_attach in dd.c */
+ 		error = fn(dev, data);
++if(error)printk(KERN_INFO "  sdiodbg bus.c "" bus_for_each_dev error %d\n", error); 
++}
+ 	klist_iter_exit(&i);
+ 	return error;
+ }
+@@ -510,6 +514,17 @@ int bus_add_device(struct device *dev)
+ 
+ 	if (bus) {
+ 		pr_debug("bus: '%s': add device %s\n", bus->name, dev_name(dev));
++{
++printk(KERN_INFO "  sdiodbg bus.c bus_add_device ""bus: '%s': add device %s\n", bus->name, dev_name(dev));
++if (strcmp(dev_name(dev), "wl18xx.1.auto") == 0 || 
++    strcmp(dev_name(dev), "mmc2:0001") == 0 || 
++    strcmp(dev_name(dev), "mmc2:0001:1") == 0 || 
++    strcmp(dev_name(dev), "mmc2:0001:2") == 0
++        ) {
++ printk(KERN_INFO " sdiodbg bus.c  %4d %s --- --- dump ...\n", __LINE__, __func__);
++ /*dump_stack();*/
++}
++}
+ 		error = device_add_attrs(bus, dev);
+ 		if (error)
+ 			goto out_put;
+@@ -682,6 +697,7 @@ int bus_add_driver(struct device_driver *drv)
+ 		return -EINVAL;
+ 
+ 	pr_debug("bus: '%s': add driver %s\n", bus->name, drv->name);
++printk(KERN_INFO "  sdiodbg bus.c bus_add_driver ""bus: '%s': add driver %s\n", bus->name, drv->name);
+ 
+ 	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
+ 	if (!priv) {
+@@ -702,6 +718,8 @@ int bus_add_driver(struct device_driver *drv)
+ 		if (driver_allows_async_probing(drv)) {
+ 			pr_debug("bus: '%s': probing driver %s asynchronously\n",
+ 				drv->bus->name, drv->name);
++printk(KERN_INFO "  sdiodbg bus.c ""bus: '%s': probing driver %s asynchronously\n",
++				drv->bus->name, drv->name);
+ 			async_schedule(driver_attach_async, drv);
+ 		} else {
+ 			error = driver_attach(drv);
+@@ -732,6 +750,7 @@ int bus_add_driver(struct device_driver *drv)
+ 		}
+ 	}
+ 
++printk(KERN_INFO "  sdiodbg bus.c bus_add_driver -- done\n");
+ 	return 0;
+ 
+ out_unregister:
+diff --git a/srcs/drivers/base/dd.c b/srcs/drivers/base/dd.c
+index a1fbf55..69bd6a7 100644
+--- a/srcs/drivers/base/dd.c
++++ b/srcs/drivers/base/dd.c
+@@ -722,6 +722,7 @@ void device_initial_probe(struct device *dev)
+ 	__device_attach(dev, true);
+ }
+ 
++static void *virfuncp=0;
+ static int __driver_attach(struct device *dev, void *data)
+ {
+ 	struct device_driver *drv = data;
+@@ -743,12 +744,16 @@ static int __driver_attach(struct device *dev, void *data)
+ 		return 0;
+ 	} else if (ret == -EPROBE_DEFER) {
+ 		dev_dbg(dev, "Device match requests probe deferral\n");
++printk(KERN_INFO "  sdiodbg dd.c   __driver_attach  deferred  drv->name %s\n", drv->name);
+ 		driver_deferred_probe_add(dev);
+ 	} else if (ret < 0) {
+ 		dev_dbg(dev, "Bus failed to match device: %d", ret);
+ 		return ret;
+ 	} /* ret > 0 means positive match */
+ 
++printk(KERN_INFO "  sdiodbg dd.c   __driver_attach  instant  drv->name %s  match func %p %s\n", 
++drv->name, drv->bus->match, (virfuncp == (void *)drv->bus->match)?"":"diff");
++virfuncp = (void *)drv->bus->match;
+ 	if (dev->parent)	/* Needed for USB */
+ 		device_lock(dev->parent);
+ 	device_lock(dev);
+@@ -772,7 +777,15 @@ static int __driver_attach(struct device *dev, void *data)
+  */
+ int driver_attach(struct device_driver *drv)
+ {
++#if 0
+ 	return bus_for_each_dev(drv->bus, NULL, drv, __driver_attach);
++#else
++        int ret;
++printk(KERN_INFO "  sdiodbg dd.c driver_attach\n");
++        ret = bus_for_each_dev(drv->bus, NULL, drv, __driver_attach);
++printk(KERN_INFO "  sdiodbg dd.c driver_attach -- done ret %d\n", ret);
++        return ret;
++#endif
+ }
+ EXPORT_SYMBOL_GPL(driver_attach);
+ 
+diff --git a/srcs/drivers/base/platform.c b/srcs/drivers/base/platform.c
+index 5eba478..819d6fe 100644
+--- a/srcs/drivers/base/platform.c
++++ b/srcs/drivers/base/platform.c
+@@ -930,6 +930,8 @@ static const struct platform_device_id *platform_match_id(
+ {
+ 	while (id->name[0]) {
+ 		if (strcmp(pdev->name, id->name) == 0) {
++printk(KERN_INFO "  sdiodbg platform.c   platform_match_id  pdev->name %s  id->name %s\n", 
++        pdev->name, id->name);
+ 			pdev->id_entry = id;
+ 			return id;
+ 		}
+@@ -957,6 +959,9 @@ static int platform_match(struct device *dev, struct device_driver *drv)
+ 	struct platform_driver *pdrv = to_platform_driver(drv);
+ 
+ 	/* When driver_override is set, only bind to the matching driver */
++int of_sdiodbg_sdiomatch = 0;
++//if (strcmp(drv->name, "wl1271_sdio") == 0) of_sdiodbg_sdiomatch = 1;
++if (of_sdiodbg_sdiomatch) printk(KERN_INFO "  sdiodbg platform.c platform_match "" driver %s  %d\n", drv->name, __LINE__);
+ 	if (pdev->driver_override)
+ 		return !strcmp(pdev->driver_override, drv->name);
+ 
+diff --git a/srcs/drivers/mmc/core/bus.c b/srcs/drivers/mmc/core/bus.c
+index c64266f..00eb462 100644
+--- a/srcs/drivers/mmc/core/bus.c
++++ b/srcs/drivers/mmc/core/bus.c
+@@ -291,6 +291,7 @@ int mmc_add_card(struct mmc_card *card)
+ 		[UHS_SDR104_BUS_SPEED] = "SDR104 ",
+ 		[UHS_DDR50_BUS_SPEED] = "DDR50 ",
+ 	};
++printk(KERN_INFO " sdiodbg %4d %s --- --- enter\n", __LINE__, __func__);
+ 
+ 
+ 	dev_set_name(&card->dev, "%s:%04x", mmc_hostname(card->host), card->rca);
+@@ -357,6 +358,7 @@ int mmc_add_card(struct mmc_card *card)
+ 		return ret;
+ 
+ 	mmc_card_set_present(card);
++printk(KERN_INFO " sdiodbg %4d %s --- --- exit\n", __LINE__, __func__);
+ 
+ 	return 0;
+ }
+diff --git a/srcs/drivers/mmc/core/core.c b/srcs/drivers/mmc/core/core.c
+index 2553d90..95ea077 100644
+--- a/srcs/drivers/mmc/core/core.c
++++ b/srcs/drivers/mmc/core/core.c
+@@ -2751,17 +2751,23 @@ void mmc_rescan(struct work_struct *work)
+ 	struct mmc_host *host =
+ 		container_of(work, struct mmc_host, detect.work);
+ 	int i;
++printk(KERN_INFO " sdiodbg mmc %4d %s --- --- enter ---- host %p  rescan_dis %s  removable %s\n", __LINE__, 
++       __func__, host, (host->rescan_disable)?"dis":"en", mmc_card_is_removable(host)?"yes":"no");
+ 
+ 	if (host->rescan_disable)
+ 		return;
+ 
+ 	/* If there is a non-removable card registered, only scan once */
+ 	if (!mmc_card_is_removable(host) && host->rescan_entered)
++{
++printk(KERN_INFO " sdiodbg mmc %4d %s --- --- exit skip ---- host %p \n", __LINE__, __func__, host);
+ 		return;
++}
+ 	host->rescan_entered = 1;
+ 
+ 	if (host->trigger_card_event && host->ops->card_event) {
+ 		mmc_claim_host(host);
++printk(KERN_INFO " sdiodbg mmc %4d %s --- --- card_event ---- host %p %p\n", __LINE__, __func__, host, host->ops->card_event);
+ 		host->ops->card_event(host);
+ 		mmc_release_host(host);
+ 		host->trigger_card_event = false;
+@@ -2806,6 +2812,7 @@ void mmc_rescan(struct work_struct *work)
+ 	}
+ 
+ 	for (i = 0; i < ARRAY_SIZE(freqs); i++) {
++printk(KERN_INFO " sdiodbg mmc %4d %s --- --- try_freq ---- host %p f_min %u\n", __LINE__, __func__, host, host->f_min);
+ 		if (!mmc_rescan_try_freq(host, max(freqs[i], host->f_min)))
+ 			break;
+ 		if (freqs[i] <= host->f_min)
+@@ -2816,6 +2823,8 @@ void mmc_rescan(struct work_struct *work)
+  out:
+ 	if (host->caps & MMC_CAP_NEEDS_POLL)
+ 		mmc_schedule_delayed_work(&host->detect, HZ);
++printk(KERN_INFO " sdiodbg mmc %4d %s --- --- exit ---- host %p  delayed %s\n", __LINE__, 
++       __func__, host, (host->caps & MMC_CAP_NEEDS_POLL)?"yes":"no");
+ }
+ 
+ void mmc_start_host(struct mmc_host *host)
+diff --git a/srcs/drivers/mmc/core/quirks.c b/srcs/drivers/mmc/core/quirks.c
+index ca9cade..72e3c1d 100644
+--- a/srcs/drivers/mmc/core/quirks.c
++++ b/srcs/drivers/mmc/core/quirks.c
+@@ -59,6 +59,8 @@ void mmc_fixup_device(struct mmc_card *card, const struct mmc_fixup *table)
+ 	/* Non-core specific workarounds. */
+ 	if (!table)
+ 		table = mmc_fixup_methods;
++printk(KERN_INFO "  sdiodbg quirks.c  table %p  mmc_fixup_methods %p\n", 
++       table, mmc_fixup_methods);
+ 
+ 	for (f = table; f->vendor_fixup; f++) {
+ 		if ((f->manfid == CID_MANFID_ANY ||
+@@ -76,6 +78,8 @@ void mmc_fixup_device(struct mmc_card *card, const struct mmc_fixup *table)
+ 		     f->ext_csd_rev == card->ext_csd.rev) &&
+ 		    rev >= f->rev_start && rev <= f->rev_end) {
+ 			dev_dbg(&card->dev, "calling %pf\n", f->vendor_fixup);
++printk(KERN_INFO "  sdiodbg quirks.c %p, calling %pf  name %-8s vendor %04x device %04x\n", 
++       &card->dev, f->vendor_fixup, f->name, f->cis_vendor, f->cis_device);
+ 			f->vendor_fixup(card, f->data);
+ 		}
+ 	}
+diff --git a/srcs/drivers/mmc/core/sdio.c b/srcs/drivers/mmc/core/sdio.c
+index bd44ba8..0b8a6f5 100644
+--- a/srcs/drivers/mmc/core/sdio.c
++++ b/srcs/drivers/mmc/core/sdio.c
+@@ -554,11 +554,17 @@ static int mmc_sdio_init_card(struct mmc_host *host, u32 ocr,
+ 	int retries = 10;
+ 	u32 rocr = 0;
+ 	u32 ocr_card = ocr;
++/*
++ * 
++ * 
++ */
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_sdio_init_card %d host %p \n", __LINE__, host);
+ 
+ 	BUG_ON(!host);
+ 	WARN_ON(!host->claimed);
+ 
+ 	/* to query card if 1.8V signalling is supported */
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_sdio_init_card %d host %p \n", __LINE__, host);
+ 	if (mmc_host_uhs(host))
+ 		ocr |= R4_18V_PRESENT;
+ 
+@@ -572,6 +578,7 @@ try_again:
+ 	 * Inform the card of the voltage
+ 	 */
+ 	if (!powered_resume) {
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_sdio_init_card %d host %p \n", __LINE__, host);
+ 		err = mmc_send_io_op_cond(host, ocr, &rocr);
+ 		if (err)
+ 			goto err;
+@@ -581,6 +588,7 @@ try_again:
+ 	 * For SPI, enable CRC as appropriate.
+ 	 */
+ 	if (mmc_host_is_spi(host)) {
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_sdio_init_card %d host %p \n", __LINE__, host);
+ 		err = mmc_spi_set_crc(host, use_spi_crc);
+ 		if (err)
+ 			goto err;
+@@ -589,14 +597,17 @@ try_again:
+ 	/*
+ 	 * Allocate card structure.
+ 	 */
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_sdio_init_card %d host %p \n", __LINE__, host);
+ 	card = mmc_alloc_card(host, NULL);
+ 	if (IS_ERR(card)) {
+ 		err = PTR_ERR(card);
+ 		goto err;
+ 	}
+ 
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_sdio_init_card %d host %p \n", __LINE__, host);
+ 	if ((rocr & R4_MEMORY_PRESENT) &&
+ 	    mmc_sd_get_cid(host, ocr & rocr, card->raw_cid, NULL) == 0) {
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_sdio_init_card %d host %p \n", __LINE__, host);
+ 		card->type = MMC_TYPE_SD_COMBO;
+ 
+ 		if (oldcard && (oldcard->type != MMC_TYPE_SD_COMBO ||
+@@ -605,6 +616,7 @@ try_again:
+ 			return -ENOENT;
+ 		}
+ 	} else {
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_sdio_init_card %d host %p \n", __LINE__, host);
+ 		card->type = MMC_TYPE_SDIO;
+ 
+ 		if (oldcard && oldcard->type != MMC_TYPE_SDIO) {
+@@ -616,6 +628,7 @@ try_again:
+ 	/*
+ 	 * Call the optional HC's init_card function to handle quirks.
+ 	 */
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_sdio_init_card %d host %p \n", __LINE__, host);
+ 	if (host->ops->init_card)
+ 		host->ops->init_card(host, card);
+ 
+@@ -626,6 +639,7 @@ try_again:
+ 	 * systems that claim 1.8v signalling in fact do not support
+ 	 * it.
+ 	 */
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_sdio_init_card %d host %p \n", __LINE__, host);
+ 	if (!powered_resume && (rocr & ocr & R4_18V_PRESENT)) {
+ 		err = mmc_set_signal_voltage(host, MMC_SIGNAL_VOLTAGE_180,
+ 					ocr_card);
+@@ -647,7 +661,9 @@ try_again:
+ 	/*
+ 	 * For native busses:  set card RCA and quit open drain mode.
+ 	 */
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_sdio_init_card %d host %p \n", __LINE__, host);
+ 	if (!powered_resume && !mmc_host_is_spi(host)) {
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_sdio_init_card %d host %p \n", __LINE__, host);
+ 		err = mmc_send_relative_addr(host, &card->rca);
+ 		if (err)
+ 			goto remove;
+@@ -664,7 +680,9 @@ try_again:
+ 	/*
+ 	 * Read CSD, before selecting the card
+ 	 */
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_sdio_init_card %d host %p \n", __LINE__, host);
+ 	if (!oldcard && card->type == MMC_TYPE_SD_COMBO) {
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_sdio_init_card %d host %p \n", __LINE__, host);
+ 		err = mmc_sd_get_csd(host, card);
+ 		if (err)
+ 			return err;
+@@ -675,12 +693,14 @@ try_again:
+ 	/*
+ 	 * Select card, as all following commands rely on that.
+ 	 */
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_sdio_init_card %d host %p \n", __LINE__, host);
+ 	if (!powered_resume && !mmc_host_is_spi(host)) {
+ 		err = mmc_select_card(card);
+ 		if (err)
+ 			goto remove;
+ 	}
+ 
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_sdio_init_card %d host %p \n", __LINE__, host);
+ 	if (card->quirks & MMC_QUIRK_NONSTD_SDIO) {
+ 		/*
+ 		 * This is non-standard SDIO device, meaning it doesn't
+@@ -700,6 +720,7 @@ try_again:
+ 	/*
+ 	 * Read the common registers.
+ 	 */
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_sdio_init_card %d host %p \n", __LINE__, host);
+ 	err = sdio_read_cccr(card, ocr);
+ 	if (err)
+ 		goto remove;
+@@ -707,6 +728,7 @@ try_again:
+ 	/*
+ 	 * Read the common CIS tuples.
+ 	 */
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_sdio_init_card %d host %p \n", __LINE__, host);
+ 	err = sdio_read_common_cis(card);
+ 	if (err)
+ 		goto remove;
+@@ -721,8 +743,10 @@ try_again:
+ 		card = oldcard;
+ 	}
+ 	card->ocr = ocr_card;
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_sdio_init_card %d host %p \n", __LINE__, host);
+ 	mmc_fixup_device(card, NULL);
+ 
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_sdio_init_card %d host %p \n", __LINE__, host);
+ 	if (card->type == MMC_TYPE_SD_COMBO) {
+ 		err = mmc_sd_setup_card(host, card, oldcard != NULL);
+ 		/* handle as SDIO-only card if memory init failed */
+@@ -739,12 +763,14 @@ try_again:
+ 	/*
+ 	 * If needed, disconnect card detection pull-up resistor.
+ 	 */
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_sdio_init_card %d host %p \n", __LINE__, host);
+ 	err = sdio_disable_cd(card);
+ 	if (err)
+ 		goto remove;
+ 
+ 	/* Initialization sequence for UHS-I cards */
+ 	/* Only if card supports 1.8v and UHS signaling */
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_sdio_init_card %d host %p \n", __LINE__, host);
+ 	if ((ocr & R4_18V_PRESENT) && card->sw_caps.sd3_bus_mode) {
+ 		err = mmc_sdio_init_uhs_card(card);
+ 		if (err)
+@@ -771,16 +797,20 @@ try_again:
+ 		if (err)
+ 			goto remove;
+ 	}
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_sdio_init_card %d host %p \n", __LINE__, host);
+ finish:
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_sdio_init_card %d host %p \n", __LINE__, host);
+ 	if (!oldcard)
+ 		host->card = card;
+ 	return 0;
+ 
+ remove:
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_sdio_init_card %d host %p \n", __LINE__, host);
+ 	if (!oldcard)
+ 		mmc_remove_card(card);
+ 
+ err:
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_sdio_init_card %d host %p \n", __LINE__, host);
+ 	return err;
+ }
+ 
+@@ -1062,19 +1092,26 @@ int mmc_attach_sdio(struct mmc_host *host)
+ 	int err, i, funcs;
+ 	u32 ocr, rocr;
+ 	struct mmc_card *card;
++{ struct device	*parent = host->parent;
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_attach_sdio %d  parent name %s id %u\n", __LINE__,
++       parent->init_name, parent->id);
++}
+ 
+ 	BUG_ON(!host);
+ 	WARN_ON(!host->claimed);
+ 
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_attach_sdio %d host %p \n", __LINE__, host);
+ 	err = mmc_send_io_op_cond(host, 0, &ocr);
+ 	if (err)
+ 		return err;
+ 
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_attach_sdio %d host %p \n", __LINE__, host);
+ 	mmc_attach_bus(host, &mmc_sdio_ops);
+ 	if (host->ocr_avail_sdio)
+ 		host->ocr_avail = host->ocr_avail_sdio;
+ 
+ 
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_attach_sdio %d host %p \n", __LINE__, host);
+ 	rocr = mmc_select_voltage(host, ocr);
+ 
+ 	/*
+@@ -1088,6 +1125,7 @@ int mmc_attach_sdio(struct mmc_host *host)
+ 	/*
+ 	 * Detect and init the card.
+ 	 */
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_attach_sdio %d host %p \n", __LINE__, host);
+ 	err = mmc_sdio_init_card(host, rocr, NULL, 0);
+ 	if (err)
+ 		goto err;
+@@ -1122,6 +1160,7 @@ int mmc_attach_sdio(struct mmc_host *host)
+ 	 * Initialize (but don't add) all present functions.
+ 	 */
+ 	for (i = 0; i < funcs; i++, card->sdio_funcs++) {
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_attach_sdio %d host %p \n", __LINE__, host);
+ 		err = sdio_init_func(host->card, i + 1);
+ 		if (err)
+ 			goto remove;
+@@ -1136,7 +1175,9 @@ int mmc_attach_sdio(struct mmc_host *host)
+ 	/*
+ 	 * First add the card to the driver model...
+ 	 */
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_attach_sdio %d host %p \n", __LINE__, host);
+ 	mmc_release_host(host);
++printk(KERN_INFO "  sdiodbg mmc/sdio.c mmc_attach_sdio %d host %p \n", __LINE__, host);
+ 	err = mmc_add_card(host->card);
+ 	if (err)
+ 		goto remove_added;
+diff --git a/srcs/drivers/mmc/core/sdio_bus.c b/srcs/drivers/mmc/core/sdio_bus.c
+index 86f5b32..8962f3f 100644
+--- a/srcs/drivers/mmc/core/sdio_bus.c
++++ b/srcs/drivers/mmc/core/sdio_bus.c
+@@ -81,15 +81,22 @@ static const struct sdio_device_id *sdio_match_device(struct sdio_func *func,
+ {
+ 	const struct sdio_device_id *ids;
+ 
++printk(KERN_INFO "  sdiodbg sdio_bus.c  %4d %s\n", __LINE__, __func__);
+ 	ids = sdrv->id_table;
+ 
+ 	if (ids) {
+ 		while (ids->class || ids->vendor || ids->device) {
++printk(KERN_INFO "  sdiodbg sdio_bus.c  %p class %u vendor %04x device %04x\n", ids, ids->class, ids->vendor, ids->device);
++printk(KERN_INFO "  sdiodbg sdio_bus.c  %8s class %u vendor %04x device %04x\n", "", func->class, func->vendor, func->device);
+ 			if (sdio_match_one(func, ids))
++{
++printk(KERN_INFO "  sdiodbg sdio_bus.c  return ids %p\n", ids);
+ 				return ids;
++}
+ 			ids++;
+ 		}
+ 	}
++printk(KERN_INFO "  sdiodbg sdio_bus.c  %4d %s return null\n", __LINE__, __func__);
+ 
+ 	return NULL;
+ }
+diff --git a/srcs/drivers/net/wireless/ti/wilink_platform_data.c b/srcs/drivers/net/wireless/ti/wilink_platform_data.c
+index ea0e359..72f3410 100644
+--- a/srcs/drivers/net/wireless/ti/wilink_platform_data.c
++++ b/srcs/drivers/net/wireless/ti/wilink_platform_data.c
+@@ -27,6 +27,7 @@ static struct wl1251_platform_data *wl1251_platform_data;
+ 
+ int __init wl1251_set_platform_data(const struct wl1251_platform_data *data)
+ {
++printk(KERN_INFO " sdiodbg %4d %s\n", __LINE__, __func__);
+ 	if (wl1251_platform_data)
+ 		return -EBUSY;
+ 	if (!data)
+@@ -41,6 +42,7 @@ int __init wl1251_set_platform_data(const struct wl1251_platform_data *data)
+ 
+ struct wl1251_platform_data *wl1251_get_platform_data(void)
+ {
++printk(KERN_INFO " sdiodbg %4d %s\n", __LINE__, __func__);
+ 	if (!wl1251_platform_data)
+ 		return ERR_PTR(-ENODEV);
+ 
+diff --git a/srcs/drivers/net/wireless/ti/wl1251/main.c b/srcs/drivers/net/wireless/ti/wl1251/main.c
+index bbf7604..e1a1d9e 100644
+--- a/srcs/drivers/net/wireless/ti/wl1251/main.c
++++ b/srcs/drivers/net/wireless/ti/wl1251/main.c
+@@ -390,6 +390,7 @@ static int wl1251_op_start(struct ieee80211_hw *hw)
+ 	struct wl1251 *wl = hw->priv;
+ 	struct wiphy *wiphy = hw->wiphy;
+ 	int ret = 0;
++printk(KERN_INFO " sdiodbg %4d %s\n", __LINE__, __func__);
+ 
+ 	wl1251_debug(DEBUG_MAC80211, "mac80211 start");
+ 
+@@ -614,6 +615,7 @@ static int wl1251_op_config(struct ieee80211_hw *hw, u32 changed)
+ 	struct wl1251 *wl = hw->priv;
+ 	struct ieee80211_conf *conf = &hw->conf;
+ 	int channel, ret = 0;
++printk(KERN_INFO " sdiodbg %4d %s\n", __LINE__, __func__);
+ 
+ 	channel = ieee80211_frequency_to_channel(
+ 			conf->chandef.chan->center_freq);
+@@ -1450,6 +1452,7 @@ static int wl1251_read_eeprom_mac(struct wl1251 *wl)
+ static int wl1251_register_hw(struct wl1251 *wl)
+ {
+ 	int ret;
++printk(KERN_INFO " sdiodbg %4d %s\n", __LINE__, __func__);
+ 
+ 	if (wl->mac80211_registered)
+ 		return 0;
+diff --git a/srcs/drivers/net/wireless/ti/wl12xx/main.c b/srcs/drivers/net/wireless/ti/wl12xx/main.c
+index 22009e1..2334e30 100644
+--- a/srcs/drivers/net/wireless/ti/wl12xx/main.c
++++ b/srcs/drivers/net/wireless/ti/wl12xx/main.c
+@@ -639,6 +639,7 @@ static int wl127x_prepare_read(struct wl1271 *wl, u32 rx_desc, u32 len)
+ static int wl12xx_identify_chip(struct wl1271 *wl)
+ {
+ 	int ret = 0;
++printk(KERN_INFO " sdiodbg %4d %s\n", __LINE__, __func__);
+ 
+ 	switch (wl->chip.id) {
+ 	case CHIP_ID_127X_PG10:
+@@ -1234,6 +1235,7 @@ out:
+ static int wl12xx_boot(struct wl1271 *wl)
+ {
+ 	int ret;
++printk(KERN_INFO " sdiodbg %4d %s\n", __LINE__, __func__);
+ 
+ 	ret = wl12xx_pre_boot(wl);
+ 	if (ret < 0)
+@@ -1388,6 +1390,7 @@ static int wl12xx_tx_delayed_compl(struct wl1271 *wl)
+ static int wl12xx_hw_init(struct wl1271 *wl)
+ {
+ 	int ret;
++printk(KERN_INFO " sdiodbg %4d %s\n", __LINE__, __func__);
+ 
+ 	if (wl->chip.id == CHIP_ID_128X_PG20) {
+ 		u32 host_cfg_bitmap = HOST_IF_CFG_RX_FIFO_ENABLE;
+@@ -1578,6 +1581,7 @@ static void wl12xx_set_tx_desc_csum(struct wl1271 *wl,
+ static int wl12xx_plt_init(struct wl1271 *wl)
+ {
+ 	int ret;
++printk(KERN_INFO " sdiodbg %4d %s\n", __LINE__, __func__);
+ 
+ 	ret = wl->ops->boot(wl);
+ 	if (ret < 0)
+@@ -1807,6 +1811,7 @@ static int wl12xx_setup(struct wl1271 *wl)
+ {
+ 	struct wl12xx_priv *priv = wl->priv;
+ 	struct wlcore_platdev_data *pdev_data = dev_get_platdata(&wl->pdev->dev);
++printk(KERN_INFO " sdiodbg %4d %s\n", __LINE__, __func__);
+ 
+ 	BUILD_BUG_ON(WL12XX_MAX_LINKS > WLCORE_MAX_LINKS);
+ 	BUILD_BUG_ON(WL12XX_MAX_AP_STATIONS > WL12XX_MAX_LINKS);
+diff --git a/srcs/drivers/net/wireless/ti/wl18xx/main.c b/srcs/drivers/net/wireless/ti/wl18xx/main.c
+index dafb2fd..47ce305 100644
+--- a/srcs/drivers/net/wireless/ti/wl18xx/main.c
++++ b/srcs/drivers/net/wireless/ti/wl18xx/main.c
+@@ -674,6 +674,7 @@ static const struct wl18xx_clk_cfg wl18xx_clk_table[NUM_CLOCK_CONFIGS] = {
+ static int wl18xx_identify_chip(struct wl1271 *wl)
+ {
+ 	int ret = 0;
++printk(KERN_INFO " sdiodbg wl18xx_main %4d %s\n", __LINE__, __func__);
+ 
+ 	switch (wl->chip.id) {
+ 	case CHIP_ID_185x_PG20:
+@@ -1008,6 +1009,7 @@ out:
+ static int wl18xx_boot(struct wl1271 *wl)
+ {
+ 	int ret;
++printk(KERN_INFO " sdiodbg %4d %s\n", __LINE__, __func__);
+ 
+ 	ret = wl18xx_pre_boot(wl);
+ 	if (ret < 0)
+@@ -1164,6 +1166,7 @@ static int wl18xx_hw_init(struct wl1271 *wl)
+ {
+ 	int ret;
+ 	struct wl18xx_priv *priv = wl->priv;
++printk(KERN_INFO " sdiodbg wl18xx_main %4d %s\n", __LINE__, __func__);
+ 
+ 	/* (re)init private structures. Relevant on recovery as well. */
+ 	priv->last_fw_rls_idx = 0;
+@@ -1185,6 +1188,7 @@ static int wl18xx_hw_init(struct wl1271 *wl)
+ 			return ret;
+ 	}
+ 
++printk(KERN_INFO " sdiodbg wl18xx_main %4d %s -- done ok\n", __LINE__, __func__);
+ 	return ret;
+ }
+ 
+@@ -1450,6 +1454,7 @@ out_release:
+ static int wl18xx_conf_init(struct wl1271 *wl, struct device *dev)
+ {
+ 	struct wl18xx_priv *priv = wl->priv;
++printk(KERN_INFO " sdiodbg wl18xx_main %4d %s\n", __LINE__, __func__);
+ 
+ 	if (wl18xx_load_conf_file(dev, &wl->conf, &priv->conf) < 0) {
+ 		wl1271_warning("falling back to default config");
+@@ -1467,6 +1472,7 @@ static int wl18xx_conf_init(struct wl1271 *wl, struct device *dev)
+ static int wl18xx_plt_init(struct wl1271 *wl)
+ {
+ 	int ret;
++printk(KERN_INFO " sdiodbg wl18xx_main %4d %s\n", __LINE__, __func__);
+ 
+ 	/* calibrator based auto/fem detect not supported for 18xx */
+ 	if (wl->plt_mode == PLT_FEM_DETECT) {
+@@ -1478,7 +1484,13 @@ static int wl18xx_plt_init(struct wl1271 *wl)
+ 	if (ret < 0)
+ 		return ret;
+ 
++#if 0
+ 	return wl->ops->boot(wl);
++#else
++	ret = wl->ops->boot(wl);
++printk(KERN_INFO " sdiodbg wl18xx_main %4d %s -- done ok\n", __LINE__, __func__);
++        return ret;
++#endif
+ }
+ 
+ static int wl18xx_get_mac(struct wl1271 *wl)
+@@ -1918,6 +1930,7 @@ static int wl18xx_setup(struct wl1271 *wl)
+ {
+ 	struct wl18xx_priv *priv = wl->priv;
+ 	int ret;
++printk(KERN_INFO " sdiodbg wl18xx_main %4d %s\n", __LINE__, __func__);
+ 
+ 	BUILD_BUG_ON(WL18XX_MAX_LINKS > WLCORE_MAX_LINKS);
+ 	BUILD_BUG_ON(WL18XX_MAX_AP_STATIONS > WL18XX_MAX_LINKS);
+@@ -2039,6 +2052,7 @@ static int wl18xx_setup(struct wl1271 *wl)
+ 	/* Enable 11a Band only if we have 5G antennas */
+ 	wl->enable_11a = (priv->conf.phy.number_of_assembled_ant5 != 0);
+ 
++printk(KERN_INFO " sdiodbg wl18xx_main %4d %s -- done ok\n", __LINE__, __func__);
+ 	return 0;
+ }
+ 
+@@ -2047,6 +2061,10 @@ static int wl18xx_probe(struct platform_device *pdev)
+ 	struct wl1271 *wl;
+ 	struct ieee80211_hw *hw;
+ 	int ret;
++printk(KERN_INFO " sdiodbg \n");
++printk(KERN_INFO " sdiodbg wl18xx_main %4d %s --- --- enter\n", __LINE__, __func__);
++dump_stack();
++printk(KERN_INFO " sdiodbg \n");
+ 
+ 	hw = wlcore_alloc_hw(sizeof(struct wl18xx_priv),
+ 			     WL18XX_AGGR_BUFFER_SIZE,
+@@ -2064,6 +2082,8 @@ static int wl18xx_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto out_free;
+ 
++printk(KERN_INFO " sdiodbg %4d %s probed with ret %d\n", __LINE__, __func__, ret);
++printk(KERN_INFO " sdiodbg wl18xx_main %4d %s --- --- exit\n", __LINE__, __func__);
+ 	return ret;
+ 
+ out_free:
+diff --git a/srcs/drivers/net/wireless/ti/wlcore/debug.h b/srcs/drivers/net/wireless/ti/wlcore/debug.h
+index 27bfb7c..9edb267 100644
+--- a/srcs/drivers/net/wireless/ti/wlcore/debug.h
++++ b/srcs/drivers/net/wireless/ti/wlcore/debug.h
+@@ -62,18 +62,22 @@ extern u32 wl12xx_debug_level;
+ #define DEBUG_DUMP_LIMIT 1024
+ 
+ #define wl1271_error(fmt, arg...) \
+-	pr_err(DRIVER_PREFIX "ERROR " fmt "\n", ##arg)
++	pr_err(DRIVER_PREFIX " sdiodbg ERROR " fmt "\n", ##arg)
+ 
+ #define wl1271_warning(fmt, arg...) \
+-	pr_warn(DRIVER_PREFIX "WARNING " fmt "\n", ##arg)
++	pr_warn(DRIVER_PREFIX " sdiodbg WARNING " fmt "\n", ##arg)
+ 
+ #define wl1271_notice(fmt, arg...) \
+-	pr_info(DRIVER_PREFIX fmt "\n", ##arg)
++	pr_info(DRIVER_PREFIX " sdiodbg note: " fmt "\n", ##arg)
+ 
+ #define wl1271_info(fmt, arg...) \
+-	pr_info(DRIVER_PREFIX fmt "\n", ##arg)
++	pr_info(DRIVER_PREFIX " sdiodbg %22s info:  " fmt "\n", __func__, ##arg)
+ 
+ /* define the debug macro differently if dynamic debug is supported */
++#if 1
++#define wl1271_debug(level, fmt, arg...) \
++	pr_info(DRIVER_PREFIX " sdiodbg %22s debug lvl%#x:  " fmt "\n", __func__, level, ##arg)
++#else
+ #if defined(CONFIG_DYNAMIC_DEBUG)
+ #define wl1271_debug(level, fmt, arg...) \
+ 	do { \
+@@ -88,6 +92,7 @@ extern u32 wl12xx_debug_level;
+ 			       ##arg); \
+ 	} while (0)
+ #endif
++#endif
+ 
+ #define wl1271_dump(level, prefix, buf, len)				      \
+ 	do {								      \
+diff --git a/srcs/drivers/net/wireless/ti/wlcore/init.c b/srcs/drivers/net/wireless/ti/wlcore/init.c
+index d0b7734..17ba293 100644
+--- a/srcs/drivers/net/wireless/ti/wlcore/init.c
++++ b/srcs/drivers/net/wireless/ti/wlcore/init.c
+@@ -673,6 +673,7 @@ int wl1271_init_vif_specific(struct wl1271 *wl, struct ieee80211_vif *vif)
+ int wl1271_hw_init(struct wl1271 *wl)
+ {
+ 	int ret;
++printk(KERN_INFO " sdiodbg %4d %s\n", __LINE__, __func__);
+ 
+ 	/* Chip-specific hw init */
+ 	ret = wl->ops->hw_init(wl);
+diff --git a/srcs/drivers/net/wireless/ti/wlcore/main.c b/srcs/drivers/net/wireless/ti/wlcore/main.c
+index 867d524..86de38f 100644
+--- a/srcs/drivers/net/wireless/ti/wlcore/main.c
++++ b/srcs/drivers/net/wireless/ti/wlcore/main.c
+@@ -6513,6 +6513,10 @@ out:
+ int wlcore_probe(struct wl1271 *wl, struct platform_device *pdev)
+ {
+ 	int ret;
++printk(KERN_INFO " sdiodbg \n");
++printk(KERN_INFO " sdiodbg %4d %s --- --- enter\n", __LINE__, __func__);
++dump_stack();
++printk(KERN_INFO " sdiodbg \n");
+ 
+ 	if (!wl->ops || !wl->ptable)
+ 		return -EINVAL;
+@@ -6529,6 +6533,8 @@ int wlcore_probe(struct wl1271 *wl, struct platform_device *pdev)
+ 		complete_all(&wl->nvs_loading_complete);
+ 	}
+ 
++printk(KERN_INFO " sdiodbg %4d %s probed ok with ret %d\n", __LINE__, __func__, ret);
++printk(KERN_INFO " sdiodbg %4d %s --- --- exit\n", __LINE__, __func__);
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(wlcore_probe);
+diff --git a/srcs/drivers/net/wireless/ti/wlcore/sdio.c b/srcs/drivers/net/wireless/ti/wlcore/sdio.c
+index b4c43fb..e4472d1 100644
+--- a/srcs/drivers/net/wireless/ti/wlcore/sdio.c
++++ b/srcs/drivers/net/wireless/ti/wlcore/sdio.c
+@@ -274,6 +274,7 @@ static int wl1271_probe(struct sdio_func *func,
+ 	/* We are only able to handle the wlan function */
+ 	if (func->num != 0x02)
+ 		return -ENODEV;
++printk(KERN_INFO " sdiodbg sdio.c  %4d %s  enter\n", __LINE__, __func__);
+ 
+ 	memset(&pdev_data, 0x00, sizeof(pdev_data));
+ 	pdev_data.if_ops = &sdio_ops;
+@@ -319,6 +320,7 @@ static int wl1271_probe(struct sdio_func *func,
+ 	else
+ 		chip_family = "wl12xx";
+ 
++printk(KERN_INFO " sdiodbg sdio.c  %4d %s  running\n", __LINE__, __func__);
+ 	glue->core = platform_device_alloc(chip_family, PLATFORM_DEVID_AUTO);
+ 	if (!glue->core) {
+ 		dev_err(glue->dev, "can't allocate platform_device");
+@@ -335,12 +337,14 @@ static int wl1271_probe(struct sdio_func *func,
+ 		       irqd_get_trigger_type(irq_get_irq_data(irq));
+ 	res[0].name = "irq";
+ 
++printk(KERN_INFO " sdiodbg sdio.c  %4d %s  running\n", __LINE__, __func__);
+ 	ret = platform_device_add_resources(glue->core, res, ARRAY_SIZE(res));
+ 	if (ret) {
+ 		dev_err(glue->dev, "can't add resources\n");
+ 		goto out_dev_put;
+ 	}
+ 
++printk(KERN_INFO " sdiodbg sdio.c  %4d %s  running\n", __LINE__, __func__);
+ 	ret = platform_device_add_data(glue->core, &pdev_data,
+ 				       sizeof(pdev_data));
+ 	if (ret) {
+@@ -348,11 +352,13 @@ static int wl1271_probe(struct sdio_func *func,
+ 		goto out_dev_put;
+ 	}
+ 
++printk(KERN_INFO " sdiodbg sdio.c  %4d %s  running\n", __LINE__, __func__);
+ 	ret = platform_device_add(glue->core);
+ 	if (ret) {
+ 		dev_err(glue->dev, "can't add platform device\n");
+ 		goto out_dev_put;
+ 	}
++printk(KERN_INFO " sdiodbg sdio.c  %4d %s  exit ok\n", __LINE__, __func__);
+ 	return 0;
+ 
+ out_dev_put:
+@@ -362,6 +368,7 @@ out_free_glue:
+ 	kfree(glue);
+ 
+ out:
++printk(KERN_INFO " sdiodbg sdio.c  %4d %s  exit out\n", __LINE__, __func__);
+ 	return ret;
+ }
+ 
+diff --git a/srcs/drivers/regulator/core.c b/srcs/drivers/regulator/core.c
+index 74b3f5b..bab471c 100644
+--- a/srcs/drivers/regulator/core.c
++++ b/srcs/drivers/regulator/core.c
+@@ -39,6 +39,7 @@
+ #include "dummy.h"
+ #include "internal.h"
+ 
++#if 0
+ #define rdev_crit(rdev, fmt, ...)					\
+ 	pr_crit("%s: " fmt, rdev_get_name(rdev), ##__VA_ARGS__)
+ #define rdev_err(rdev, fmt, ...)					\
+@@ -49,6 +50,18 @@
+ 	pr_info("%s: " fmt, rdev_get_name(rdev), ##__VA_ARGS__)
+ #define rdev_dbg(rdev, fmt, ...)					\
+ 	pr_debug("%s: " fmt, rdev_get_name(rdev), ##__VA_ARGS__)
++#else
++#define rdev_crit(rdev, fmt, ...)					\
++	pr_crit(" sdiodbg %s: " fmt, rdev_get_name(rdev), ##__VA_ARGS__)
++#define rdev_err(rdev, fmt, ...)					\
++	pr_err(" sdiodbg %s: " fmt, rdev_get_name(rdev), ##__VA_ARGS__)
++#define rdev_warn(rdev, fmt, ...)					\
++	pr_warn(" sdiodbg %s: " fmt, rdev_get_name(rdev), ##__VA_ARGS__)
++#define rdev_info(rdev, fmt, ...)					\
++	pr_info(" sdiodbg %s: " fmt, rdev_get_name(rdev), ##__VA_ARGS__)
++#define rdev_dbg(rdev, fmt, ...)					\
++	pr_info(" sdiodbg %s: " fmt, rdev_get_name(rdev), ##__VA_ARGS__)
++#endif
+ 
+ static DEFINE_MUTEX(regulator_list_mutex);
+ static LIST_HEAD(regulator_map_list);
